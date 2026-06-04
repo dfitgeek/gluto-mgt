@@ -1,79 +1,73 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>LogiCore Admin - Supplier Management</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
-        rel="stylesheet" />
-    <!-- Material Symbols -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <!-- Tailwind CSS -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Manage Suppliers | LogiCore Admin</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "on-secondary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "background": "#f9f9ff",
-                        "on-background": "#151c27",
-                        "tertiary": "#22312c",
-                        "secondary-fixed-dim": "#4edea3",
-                        "surface-container-low": "#f0f3ff",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed": "#002113",
-                        "on-secondary-fixed-variant": "#005236",
-                        "on-surface": "#151c27",
-                        "tertiary-container": "#384742",
-                        "surface-container-highest": "#dce2f3",
-                        "error-container": "#ffdad6",
-                        "outline": "#707974",
-                        "on-tertiary-container": "#a4b5ae",
-                        "surface-bright": "#f9f9ff",
-                        "surface": "#f9f9ff",
-                        "on-primary-container": "#80bea6",
                         "inverse-surface": "#2a313d",
-                        "surface-container-high": "#e2e8f8",
-                        "on-secondary-container": "#00714d",
-                        "outline-variant": "#bfc9c3",
-                        "on-primary-fixed": "#002117",
-                        "on-tertiary": "#ffffff",
-                        "secondary": "#006c49",
-                        "on-primary-fixed-variant": "#0b513d",
-                        "secondary-container": "#6cf8bb",
+                        "background": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#dce2f3",
+                        "error": "#ba1a1a",
                         "primary": "#003527",
-                        "surface-dim": "#d3daea",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#005236",
+                        "outline-variant": "#bfc9c3",
+                        "primary-fixed-dim": "#95d3ba",
+                        "inverse-on-surface": "#ebf1ff",
                         "on-tertiary-fixed": "#101e1a",
-                        "primary-fixed": "#b0f0d6",
-                        "primary-container": "#064e3b",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#95d3ba",
+                        "on-tertiary-container": "#a4b5ae",
+                        "on-primary-fixed": "#002117",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "surface": "#f9f9ff",
+                        "tertiary": "#22312c",
+                        "on-surface-variant": "#404944",
+                        "on-background": "#151c27",
+                        "secondary": "#006c49",
+                        "on-primary-container": "#80bea6",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-variant": "#dce2f3",
+                        "on-secondary-container": "#00714d",
+                        "on-primary-fixed-variant": "#0b513d",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-container": "#384742",
+                        "outline": "#707974",
                         "surface-container-lowest": "#ffffff",
                         "on-error": "#ffffff",
-                        "inverse-primary": "#95d3ba",
-                        "on-primary": "#ffffff",
-                        "surface-tint": "#2b6954",
+                        "error-container": "#ffdad6",
                         "surface-container": "#e7eefe",
-                        "tertiary-fixed-dim": "#bacac3",
-                        "secondary-fixed": "#6ffbbe",
-                        "inverse-on-surface": "#ebf1ff",
                         "on-tertiary-fixed-variant": "#3b4a44",
-                        "on-surface-variant": "#404944",
-                        "primary-fixed-dim": "#95d3ba",
-                        "surface-variant": "#dce2f3",
-                        "tertiary-fixed": "#d5e6df"
+                        "tertiary-fixed-dim": "#bacac3",
+                        "tertiary-fixed": "#d5e6df",
+                        "surface-dim": "#d3daea",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#b0f0d6",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f9f9ff",
+                        "primary-container": "#064e3b",
+                        "on-surface": "#151c27",
+                        "surface-tint": "#2b6954",
+                        "surface-container-high": "#e2e8f8"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
@@ -84,33 +78,33 @@
                     },
                     "spacing": {
                         "gutter": "24px",
-                        "stack-lg": "48px",
-                        "base": "8px",
                         "stack-sm": "12px",
+                        "stack-lg": "48px",
                         "container-padding": "32px",
-                        "stack-md": "24px"
+                        "stack-md": "24px",
+                        "base": "8px"
                     },
                     "fontFamily": {
-                        "body-md": ["Inter"],
-                        "label-md": ["Geist"],
-                        "label-sm": ["Geist"],
-                        "body-sm": ["Inter"],
                         "headline-md": ["Geist"],
+                        "body-md": ["Inter"],
                         "headline-lg": ["Geist"],
                         "body-lg": ["Inter"],
                         "headline-xl": ["Geist"],
-                        "headline-lg-mobile": ["Geist"]
+                        "headline-lg-mobile": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "label-md": ["Geist"],
+                        "body-sm": ["Inter"]
                     },
                     "fontSize": {
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-md": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
-                        "label-sm": ["12px", { "lineHeight": "14px", "fontWeight": "500" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
                         "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
                         "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
                         "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
                         "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }]
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
                     }
                 },
             },
@@ -121,78 +115,514 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
-        .active-nav-indicator {
-            font-variation-settings: 'FILL' 1;
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
         }
     </style>
 </head>
 
-<body class="bg-background overflow-x-hidden font-body-md text-on-background antialiased">
-    <!-- Side Navigation Bar (Anchored from JSON) -->
+<body class="bg-background text-on-background font-body-md flex min-h-screen overflow-x-hidden">
+    <!-- SideNavBar (Shared Component) -->
     <aside
-        class="hidden top-0 left-0 z-50 fixed md:flex flex-col bg-surface-container-lowest py-stack-md border-r border-outline-variant w-[280px] h-screen">
-        <div class="mb-stack-lg px-6">
-            <h2 class="font-headline-md text-headline-md text-primary tracking-tight">Buyer Management</h2>
+        class="bg-surface-container-lowest dark:bg-surface-container py-stack-md border-outline-variant fixed left-0 top-0 z-50 hidden h-screen w-[280px] flex-col border-r md:flex">
+        <div class="mb-8 px-6">
+            <h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">LogiCore Admin</h1>
             <p class="font-body-sm text-body-sm text-on-surface-variant">Enterprise Portal</p>
         </div>
         <nav class="flex-1 space-y-1">
-            <!-- Mapping labels based on User Request + JSON Blueprint -->
-            <a class="group flex items-center gap-3 bg-secondary-container mx-2 my-1 px-4 py-3 rounded-lg font-semibold text-on-secondary-container transition-all"
+            <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
                 href="#">
-                <span class="material-symbols-outlined active-nav-indicator">dashboard</span>
+                <span class="material-symbols-outlined">dashboard</span>
                 <span class="font-label-md text-label-md">Dashboard</span>
             </a>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
-                href="#">
-                <span class="material-symbols-outlined">pending_actions</span>
-                <span class="font-label-md text-label-md">Unverified Supplier</span>
-            </a>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
-                href="#">
-                <span class="material-symbols-outlined">done_all</span>
-                <span class="font-label-md text-label-md">Verified Suppliers</span>
-            </a>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
+            <a class="bg-secondary-container text-on-secondary-container group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition-all"
                 href="#">
                 <span class="material-symbols-outlined">person_add</span>
-                <span class="font-label-md text-label-md">Create Supplier</span>
+                <span class="font-label-md text-label-md">Manage Suppliers</span>
             </a>
-            <div class="px-6 pt-stack-md">
-                <div class="opacity-30 bg-outline-variant h-px"></div>
-            </div>
-            <!-- Extended menu items from JSON -->
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
+            <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
+                href="#">
+                <span class="material-symbols-outlined">pending_actions</span>
+                <span class="font-label-md text-label-md">Unprocessed Buyer</span>
+            </a>
+            <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
                 href="#">
                 <span class="material-symbols-outlined">shopping_cart</span>
                 <span class="font-label-md text-label-md">Orders</span>
             </a>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
+            <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
                 href="#">
                 <span class="material-symbols-outlined">receipt_long</span>
                 <span class="font-label-md text-label-md">Invoices</span>
             </a>
         </nav>
-        <div class="space-y-1 mt-auto px-4">
+        <div class="mt-auto space-y-2 px-4">
             <button
-                class="flex justify-center items-center gap-2 bg-primary hover:bg-primary-container shadow-sm mb-stack-sm px-4 py-3 rounded-2xl w-full font-label-md text-white transition-colors">
-                <span class="text-[20px] material-symbols-outlined">swap_horiz</span>
-                Switch to Supplier
+                class="bg-secondary text-on-secondary flex w-full items-center justify-center gap-2 rounded-2xl py-3 font-semibold transition-all hover:opacity-90">
+                <span class="material-symbols-outlined">swap_horiz</span>
+                <span>Switch to Supplier</span>
             </button>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
-                href="#">
-                <span class="material-symbols-outlined">help</span>
-                <span class="font-label-md text-label-md">Support</span>
-            </a>
-            <a class="group flex items-center gap-3 hover:bg-surface-container-high my-1 px-4 py-3 rounded-lg text-error text-on-surface-variant transition-all"
-                href="#">
-                <span class="material-symbols-outlined">logout</span>
-                <span class="font-label-md text-label-md">Logout</span>
-            </a>
+            <div class="border-outline-variant border-t pt-4">
+                <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined">help</span>
+                    <span class="font-label-md text-label-md">Support</span>
+                </a>
+                <a class="text-on-surface-variant hover:bg-surface-container-high group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span class="font-label-md text-label-md">Logout</span>
+                </a>
+            </div>
         </div>
     </aside>
-  
-    
-   
-</body>
+    <!-- Main Canvas -->
+    <main class="flex min-h-screen flex-1 flex-col md:ml-[280px]">
+        <!-- TopAppBar (Shared Component) -->
+        <header class="bg-surface dark:bg-surface-dim sticky top-0 z-40 shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
+            <div class="px-container-padding mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <div class="relative hidden sm:block">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2">search</span>
+                        <input
+                            class="bg-surface-container-low focus:ring-primary text-body-sm font-body-sm w-64 rounded-full border-none py-2 pl-10 pr-4 focus:ring-2"
+                            placeholder="Search suppliers..." type="text">
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="hover:bg-surface-container-high cursor-pointer rounded-full p-2 transition-colors active:scale-95">
+                        <span class="material-symbols-outlined text-primary">notifications</span>
+                    </button>
+                    <button
+                        class="hover:bg-surface-container-high cursor-pointer rounded-full p-2 transition-colors active:scale-95">
+                        <span class="material-symbols-outlined text-primary">settings</span>
+                    </button>
+                    <div class="bg-primary-fixed border-outline-variant h-10 w-10 overflow-hidden rounded-full border">
+                        <img alt="Administrator profile avatar"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCycJWbUi2ptWvktrRMGL0aEU02061RU3mBmhaW4Bn1cH-q-RoJDExIXb37CMdRo5ZHotezPHxTptIgI7sMRQGYDLUOxEue8lAauUaLggSRPbi_BFiP4o7IX2M5tRSJNoxqKXT9_llcFnFFR9-T_PhrwcWEbptwhHkOJytHWR9d2CNfrTXHT6Qy8K4vTc28Os5wszpZVICWDfxYxW9b-CFJ9469a8Tx-Y7ExNwPR5J7TOdA7RMhU4yE4VhoEoUq6aXGt6pwFrq2jQ">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Content Area -->
+        <div class="p-gutter mx-auto w-full max-w-[1440px] flex-1">
+            <!-- Header & Tabs -->
+            <div class="mb-stack-lg">
+                <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Manage Suppliers</h2>
+                <div class="bg-surface-container-low flex w-fit items-center gap-1 rounded-2xl p-1">
+                    <button
+                        class="font-label-md text-label-md text-primary rounded-xl bg-white px-6 py-2.5 shadow-sm transition-all">Verified
+                        Suppliers</button>
+                    <button
+                        class="font-label-md text-label-md text-on-surface-variant rounded-xl px-6 py-2.5 transition-all hover:bg-white/50">Unverified
+                        Suppliers</button>
+                </div>
+            </div>
+            <!-- Bento-style Grid of Cards -->
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Supplier Card 1 -->
+                <div
+                    class="glass-card border-l-secondary group rounded-2xl border-l-4 p-6 shadow-sm transition-all hover:shadow-md">
+                    <div class="mb-4 flex items-start justify-between">
+                        <div
+                            class="bg-surface-container flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl shadow-inner">
+                            <img alt="Logistics Alpha Logo"
+                                data-alt="A clean, minimalist company logo featuring geometric forest green shapes on a soft white background, representing a professional and modern logistics corporation. The style is crisp and corporate."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCikfdNBV_ifvXUN8qsMn6k1Zf0fBf5Dw0QHnturdaZw1aXFnmxwVopYy8B7azTVFabe-7THsDsz6vnNcrPUx7r3_N0mgZsU1GsYAKET-AYHLuVPg_6bqv4EQqAr8-o7Fd4SGsHPqw9jkEG3p_zY6lWOElwR8_sKMbmpcvC8dn_FSY7zcxsKrtLXRc38rkvj-RzuZ1ZN82FVthQGzB2ToaXu8AnHMV3TCRq3mLcMLnO1pTliDx_DoL7eqiewoK_6tUoFM19SYxCVQ">
+                        </div>
+                        <span
+                            class="bg-secondary-container/20 text-on-secondary-container rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Active</span>
+                    </div>
+                    <div class="mb-6 space-y-3">
+                        <h3 class="font-headline-md text-headline-md text-primary truncate">Global Freight Solutions
+                        </h3>
+                        <div class="space-y-1">
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">verified</span>
+                                Reg: GFS-2023-8842
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">tag</span>
+                                Ref: #SUP-9901
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">mail</span>
+                                procurement@globalfreight.com
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        class="bg-primary font-label-md text-label-md hover:bg-primary/90 flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-white transition-all group-hover:gap-3"
+                        onclick="openModal()">
+                        View Full Profile
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                </div>
+                <!-- Supplier Card 2 -->
+                <div
+                    class="glass-card border-l-secondary group rounded-2xl border-l-4 p-6 shadow-sm transition-all hover:shadow-md">
+                    <div class="mb-4 flex items-start justify-between">
+                        <div
+                            class="bg-surface-container flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl shadow-inner">
+                            <img alt="EcoSupply Logo"
+                                data-alt="A sophisticated corporate logo for an eco-friendly supply chain company, using shades of mint and forest green. The design is modern, organic, and implies sustainability and trust."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPKsUAB092ohjfSdOL9b-4quH_JI-DZ5WepQLUBH9yu3lDUwhYZA6a5IbP5ST6O5oQ8ml04Wzv3A_4i5yfrKMlxFc9lnb2b5BbPJ7mP0M2icEGPTo54wxH_HKV8rRZ5a9C0DUQtVnATC-QD2whvbS_1_Nh8es8_q2izt0Km9_gRbFdwWDIFv5d6e9_h345UtAti5Uzb9HQpVJkQl51RPW-JZ5BucnJ01tTwMS5MkqI6-cJvY9P66kSyfahD_z9FB2viUZMC1phvw">
+                        </div>
+                        <span
+                            class="bg-secondary-container/20 text-on-secondary-container rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Active</span>
+                    </div>
+                    <div class="mb-6 space-y-3">
+                        <h3 class="font-headline-md text-headline-md text-primary truncate">EcoSupply Network</h3>
+                        <div class="space-y-1">
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">verified</span>
+                                Reg: ESN-441-0023
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">tag</span>
+                                Ref: #SUP-8822
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">mail</span>
+                                contact@ecosupply.net
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        class="bg-primary font-label-md text-label-md hover:bg-primary/90 flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-white transition-all group-hover:gap-3"
+                        onclick="openModal()">
+                        View Full Profile
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                </div>
+                <!-- Supplier Card 3 -->
+                <div
+                    class="glass-card border-l-secondary group rounded-2xl border-l-4 p-6 shadow-sm transition-all hover:shadow-md">
+                    <div class="mb-4 flex items-start justify-between">
+                        <div
+                            class="bg-surface-container flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl shadow-inner">
+                            <img alt="Azure Distro Logo"
+                                data-alt="A professional emblem for a global distribution firm. The logo combines sharp lines with rounded corners in a palette of deep greens and grays, evoking a sense of established reliability and efficient logistics."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtw0K-LjrrnzWOwLCz6h3QtJsTyyTgF53lWTSltJ-Nn6Irqw0K4KlgM5oJ-mnyWgI_SVCYXh7lj738fbWS7vpF0-yAbotN7GAf8baVeO5BnX7oW4XkogJvLgym2PgMI9psi5GY-QVxfRjzYmHLItmZwGFVb1J_JLlermGq-bwOr4ZyTQvX1hs-GoWftAzWxMj3NNBVl4dkNvnWqZik5CLmkYtCL4yVJO3MTI_5_GVrm_DkWeqyeO2deOKDY2RXelxCW990RgqVGQ">
+                        </div>
+                        <span
+                            class="bg-secondary-container/20 text-on-secondary-container rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider">Active</span>
+                    </div>
+                    <div class="mb-6 space-y-3">
+                        <h3 class="font-headline-md text-headline-md text-primary truncate">Azure Distribution Ltd.</h3>
+                        <div class="space-y-1">
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">verified</span>
+                                Reg: AZR-902-1110
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">tag</span>
+                                Ref: #SUP-7731
+                            </p>
+                            <p class="text-on-surface-variant text-body-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">mail</span>
+                                sales@azuredistribution.com
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        class="bg-primary font-label-md text-label-md hover:bg-primary/90 flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-white transition-all group-hover:gap-3"
+                        onclick="openModal()">
+                        View Full Profile
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Modal Backdrop -->
+    <div class="fixed inset-0 z-[100] flex hidden items-center justify-center bg-black/40 p-4 opacity-0 backdrop-blur-sm transition-opacity duration-300"
+        id="modalBackdrop">
+        <!-- Modal Content -->
+        <div class="flex max-h-[921px] w-full max-w-5xl scale-95 flex-col overflow-hidden rounded-[2rem] bg-white shadow-2xl transition-transform duration-300"
+            id="modalContainer">
+            <!-- Modal Header -->
+            <div class="bg-primary flex items-center justify-between p-6 text-white">
+                <div class="flex items-center gap-4">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">store</span>
+                    </div>
+                    <div>
+                        <h2 class="font-headline-md text-headline-md">Global Freight Solutions</h2>
+                        <p class="text-secondary-fixed text-label-md">Verified Enterprise Partner</p>
+                    </div>
+                </div>
+                <button class="rounded-full p-2 transition-colors hover:bg-white/10" onclick="closeModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <!-- Modal Body Scroll Area -->
+            <div class="p-gutter hide-scrollbar bg-background flex-1 space-y-8 overflow-y-auto">
+                <!-- Section 1: Representative Info -->
+                <section>
+                    <h3 class="font-headline-md text-primary mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        Representative Information
+                    </h3>
+                    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                        <div class="border-outline-variant rounded-2xl border bg-white p-6 lg:col-span-1">
+                            <div class="mb-6 flex flex-col items-center text-center">
+                                <div
+                                    class="border-secondary-container mb-4 h-24 w-24 overflow-hidden rounded-full border-4">
+                                    <img alt="Representative Avatar"
+                                        data-alt="A professional headshot of a corporate executive in a business suit. The individual has a friendly but authoritative expression, suitable for a lead representative in a high-stakes management portal. Soft office lighting, professional photography style."
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVDK0aASwEMBZq8b_PTDhHq1XU4_8A4H9LrujafvxdYg8lvunUt4c1wljSEqGNGmuiIy64IsrtiK41YluKUh-nRx--tRMYv_Vgehoo8jJ-pwdC004BNOop7hFbhPU76RKOzfmhe1Kqybj_tzv8W22AkkI8UT5B1j2z8hrQcnx_8QIxnUdM_m_xtINs_0S_e8LrVBEuqKYzwjapy8_2CYRsnxBBpuXDt3Z4zH2bsTQg9mGAQptM9HmE9TVB3I-AJoN3Eq7FazHF4Q">
+                                </div>
+                                <h4 class="font-headline-md text-primary">Marcus Sterling</h4>
+                                <p class="text-on-surface-variant text-body-sm">Managing Director</p>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="text-body-sm flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-secondary">mail</span>
+                                    m.sterling@globalfreight.com
+                                </div>
+                                <div class="text-body-sm flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-secondary">call</span>
+                                    +1 (555) 902-8831
+                                </div>
+                                <div class="text-body-sm flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-secondary">public</span>
+                                    www.globalfreight.com
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-2">
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-[#25D366]">chat</span> WhatsApp</span>
+                                <span class="text-body-sm text-on-surface-variant">+1 (555) WhatsApp</span>
+                            </div>
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-[#1DA1F2]">share</span> Twitter (X)</span>
+                                <span class="text-body-sm text-on-surface-variant">@global_freight</span>
+                            </div>
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-[#4267B2]">social_leaderboard</span>
+                                    Facebook</span>
+                                <span class="text-body-sm text-on-surface-variant">/GlobalFreightSolutions</span>
+                            </div>
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-[#C13584]">photo_camera</span>
+                                    Instagram</span>
+                                <span class="text-body-sm text-on-surface-variant">@globalfreight_official</span>
+                            </div>
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-black">movie</span> TikTok</span>
+                                <span class="text-body-sm text-on-surface-variant">@gfs_logistics</span>
+                            </div>
+                            <div
+                                class="bg-surface-container-low hover:border-secondary flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 transition-all">
+                                <span class="font-label-md flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-black">alternate_email</span>
+                                    Threads</span>
+                                <span class="text-body-sm text-on-surface-variant">@globalfreight</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Section 2: Business Details -->
+                <section>
+                    <h3 class="font-headline-md text-primary mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">business</span>
+                        Business Details
+                    </h3>
+                    <div class="border-outline-variant overflow-hidden rounded-2xl border bg-white">
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="border-outline-variant space-y-4 border-b p-6 md:border-b-0 md:border-r">
+                                <div>
+                                    <p class="text-label-sm text-on-surface-variant uppercase tracking-wide">Nature of
+                                        Business</p>
+                                    <p class="text-body-md text-primary font-semibold">International Logistics &amp;
+                                        Cold Chain Distribution</p>
+                                </div>
+                                <div>
+                                    <p class="text-label-sm text-on-surface-variant uppercase tracking-wide">Company
+                                        Address</p>
+                                    <p class="text-body-md text-primary font-semibold">442 Trade Center Plaza, Suite
+                                        800, San Francisco, CA 94103</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="text-label-sm text-on-surface-variant uppercase tracking-wide">Type of
+                                            Business</p>
+                                        <p class="text-body-md text-primary font-semibold">Private Limited</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-label-sm text-on-surface-variant uppercase tracking-wide">Year
+                                            Established</p>
+                                        <p class="text-body-md text-primary font-semibold">2012 (12 Years)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <p class="text-label-sm text-on-surface-variant mb-3 uppercase tracking-wide">Board of
+                                    Directors</p>
+                                <ul class="space-y-3">
+                                    <li
+                                        class="bg-surface-container-low flex items-center justify-between rounded-lg px-4 py-2">
+                                        <span class="text-body-sm font-semibold">Sarah Jenkins</span>
+                                        <span class="text-label-sm text-on-surface-variant">Chairwoman</span>
+                                    </li>
+                                    <li
+                                        class="bg-surface-container-low flex items-center justify-between rounded-lg px-4 py-2">
+                                        <span class="text-body-sm font-semibold">David Chen</span>
+                                        <span class="text-label-sm text-on-surface-variant">Operations Director</span>
+                                    </li>
+                                    <li
+                                        class="bg-surface-container-low flex items-center justify-between rounded-lg px-4 py-2">
+                                        <span class="text-body-sm font-semibold">Elena Rodriguez</span>
+                                        <span class="text-label-sm text-on-surface-variant">Financial Director</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Section 3: Submitted Documents -->
+                <section>
+                    <h3 class="font-headline-md text-primary mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">description</span>
+                        Submitted Documents
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                        <!-- Doc Item -->
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Sales Contract</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Commercial Invoice</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Packing List</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Cert of Origin</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center opacity-50 grayscale">
+                            <span class="material-symbols-outlined text-outline">pending</span>
+                            <span class="text-label-sm font-semibold">Test Analysis</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Bill of Lading</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Insurance Cert</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Product Spec</span>
+                        </div>
+                        <div
+                            class="border-outline-variant flex flex-col items-center gap-2 rounded-xl border bg-white p-4 text-center">
+                            <span class="material-symbols-outlined text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span class="text-label-sm font-semibold">Other Docs</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Modal Footer -->
+            <div
+                class="border-outline-variant flex flex-col items-center justify-between gap-4 border-t bg-white p-6 sm:flex-row">
+                <div class="text-on-surface-variant text-label-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                    Profile created on January 15, 2024
+                </div>
+                <button
+                    class="bg-secondary text-on-secondary font-label-md text-label-md hover:bg-secondary/90 shadow-secondary/20 flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-3 shadow-lg transition-all sm:w-auto">
+                    View Supplier Products
+                    <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Quick-Add FAB -->
+    <button
+        class="bg-primary group fixed bottom-8 right-8 z-40 flex h-16 w-16 items-center justify-center rounded-full text-white shadow-[0px_10px_32px_rgba(0,0,0,0.15)] transition-all hover:scale-110 active:scale-95">
+        <span
+            class="material-symbols-outlined text-[32px] transition-transform duration-300 group-hover:rotate-90">add</span>
+    </button>
+    <script>
+        const backdrop = document.getElementById('modalBackdrop');
+        const container = document.getElementById('modalContainer');
 
+        function openModal() {
+            backdrop.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.add('opacity-100');
+                container.classList.remove('scale-95');
+                container.classList.add('scale-100');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal() {
+            backdrop.classList.remove('opacity-100');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+
+        // Close on escape
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Close on backdrop click
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) closeModal();
+        });
+    </script>
+</body>
 </html>

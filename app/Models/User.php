@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\RegistrationOnboardingToken;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -82,4 +83,19 @@ class User extends Authenticatable
             self::TYPE_STAFF
         ]);
     }
+
+    /**
+     * Get all profile tracker entries and communication notes authored by this user.
+     */
+    public function supplierTrackers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SupplierProfileTracker::class, 'user_id')->latest();
+    }
+
+    public function onboardingToken(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(RegistrationOnboardingToken::class, 'user_id');
+    }
+
+
 }

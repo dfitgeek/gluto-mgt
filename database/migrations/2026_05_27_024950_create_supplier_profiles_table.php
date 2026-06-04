@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -16,6 +17,7 @@ return new class extends Migration
 
             // Relationships & System Labels
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            // $table->integer('user_id')->nullable(); // Optional direct user link for internal management [cite: 291]
             $table->string('supplier_ref_number')->unique(); // Internal Protocol [cite: 292]
 
             // Status Label: Unverified Supplier, Verified Supplier [cite: 233]
@@ -29,13 +31,14 @@ return new class extends Migration
             $table->string('email_address'); // [cite: 239]
             $table->string('website')->nullable(); // [cite: 240]
             $table->string('whatsapp_contact')->nullable(); // [cite: 241]
-            $table->string('social_media')->nullable(); // [cite: 242]
+            $table->json('social_media')->nullable(); // [cite: 242]
             $table->string('reg_number'); // [cite: 243]
             $table->string('type_of_business'); // e.g., Manufacturer, Wholesaler [cite: 244]
             $table->string('nature_of_business'); // [cite: 245]
             $table->integer('year_established')->nullable(); // [cite: 246]
             $table->text('names_of_board_directors')->nullable(); // [cite: 247]
             $table->string('director_position_title')->nullable(); // [cite: 248]
+            $table->string('password')->default(Hash::make('glutosupplier')); // Temporary storage for initial password setup, to be hashed and cleared after use [cite: 248]
             $table->string('director_email')->nullable(); // [cite: 249]
 
             // 2. AUTHORIZED REPRESENTATIVE DETAILS [cite: 251]
@@ -51,11 +54,11 @@ return new class extends Migration
             $table->boolean('ability_to_provide_samples')->default(false); // [cite: 264]
             $table->text('manufacturing_locations')->nullable(); // [cite: 265]
             $table->string('production_capacity')->nullable(); // [cite: 266]
-            $table->text('product_manufacturing_certifications')->nullable(); // [cite: 267]
-            $table->text('returns_warranty_policy')->nullable(); // [cite: 268]
+            $table->string('product_manufacturing_certifications')->nullable(); // [cite: 267]
+            $table->string('returns_warranty_policy')->nullable(); // [cite: 268]
             $table->string('pricing_structure_type')->nullable(); // e.g., Per Unit, Bulk [cite: 269]
             $table->text('payment_terms')->nullable(); // [cite: 270]
-            $table->string('currency_accepted', 3)->default('USD'); // [cite: 271]
+            $table->string('currency_accepted')->default('Naira'); // [cite: 271]
             $table->decimal('estimated_shipping_costs', 15, 2)->nullable(); // [cite: 272]
             $table->string('shipping_methods_available')->nullable(); // [cite: 273]
 
@@ -74,7 +77,7 @@ return new class extends Migration
             $table->string('assigned_manager')->nullable(); // [cite: 293]
             $table->string('lead_source')->nullable(); // [cite: 294]
             $table->date('date_of_initial_contact')->nullable(); // [cite: 295]
-            $table->text('supplier_tracker_notes')->nullable(); // Internal text log panel [cite: 308]
+            // $table->text('supplier_tracker_notes')->nullable(); // Internal text log panel [cite: 308]
 
             // 6. COMPLIANCE & LEGAL DECLARATIONS [cite: 369]
             $table->boolean('declares_gmo_free')->default(false); // [cite: 370]
@@ -87,6 +90,7 @@ return new class extends Migration
             $table->string('declaration_authorized_person')->nullable(); // [cite: 390]
             $table->string('declaration_title')->nullable(); // [cite: 391]
             $table->string('declaration_signature_path')->nullable(); // Image path of signature [cite: 392]
+
 
             $table->timestamps();
         });

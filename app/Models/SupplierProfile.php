@@ -13,6 +13,7 @@ class SupplierProfile extends Model {
     protected $guarded = ['id'];
 
     protected $casts = [
+        // 'user_id' => ''
         'ability_to_provide_samples' => 'boolean',
         'date_of_initial_contact'    => 'date',
         'declares_gmo_free'          => 'boolean',
@@ -20,6 +21,12 @@ class SupplierProfile extends Model {
         'declares_non_irradiated'    => 'boolean',
         'declares_no_nanomaterials'  => 'boolean',
         'complies_haccp_gmp'         => 'boolean',
+        'social_media' => 'array',
+        'password' => 'hashed',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     /**
@@ -36,5 +43,13 @@ class SupplierProfile extends Model {
     public function products(): HasMany
     {
         return $this->hasMany(SupplierProduct::class);
+    }
+
+    /**
+     * Fetch all internal tracking records and communication logs linked to this supplier profile.
+     */
+    public function trackers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SupplierProfileTracker::class, 'supplier_profile_id')->latest();
     }
 }

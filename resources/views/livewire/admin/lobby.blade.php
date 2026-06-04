@@ -27,7 +27,7 @@
                         Access the buyer ecosystem to monitor procurement requests, verify profiles, and manage
                         transaction cycles for corporate clients.
                     </p>
-                    <a href="{{ route('admin.suppliers') }}" wire:navigate
+                    <a href="{{ route('admin.buyers') }}" wire:navigate
                         class="inline-flex items-center gap-2 bg-secondary group-hover:bg-primary mt-auto px-6 py-3 rounded-2xl font-label-md text-label-md text-on-secondary transition-colors">
                         Enter Dashboard
                         <span class="text-sm material-symbols-outlined">arrow_forward</span>
@@ -55,7 +55,7 @@
                         Oversee supplier performance, logistics partnerships, and product inventory metrics across
                         the global supply chain network.
                     </p>
-                    <a href="{{ route('admin.buyers') }}" wire:navigate
+                    <a href="{{ route('admin.suppliers') }}" wire:navigate
                         class="inline-flex items-center gap-2 bg-secondary group-hover:bg-primary mt-auto px-6 py-3 rounded-2xl font-label-md text-label-md text-on-secondary transition-colors">
                         Enter Dashboard
                         <span class="text-sm material-symbols-outlined">arrow_forward</span>

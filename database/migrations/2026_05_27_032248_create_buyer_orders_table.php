@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             // Relationship link back to the parent buyer profile
-            $table->foreignId('buyer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('buyer_profile_id')->constrained()->onDelete('cascade');
 
             // Transaction-Specific Status Label [cite: 46, 56, 91]
             // Allowed: Unprocessed Buyer, Processed Buyer, Confirmed Order, Processing Order, Shipped Order, Completed Order [cite: 91, 92]

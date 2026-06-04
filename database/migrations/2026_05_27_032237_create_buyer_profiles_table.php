@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('buyer_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            // $table->integer('user_id')->nullable();
             $table->string('buyer_ref_number')->unique(); // Unique permanent identifier [cite: 160]
 
             // 1. BUYER COMPANY INFORMATION [cite: 93]
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->string('company_website')->nullable(); // [cite: 98]
             $table->string('country_of_registration'); // [cite: 99]
             $table->integer('year_established')->nullable(); // [cite: 100]
-
+            $table->string('password')->nullable(); // Temporary storage for initial password setup, to be hashed and cleared after use [cite: 248]
             // 2. AUTHORIZED REPRESENTATIVE DETAILS [cite: 101]
             $table->string('rep_full_name'); // [cite: 102]
             $table->string('rep_position'); // [cite: 103]
