@@ -320,6 +320,12 @@
                         </div>
                     </div>
                     <input type="file" name="file_sales_contract" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="file_sales_contract_prod_ref" value="{{ old('file_sales_contract_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                     @error('file_sales_contract') <span class="block mt-1 text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
@@ -332,6 +338,12 @@
                         </div>
                     </div>
                     <input type="file" name="file_commercial_invoice" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="file_commercial_invoice_prod_ref" value="{{ old('file_commercial_invoice_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                 </div>
 
                 <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
@@ -343,6 +355,12 @@
                         </div>
                     </div>
                     <input type="file" name="file_packing_list" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="file_packing_list_prod_ref" value="{{ old('file_packing_list_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                 </div>
 
                 <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
@@ -354,6 +372,12 @@
                         </div>
                     </div>
                     <input type="file" name="file_product_spec_sheet" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="file_product_spec_sheet_prod_ref" value="{{ old('file_product_spec_sheet_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                 </div>
 
                 <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
@@ -365,6 +389,12 @@
                         </div>
                     </div>
                     <input type="file" name="file_test_analysis_report" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="file_test_analysis_report_prod_ref" value="{{ old('file_test_analysis_report_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                 </div>
                 <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
                     <div class="flex items-start gap-3">
@@ -375,6 +405,12 @@
                         </div>
                     </div>
                     <input type="file" name="product_manufacturing_certifications" class="w-full text-xs">
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="product_manufacturing_certifications_prod_ref" value="{{ old('product_manufacturing_certifications_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
                 </div>
                 <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
                     <div class="flex items-start gap-3">
@@ -384,7 +420,72 @@
                             <p class="text-[11px] text-on-surface-variant">Accepts: PDF, DOCX, JPG (Max: 5MB)</p>
                         </div>
                     </div>
+                    
                     <input type="file" name="returns_warranty_policy" class="w-full text-xs">
+                    
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="returns_warranty_policy_prod_ref" value="{{ old('returns_warranty_policy_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
+                </div>
+                
+                <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
+                    <div class="flex items-start gap-3">
+                        <span class="text-[28px] text-primary material-symbols-outlined">receipt</span>
+                        <div>
+                            <p class="font-label-md font-bold text-primary">Supplier Invoice</p>
+                            <p class="text-[11px] text-on-surface-variant">Accepts: PDF, DOCX, JPG (Max: 5MB)</p>
+                        </div>
+                    </div>
+                    
+                    <input type="file" name="supplier_invoice" class="w-full text-xs">
+                    
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="supplier_invoice_prod_ref" value="{{ old('supplier_invoice_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
+                    <div class="flex items-start gap-3">
+                        <span class="text-[28px] text-primary material-symbols-outlined">receipt</span>
+                        <div>
+                            <p class="font-label-md font-bold text-primary">Proforma Invoice</p>
+                            <p class="text-[11px] text-on-surface-variant">Accepts: PDF, DOCX, JPG (Max: 5MB)</p>
+                        </div>
+                    </div>
+                    
+                    <input type="file" name="proforma_invoice" class="w-full text-xs">
+                    
+                    <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="proforma_invoice_prod_ref" value="{{ old('proforma_invoice_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div>
+                </div>
+                
+                <div class="flex flex-col justify-between gap-3 bg-surface-container-lowest p-4 border rounded-2xl border-outline-variant/60">
+                    <div class="flex items-start gap-3">
+                        <span class="text-[28px] text-primary material-symbols-outlined">receipt</span>
+                        <div>
+                            <p class="font-label-md font-bold text-primary">Other File e.g. (CAC)</p>
+                            <p class="text-[11px] text-on-surface-variant">Accepts: PDF, DOCX, JPG (Max: 5MB)</p>
+                        </div>
+                    </div>
+                    
+                    <input type="file" name="file_others" class="w-full text-xs">
+                    
+                    {{-- <div class="space-y-1 mt-2">
+                        <label class="block pl-0.5 font-bold text-[10px] text-on-surface-variant uppercase tracking-wider">Associated Product Ref (Optional)</label>
+                        <input type="text" name="supplier_invoice_prod_ref" value="{{ old('proforma_invoice_prod_ref') }}" 
+                            class="bg-surface-container-low px-3 py-1.5 border rounded-lg border-outline-variant outline-none w-full font-mono text-xs" 
+                            placeholder="e.g., PROD-8821 (Leave blank if null)">
+                    </div> --}}
                 </div>
             </div>
 
@@ -459,7 +560,7 @@
                         <input type="text" name="assigned_manager" value="{{ old('assigned_manager') }}" class="bg-surface-container-low px-4 py-3 border rounded-xl border-outline-variant outline-none focus:ring-2 focus:ring-primary w-full font-body-sm" placeholder="Internal Gluto Account Manager">
                     </div>
                     <div class="space-y-2">
-                        <label class="block pl-1 font-label-md text-on-surface-variant">Onboarding Sourcing Route</label>
+                        <label class="block pl-1 font-label-md text-on-surface-variant">Lead Source</label>
                         <input type="text" name="lead_source" value="{{ old('lead_source', 'Direct Organic Registration Form') }}" class="bg-surface-container-low px-4 py-3 border rounded-xl border-outline-variant outline-none focus:ring-2 focus:ring-primary w-full font-body-sm">
                     </div>
                 </div>

@@ -16,7 +16,7 @@ return new class extends Migration
 
             // Relationships
             $table->foreignId('supplier_profile_id')->nullable()->constrained('supplier_profiles')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->nullable()->onDelete('cascade'); // The user who sent the note (Admin or Supplier Account)
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade'); // The user who sent the note (Admin or Supplier Account)
 
             // Interaction Metadata Context
             $table->string('subject')->default('General Note'); // e.g., 'Document Rejection', 'Clarification Request', 'General Note', 'System Update'

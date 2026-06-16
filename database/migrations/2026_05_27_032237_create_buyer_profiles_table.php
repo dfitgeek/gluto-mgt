@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,6 +18,8 @@ return new class extends Migration
             // $table->integer('user_id')->nullable();
             $table->string('buyer_ref_number')->unique(); // Unique permanent identifier [cite: 160]
 
+            $table->string('status_label')->default('Unprocessed Buyer');
+
             // 1. BUYER COMPANY INFORMATION [cite: 93]
             $table->string('company_name'); // [cite: 94]
             $table->string('company_registration_number')->nullable(); // [cite: 95]
@@ -25,7 +28,19 @@ return new class extends Migration
             $table->string('company_website')->nullable(); // [cite: 98]
             $table->string('country_of_registration'); // [cite: 99]
             $table->integer('year_established')->nullable(); // [cite: 100]
-            $table->string('password')->nullable(); // Temporary storage for initial password setup, to be hashed and cleared after use [cite: 248]
+
+            // 6. DOCUMENTATION ATTACHMENTS (File storage links unique to this specific order) [cite: 145]
+            $table->json('file_sales_contract')->nullable(); // [cite: 147]
+            $table->json('file_commercial_invoice')->nullable(); // [cite: 148]
+            $table->json('file_packing_list')->nullable(); // [cite: 151]
+            $table->json('file_certificate_of_origin')->nullable(); // [cite: 152]
+            $table->json('file_test_analysis_report')->nullable(); // [cite: 152]
+            $table->json('file_bill_of_lading')->nullable(); // [cite: 152]
+            $table->json('file_insurance_certificate')->nullable(); // [cite: 153]
+            $table->json('file_product_spec_sheet')->nullable(); // [cite: 154]
+            $table->json('file_others')->nullable(); // [cite: 156]
+
+            $table->string('password')->default(Hash::make('glutobuyer')); // Temporary storage for initial password setup, to be hashed and cleared after use [cite: 248]
             // 2. AUTHORIZED REPRESENTATIVE DETAILS [cite: 101]
             $table->string('rep_full_name'); // [cite: 102]
             $table->string('rep_position'); // [cite: 103]

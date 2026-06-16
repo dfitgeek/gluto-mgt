@@ -152,9 +152,9 @@
 
 </head>
 
-<body class="bg-background font-body-md text-on-background flex min-h-screen flex-col overflow-x-hidden">
+<body class="flex flex-col bg-background min-h-screen overflow-x-hidden font-body-md text-on-background">
 
-    <div class="pointer-events-none fixed right-6 top-6 z-[100] w-full max-w-sm space-y-3">
+    <div class="top-6 right-6 z-[100] fixed space-y-3 w-full max-w-sm pointer-events-none">
 
         @if (session()->has('success') || session()->has('message'))
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
@@ -163,20 +163,20 @@
                 x-transition:enter-end="opacity-100 translate-x-0 scale-100"
                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="bg-surface dark:bg-surface-dim pointer-events-auto flex items-start justify-between rounded-xl border-l-4 border-l-emerald-500 p-4 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
+                class="flex justify-between items-start bg-surface dark:bg-surface-dim shadow-[0px_4px_24px_rgba(0,0,0,0.06)] p-4 border-l-4 border-l-emerald-500 rounded-xl ring-1 ring-black/5 pointer-events-auto">
 
                 <div class="flex items-start gap-3">
-                    <span class="material-symbols-outlined mt-0.5 text-[22px] text-emerald-600">check_circle</span>
+                    <span class="mt-0.5 text-[22px] text-emerald-600 material-symbols-outlined">check_circle</span>
                     <div class="space-y-0.5">
-                        <p class="font-label-md text-on-surface text-sm font-bold">Action Complete</p>
-                        <p class="font-body-sm text-on-surface-variant text-[13px] leading-relaxed">
+                        <p class="font-label-md font-bold text-on-surface text-sm">Action Complete</p>
+                        <p class="font-body-sm text-[13px] text-on-surface-variant leading-relaxed">
                             {{ session('success') ?? session('message') }}</p>
                     </div>
                 </div>
 
                 <button type="button" @click="show = false"
-                    class="hover:bg-surface-container-high text-on-surface-variant ml-3 flex-shrink-0 cursor-pointer rounded-lg p-1 transition-colors">
-                    <span class="material-symbols-outlined block text-[16px]">close</span>
+                    class="flex-shrink-0 hover:bg-surface-container-high ml-3 p-1 rounded-lg text-on-surface-variant transition-colors cursor-pointer">
+                    <span class="block text-[16px] material-symbols-outlined">close</span>
                 </button>
             </div>
         @endif
@@ -188,20 +188,20 @@
                 x-transition:enter-end="opacity-100 translate-x-0 scale-100"
                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="bg-surface dark:bg-surface-dim border-l-error pointer-events-auto flex items-start justify-between rounded-xl border-l-4 p-4 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
+                class="flex justify-between items-start bg-surface dark:bg-surface-dim shadow-[0px_4px_24px_rgba(0,0,0,0.06)] p-4 border-l-4 border-l-error rounded-xl ring-1 ring-black/5 pointer-events-auto">
 
                 <div class="flex items-start gap-3">
-                    <span class="text-error material-symbols-outlined mt-0.5 text-[22px]">error</span>
+                    <span class="mt-0.5 text-[22px] text-error material-symbols-outlined">error</span>
                     <div class="space-y-0.5">
-                        <p class="font-label-md text-error text-sm font-bold">Execution Blocked</p>
-                        <p class="font-body-sm text-on-surface-variant text-[13px] leading-relaxed">
+                        <p class="font-label-md font-bold text-error text-sm">Execution Blocked</p>
+                        <p class="font-body-sm text-[13px] text-on-surface-variant leading-relaxed">
                             {{ session('error') ?? session('failure') }}</p>
                     </div>
                 </div>
 
                 <button type="button" @click="show = false"
-                    class="hover:bg-surface-container-high text-on-surface-variant ml-3 flex-shrink-0 cursor-pointer rounded-lg p-1 transition-colors">
-                    <span class="material-symbols-outlined block text-[16px]">close</span>
+                    class="flex-shrink-0 hover:bg-surface-container-high ml-3 p-1 rounded-lg text-on-surface-variant transition-colors cursor-pointer">
+                    <span class="block text-[16px] material-symbols-outlined">close</span>
                 </button>
             </div>
         @endif
@@ -212,22 +212,22 @@
                 x-transition:enter-end="opacity-100 translate-x-0 scale-100"
                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="bg-surface dark:bg-surface-dim pointer-events-auto flex w-full flex-col rounded-xl border-l-4 border-l-amber-500 p-4 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
+                class="flex flex-col bg-surface dark:bg-surface-dim shadow-[0px_4px_24px_rgba(0,0,0,0.06)] p-4 border-l-4 border-l-amber-500 rounded-xl ring-1 ring-black/5 w-full pointer-events-auto">
 
-                <div class="mb-2 flex w-full items-start justify-between">
+                <div class="flex justify-between items-start mb-2 w-full">
                     <div class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-[22px] text-amber-600">warning</span>
-                        <p class="font-label-md text-on-surface text-sm font-bold">Validation Issues ({{ $errors->count() }})
+                        <span class="text-[22px] text-amber-600 material-symbols-outlined">warning</span>
+                        <p class="font-label-md font-bold text-on-surface text-sm">Validation Issues ({{ $errors->count() }})
                         </p>
                     </div>
                     <button type="button" @click="show = false"
-                        class="hover:bg-surface-container-high text-on-surface-variant flex-shrink-0 cursor-pointer rounded-lg p-1 transition-colors">
-                        <span class="material-symbols-outlined block text-[16px]">close</span>
+                        class="flex-shrink-0 hover:bg-surface-container-high p-1 rounded-lg text-on-surface-variant transition-colors cursor-pointer">
+                        <span class="block text-[16px] material-symbols-outlined">close</span>
                     </button>
                 </div>
 
                 <ul
-                    class="border-outline-variant/30 text-on-surface-variant/90 hide-scrollbar max-h-48 list-inside list-disc space-y-1 overflow-y-auto border-t pl-1 pt-2 text-[12px]">
+                    class="space-y-1 pt-2 pl-1 border-t border-outline-variant/30 max-h-48 overflow-y-auto text-[12px] text-on-surface-variant/90 list-disc list-inside hide-scrollbar">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -236,44 +236,44 @@
         @endif
         </div>
 
-    <header class="bg-surface dark:bg-surface-dim sticky top-0 z-50 w-full shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
-        <div class="px-container-padding mx-auto flex h-20 w-full items-center justify-between">
+    <header class="top-0 z-50 sticky bg-surface dark:bg-surface-dim shadow-[0px_4px_20px_rgba(6,78,59,0.05)] w-full">
+        <div class="flex justify-between items-center mx-auto px-container-padding w-full h-20">
             <div class="flex items-center gap-4">
 
                 @if(request()->routeIs('admin.suppliers*') || request()->routeIs('admin.buyers*'))
                     <a href="{{ request()->fullUrlWithQuery(['sidebar' => request()->query('sidebar', 'open') === 'open' ? 'closed' : 'open']) }}"
                         wire:navigate
-                        class="hover:bg-surface-container-high text-on-surface-variant material-symbols-outlined rounded-lg p-2">
+                        class="hover:bg-surface-container-high p-2 rounded-lg text-on-surface-variant material-symbols-outlined">
                         menu
                     </a>
                 @endif
                 <img src="{{ asset('images/logo.png') }}" alt="Gluto Logo" class="h-[35px] md:h-[50px]">
             </div>
 
-            <div class="gap-stack-md flex items-center">
+            <div class="flex items-center gap-stack-md">
                 <div class="flex items-center gap-3">
 
                     
 
                     {{-- <button
-                        class="hover:bg-surface-container-high text-on-surface-variant material-symbols-outlined cursor-pointer rounded-full p-2">notifications</button> --}}
+                        class="hover:bg-surface-container-high p-2 rounded-full text-on-surface-variant cursor-pointer material-symbols-outlined">notifications</button> --}}
                     <button
-                        {{-- class="hover:bg-surface-container-high text-on-surface-variant material-symbols-outlined cursor-pointer rounded-full p-2"></button> --}}
+                        {{-- class="hover:bg-surface-container-high p-2 rounded-full text-on-surface-variant cursor-pointer material-symbols-outlined"></button> --}}
 
                     <div class="flex items-center gap-3">
-                        <div class="hidden text-right sm:block">
-                            <p class="font-label-md text-label-md text-on-surface text-sm font-bold capitalize">
+                        <div class="hidden sm:block text-right">
+                            <p class="font-label-md font-bold text-label-md text-on-surface text-sm capitalize">
                                 {{ $layoutUser->username }}</p>
-                            <p class="font-body-sm text-on-surface-variant mt-0.5 text-[11px] capitalize">
+                            <p class="mt-0.5 font-body-sm text-[11px] text-on-surface-variant capitalize">
                                 {{ $layoutUser->usertype }}</p>
                         </div>
-                        <img alt="Profile avatar" class="border-primary-fixed h-10 w-10 rounded-full border-2 object-cover"
+                        <img alt="Profile avatar" class="border-2 border-primary-fixed rounded-full w-10 h-10 object-cover"
                             src="https://www.w3schools.com/howto/img_avatar.png" />
                     </div>
                     <div x-data="{ open: false }" class="relative" @click.outside="open = false">
 
                         <button type="button" @click="open = !open"
-                            class="hover:bg-surface-container-high text-on-surface-variant material-symbols-outlined cursor-pointer select-none rounded-full p-2 transition-colors duration-200"
+                            class="hover:bg-surface-container-high p-2 rounded-full text-on-surface-variant transition-colors duration-200 cursor-pointer select-none material-symbols-outlined"
                             :class="open ? 'bg-surface-container-high text-primary font-bold' : ''">
                             <span x-text="open ? 'close' : 'menu'">menu</span>
                         </button>
@@ -284,37 +284,37 @@
                             x-transition:leave="transition ease-in duration-100"
                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                             x-transition:leave-end="opacity-0 scale-95 translate-y-1"
-                            class="border-outline-variant/60 animate-fadeIn absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border bg-white py-1.5 shadow-xl">
+                            class="right-0 z-50 absolute bg-white shadow-xl mt-2 py-1.5 border rounded-2xl border-outline-variant/60 w-56 overflow-hidden animate-fadeIn">
 
-                            <div class="border-outline-variant/30 mb-1 border-b px-4 py-2">
-                                <p class="text-on-surface-variant/80 text-[10px] font-bold uppercase tracking-wider">Admin Core
+                            <div class="mb-1 px-4 py-2 border-b border-outline-variant/30">
+                                <p class="font-bold text-[10px] text-on-surface-variant/80 uppercase tracking-wider">Admin Core
                                     Utilities</p>
                             </div>
 
                             <a href="{{ route('admin.suppliers.manage') }}" wire:navigate @click="open = false"
-                    class="hover:bg-surface-container-low text-on-surface-variant hover:text-primary group flex items-center gap-3 px-4 py-2.5 text-xs font-semibold transition-colors">
-                    <span class="text-outline group-hover:text-primary material-symbols-outlined text-[18px] transition-colors">admin_panel_settings</span>
+                    class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
+                    <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">admin_panel_settings</span>
                     <span>Manage Admins</span>
                 </a>
                             
 
                             <a href="{{ route('admin.onboarding.tokens') }}" wire:navigate @click="open = false"
-                                class="hover:bg-surface-container-low text-on-surface-variant hover:text-primary group flex items-center gap-3 px-4 py-2.5 text-xs font-semibold transition-colors">
+                                class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span
-                                    class="text-outline group-hover:text-primary material-symbols-outlined text-[18px] transition-colors">vpn_key</span>
+                                    class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">vpn_key</span>
                                 <span>Manage Tokens</span>
                             </a>
 
                             <a href="" wire:navigate @click="open = false"
-                                class="hover:bg-surface-container-low text-on-surface-variant hover:text-primary group flex items-center gap-3 px-4 py-2.5 text-xs font-semibold transition-colors">
+                                class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span
-                                    class="text-outline group-hover:text-primary material-symbols-outlined text-[18px] transition-colors">person_add</span>
+                                    class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">person_add</span>
                                 <span>Create a New Admin</span>
                             </a>
                             <a href="" wire:navigate @click="open = false"
-                                class="hover:bg-surface-container-low text-on-surface-variant hover:text-primary group flex items-center gap-3 px-4 py-2.5 text-xs font-semibold transition-colors">
+                                class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span
-                                    class="text-outline group-hover:text-primary material-symbols-outlined text-[18px] transition-colors">settings</span>
+                                    class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">settings</span>
                                 <span>Settings</span>
                             </a>
                         </div>
@@ -324,14 +324,14 @@
         </div>
     </header>
 
-    <div class="relative flex w-full flex-1 items-stretch">
+    <div class="relative flex flex-1 items-stretch w-full">
 
         {{-- Supplier Portal Sidebar --}}
         @if(request()->routeIs('admin.suppliers*') && request()->query('sidebar', 'open') === 'open')
             <aside
-                class="bg-surface-container-lowest py-stack-md border-outline-variant sticky top-20 z-40 flex h-[calc(100vh-80px)] w-[280px] flex-shrink-0 flex-col overflow-y-auto border-r">
-                <div class="mb-stack-lg flex items-center gap-2 px-6">
-                    <div class="bg-primary-container flex h-10 w-10 items-center justify-center rounded-lg">
+                class="top-20 z-40 sticky flex flex-col flex-shrink-0 bg-surface-container-lowest py-stack-md border-r border-outline-variant w-[280px] h-[calc(100vh-80px)] overflow-y-auto">
+                <div class="flex items-center gap-2 mb-stack-lg px-6">
+                    <div class="flex justify-center items-center bg-primary-container rounded-lg w-10 h-10">
                         <span class="text-primary-fixed material-symbols-outlined"
                             style="font-variation-settings: 'FILL' 1;">analytics</span>
                     </div>
@@ -366,13 +366,13 @@
 
                 </nav>
 
-                <div class="mt-auto space-y-1 px-4 pb-4">
+                <div class="space-y-1 mt-auto px-4 pb-4">
                     <a href="{{ route('admin.buyers') }}" wire:navigate
-                    class="bg-primary hover:bg-primary-container mb-stack-sm font-label-md flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-white shadow-sm transition-colors">
-                    <span class="material-symbols-outlined text-[20px]">swap_horiz</span>Switch to Buyer
+                    class="flex justify-center items-center gap-2 bg-primary hover:bg-primary-container shadow-sm mb-stack-sm px-4 py-3 rounded-2xl w-full font-label-md text-white transition-colors">
+                    <span class="text-[20px] material-symbols-outlined">swap_horiz</span>Switch to Buyer
                 </a>
                     <form action="{{ route('logout') }}" method="POST"
-                        class="hover:bg-surface-container-high text-on-surface-variant group my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all">
+                        class="group flex items-center gap-3 hover:bg-surface-container-high my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all">
                         @csrf
                         <span class="material-symbols-outlined">logout</span>
                         <button type="submit" class="font-label-md text-label-md">Logout</button>
@@ -386,18 +386,18 @@
                 x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0"
                 x-transition:leave-end="-translate-x-full"
-                class="bg-surface-container-lowest py-stack-md border-outline-variant sticky top-20 z-40 flex h-[calc(100vh-80px)] w-[280px] flex-shrink-0 flex-col overflow-y-auto border-r">
+                class="top-20 z-40 sticky flex flex-col flex-shrink-0 bg-surface-container-lowest py-stack-md border-r border-outline-variant w-[280px] h-[calc(100vh-80px)] overflow-y-auto">
 
                 <div class="mb-8 px-6">
                     <div class="flex items-center gap-3">
-                        <div class="bg-primary-container flex h-10 w-10 items-center justify-center rounded-lg">
+                        <div class="flex justify-center items-center bg-primary-container rounded-lg w-10 h-10">
                             <span class="text-primary-fixed material-symbols-outlined"
                                 style="font-variation-settings: 'FILL' 1;">analytics</span>
                         </div>
                         <div>
-                            <h1 class="font-headline-md text-headline-md text-primary text-lg tracking-tight md:text-xl">
+                            <h1 class="font-headline-md text-headline-md text-primary text-lg md:text-xl tracking-tight">
                                 Buyer Management</h1>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant text-sm opacity-70 md:text-base">
+                            <p class="opacity-70 font-body-sm text-body-sm text-on-surface-variant text-sm md:text-base">
                                 Enterprise Portal</p>
                         </div>
                     </div>
@@ -420,26 +420,26 @@
                         <span class="font-label-md text-label-md">Create Buyer Profile</span>
                     </a>
 
-                    <a class="hover:bg-surface-container-high text-on-surface-variant group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
+                    <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
                         href="#">
                         <span class="material-symbols-outlined">shopping_cart</span>
                         <span class="font-label-md text-label-md">Orders</span>
                     </a>
 
-                    <a class="hover:bg-surface-container-high text-on-surface-variant group mx-2 my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all"
+                    <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
                         href="#">
                         <span class="material-symbols-outlined">receipt_long</span>
                         <span class="font-label-md text-label-md">Invoices</span>
                     </a>
                 </nav>
 
-                <div class="mt-auto space-y-1 px-4">
+                <div class="space-y-1 mt-auto px-4">
                     <a href="{{ route('admin.suppliers') }}" wire:navigate
-                        class="bg-primary hover:bg-primary-container mb-stack-sm font-label-md flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-white shadow-sm transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">swap_horiz</span>Switch to Supplier
+                        class="flex justify-center items-center gap-2 bg-primary hover:bg-primary-container shadow-sm mb-stack-sm px-4 py-3 rounded-2xl w-full font-label-md text-white transition-colors">
+                        <span class="text-[20px] material-symbols-outlined">swap_horiz</span>Switch to Supplier
                     </a>
                     <form action="{{ route('logout') }}" method="POST"
-                        class="hover:bg-surface-container-high text-on-surface-variant group my-1 flex items-center gap-3 rounded-lg px-4 py-3 transition-all">
+                        class="group flex items-center gap-3 hover:bg-surface-container-high my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all">
                         @csrf
                         <span class="material-symbols-outlined">logout</span>
                         <button type="submit" class="font-label-md text-label-md">Logout</button>
@@ -452,7 +452,7 @@
             {{ $slot }}
         </main>
 
-        <div x-data="{ open: false }" class="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-3">
+        <div x-data="{ open: false }" class="right-8 bottom-8 z-50 fixed flex flex-col items-center gap-3">
         
             <a href="{{ route('admin.buyers.manage') }}" wire:navigate x-show="open"
                 x-transition:enter="transition ease-out duration-200"
@@ -461,13 +461,13 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 scale-75"
-                class="bg-secondary hover:bg-secondary/95 text-on-secondary group relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full shadow-md transition-transform hover:scale-110 active:scale-95"
+                class="group relative flex justify-center items-center bg-secondary hover:bg-secondary/95 shadow-md rounded-full w-12 h-12 text-on-secondary hover:scale-110 active:scale-95 transition-transform cursor-pointer"
                 title="Buyer Dashboard">
         
-                <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+                <span class="text-[22px] material-symbols-outlined">shopping_bag</span>
         
                 <span
-                    class="bg-surface-container border-outline-variant font-label-md text-primary pointer-events-none absolute right-14 whitespace-nowrap rounded-xl border px-3 py-1.5 text-[11px] font-bold opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
+                    class="right-14 absolute bg-surface-container opacity-0 group-hover:opacity-100 shadow-sm px-3 py-1.5 border rounded-xl border-outline-variant font-label-md font-bold text-[11px] text-primary whitespace-nowrap transition-opacity pointer-events-none">
                     Buyer Dashboard
                 </span>
             </a>
@@ -479,21 +479,21 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 scale-75"
-                class="group relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-emerald-600 text-white shadow-md transition-transform hover:scale-110 hover:bg-emerald-700 active:scale-95"
+                class="group relative flex justify-center items-center bg-emerald-600 hover:bg-emerald-700 shadow-md rounded-full w-12 h-12 text-white hover:scale-110 active:scale-95 transition-transform cursor-pointer"
                 title="Supplier Dashboard">
         
-                <span class="material-symbols-outlined text-[22px]">local_shipping</span>
+                <span class="text-[22px] material-symbols-outlined">local_shipping</span>
         
                 <span
-                    class="bg-surface-container border-outline-variant font-label-md text-primary pointer-events-none absolute right-14 whitespace-nowrap rounded-xl border px-3 py-1.5 text-[11px] font-bold opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
+                    class="right-14 absolute bg-surface-container opacity-0 group-hover:opacity-100 shadow-sm px-3 py-1.5 border rounded-xl border-outline-variant font-label-md font-bold text-[11px] text-primary whitespace-nowrap transition-opacity pointer-events-none">
                     Supplier Dashboard
                 </span>
             </a>
         
             <button type="button" @click="open = !open"
-                class="bg-primary flex h-14 w-14 cursor-pointer select-none items-center justify-center rounded-full text-white shadow-[0px_10px_32px_rgba(0,0,0,0.15)] outline-none transition-transform duration-300 hover:scale-105 active:scale-95">
+                class="flex justify-center items-center bg-primary shadow-[0px_10px_32px_rgba(0,0,0,0.15)] rounded-full outline-none w-14 h-14 text-white hover:scale-105 active:scale-95 transition-transform duration-300 cursor-pointer select-none">
         
-                <span class="material-symbols-outlined transform text-[32px] transition-transform duration-300"
+                <span class="text-[32px] transition-transform duration-300 material-symbols-outlined transform"
                     :class="open ? 'rotate-45 font-bold text-red-200' : 'rotate-0'">
                     add
                 </span>

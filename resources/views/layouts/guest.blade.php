@@ -136,7 +136,75 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
+    <div class="top-6 right-6 z-[100] fixed space-y-4 w-full max-w-sm pointer-events-none"
+        wire:key="global-notification-alert-stack">
+
+        @if (session()->has('success'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-4 scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:translate-x-0 scale-100"
+                x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-90 translate-y-2"
+                class="flex items-start gap-3 bg-white shadow-[0px_10px_32px_rgba(6,78,59,0.08)] p-4 border border-emerald-100 border-l-4 border-l-emerald-500 rounded-2xl w-full animate-fadeIn pointer-events-auto select-none"
+                role="alert">
+
+                <div class="flex flex-shrink-0 justify-center items-center bg-emerald-50 p-2 rounded-xl text-emerald-600">
+                    <span class="text-[20px] material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                </div>
+
+                <div class="flex-1 pt-0.5">
+                    <h4 class="font-label-md font-bold text-primary text-xs tracking-tight">Operation Successful</h4>
+                    <p class="mt-0.5 font-body-sm text-[11px] text-on-surface-variant leading-relaxed">{{ session('success') }}
+                    </p>
+                </div>
+
+                <button type="button" @click="show = false"
+                    class="hover:bg-surface-container p-1 rounded-full text-outline hover:text-on-surface transition-colors cursor-pointer">
+                    <span class="text-[16px] material-symbols-outlined">close</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session()->has('error') || $errors->any())
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 7000)" {{-- Extended duration for
+                error reading tracking --}} x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-4 scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:translate-x-0 scale-100"
+                x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-90 translate-y-2"
+                class="flex items-start gap-3 bg-white shadow-[0px_10px_32px_rgba(153,27,27,0.08)] p-4 border border-red-100 border-l-4 border-l-red-500 rounded-2xl w-full pointer-events-auto select-none"
+                role="alert">
+
+                <div class="flex flex-shrink-0 justify-center items-center bg-red-50 p-2 rounded-xl text-red-600">
+                    <span class="text-[20px] material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+                </div>
+
+                <div class="flex-1 pt-0.5">
+                    <h4 class="font-label-md font-bold text-red-900 text-xs tracking-tight">System Security Error</h4>
+
+                    @if(session()->has('error'))
+                        <p class="mt-0.5 font-body-sm text-[11px] text-on-surface-variant leading-relaxed">{{ session('error') }}
+                        </p>
+                    @else
+                        <p class="mt-0.5 font-body-sm text-[11px] text-on-surface-variant leading-relaxed">Your input form matches
+                            contain validation discrepancies. Please verify step parameters fields.</p>
+                    @endif
+                </div>
+
+                <button type="button" @click="show = false"
+                    class="hover:bg-surface-container p-1 rounded-full text-outline hover:text-on-surface transition-colors cursor-pointer">
+                    <span class="text-[16px] material-symbols-outlined">close</span>
+                </button>
+            </div>
+        @endif
+
+    </div>
+
     {{ $slot }}
+
+
 </body>
 
 </html>

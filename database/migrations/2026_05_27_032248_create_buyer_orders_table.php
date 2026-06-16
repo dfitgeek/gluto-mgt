@@ -19,7 +19,7 @@ return new class extends Migration
 
             // Transaction-Specific Status Label [cite: 46, 56, 91]
             // Allowed: Unprocessed Buyer, Processed Buyer, Confirmed Order, Processing Order, Shipped Order, Completed Order [cite: 91, 92]
-            $table->string('profile_label')->default('Unprocessed Buyer'); // [cite: 91]
+            $table->string('order_progress')->default('Unprocessed order'); // [cite: 91]
 
             // 3. ORDER INFORMATION [cite: 109]
             $table->text('product_names'); // [cite: 110]
@@ -43,22 +43,12 @@ return new class extends Migration
             $table->string('preferred_shipping_method')->nullable(); // Sea Freight, Air Freight, Land Transport [cite: 133, 134, 135]
             $table->string('incoterms_preferred')->nullable(); // FOB, CIF, EXW, DDP [cite: 139, 140, 142, 143]
 
-            // 6. DOCUMENTATION ATTACHMENTS (File storage links unique to this specific order) [cite: 145]
-            $table->string('file_sales_contract')->nullable(); // [cite: 147]
-            $table->string('file_commercial_invoice')->nullable(); // [cite: 148]
-            $table->string('file_packing_list')->nullable(); // [cite: 151]
-            $table->string('file_certificate_of_origin')->nullable(); // [cite: 152]
-            $table->string('file_test_analysis_report')->nullable(); // [cite: 152]
-            $table->string('file_bill_of_lading')->nullable(); // [cite: 152]
-            $table->string('file_insurance_certificate')->nullable(); // [cite: 153]
-            $table->string('file_product_spec_sheet')->nullable(); // [cite: 154]
-            $table->string('file_others')->nullable(); // [cite: 156]
 
             // 7. MANAGEMENT FOLLOW-UP LOG & TRANSACTION TRACKER [cite: 158]
             $table->string('assigned_manager')->nullable(); // [cite: 161]
             $table->string('lead_source')->nullable(); // [cite: 162]
             $table->date('date_of_initial_contact')->nullable(); // [cite: 163]
-            $table->text('buyer_tracker_notes')->nullable(); // Internal logs tracking this specific deal's progress [cite: 47, 57]
+            // $table->text('buyer_tracker_notes')->nullable(); // Internal logs tracking this specific deal's progress [cite: 47, 57]
 
             $table->timestamps();
         });

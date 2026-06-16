@@ -40,7 +40,6 @@ return new class extends Migration
             $table->string('director_position_title')->nullable(); // [cite: 248]
             $table->string('password')->default(Hash::make('glutosupplier')); // Temporary storage for initial password setup, to be hashed and cleared after use [cite: 248]
             $table->string('director_email')->nullable(); // [cite: 249]
-
             // 2. AUTHORIZED REPRESENTATIVE DETAILS [cite: 251]
             $table->string('rep_legal_name'); // [cite: 252]
             $table->string('rep_position_title'); // [cite: 253]
@@ -54,24 +53,26 @@ return new class extends Migration
             $table->boolean('ability_to_provide_samples')->default(false); // [cite: 264]
             $table->text('manufacturing_locations')->nullable(); // [cite: 265]
             $table->string('production_capacity')->nullable(); // [cite: 266]
-            $table->string('product_manufacturing_certifications')->nullable(); // [cite: 267]
-            $table->string('returns_warranty_policy')->nullable(); // [cite: 268]
+            $table->json('product_manufacturing_certifications')->nullable(); // [cite: 267]
+            $table->json('returns_warranty_policy')->nullable(); // [cite: 268]
             $table->string('pricing_structure_type')->nullable(); // e.g., Per Unit, Bulk [cite: 269]
             $table->text('payment_terms')->nullable(); // [cite: 270]
             $table->string('currency_accepted')->default('Naira'); // [cite: 271]
             $table->decimal('estimated_shipping_costs', 15, 2)->nullable(); // [cite: 272]
             $table->string('shipping_methods_available')->nullable(); // [cite: 273]
-
             // 4. GENERAL COMPANY DOCUMENTATION (Paths to file storage) [cite: 274]
-            $table->string('file_sales_contract')->nullable(); // [cite: 276]
-            $table->string('file_commercial_invoice')->nullable(); // [cite: 277]
-            $table->string('file_packing_list')->nullable(); // [cite: 282]
-            $table->string('file_certificate_of_origin')->nullable(); // [cite: 283]
-            $table->string('file_test_analysis_report')->nullable(); // [cite: 283]
-            $table->string('file_bill_of_lading')->nullable(); // [cite: 284]
-            $table->string('file_insurance_certificate')->nullable(); // [cite: 285]
-            $table->string('file_product_spec_sheet')->nullable(); // [cite: 286]
-            $table->string('file_others')->nullable(); // [cite: 288]
+            $table->json('file_sales_contract')->nullable(); // [cite: 276]
+            $table->json('file_commercial_invoice')->nullable(); // [cite: 277]
+            $table->json('file_packing_list')->nullable(); // [cite: 282]
+            $table->json('file_certificate_of_origin')->nullable(); // [cite: 283]
+            $table->json('file_test_analysis_report')->nullable(); // [cite: 283]
+            // $table->json('')
+            $table->json('supplier_invoice')->nullable();
+            $table->json('proforma_invoice')->nullable();
+            $table->json('file_bill_of_lading')->nullable(); // [cite: 284]
+            $table->json('file_insurance_certificate')->nullable(); // [cite: 285]
+            $table->json('file_product_spec_sheet')->nullable(); // [cite: 286]
+            $table->json('file_others')->nullable(); // [cite: 288]
 
             // 5. INTERNAL MANAGEMENT LOG & TRACKER [cite: 290]
             $table->string('assigned_manager')->nullable(); // [cite: 293]
@@ -90,8 +91,6 @@ return new class extends Migration
             $table->string('declaration_authorized_person')->nullable(); // [cite: 390]
             $table->string('declaration_title')->nullable(); // [cite: 391]
             $table->string('declaration_signature_path')->nullable(); // Image path of signature [cite: 392]
-
-
             $table->timestamps();
         });
     }

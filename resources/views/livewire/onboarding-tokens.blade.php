@@ -87,12 +87,7 @@
                                         <span x-text="supplierCopied ? 'Copied Supplier Link!' : 'Supplier Route'"></span>
                                     </button>
 
-                                    <button type="button"
-                                        @click="copyText('{{ route('admin.buyer.user.create', ['token' => $tRecord->token, 'role' => 'buyer']) }}'); buyerCopied = true; setTimeout(() => buyerCopied = false, 2000)"
-                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-outline rounded-lg text-xs font-bold hover:bg-surface-container-low text-secondary transition-colors cursor-pointer {{ $tRecord->is_used ? 'opacity-40 pointer-events-none' : '' }}">
-                                        <span class="text-[15px] material-symbols-outlined" x-text="buyerCopied ? 'check' : 'shopping_bag'"></span>
-                                        <span x-text="buyerCopied ? 'Copied Buyer Link!' : 'Buyer Route'"></span>
-                                    </button>
+
                                 </div>
                             </td>
 

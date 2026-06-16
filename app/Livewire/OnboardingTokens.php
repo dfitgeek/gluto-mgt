@@ -26,15 +26,7 @@ class OnboardingTokens extends Component
         $user = User::findOrFail($this->selectedUserId);
         $tokenString = Str::random(40);
 
-        RegistrationOnboardingToken::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'token' => $tokenString,
-                'expires_at' => now()->addHours(48),
-                'is_used' => false,
-                'used_at' => null,
-            ]
-        );
+        RegistrationOnboardingToken::create(['user_id' => $user->id, 'token' => $tokenString, 'expires_at' => now()->addHours(48), 'is_used' => false, 'used_at' => null,]);
 
         $this->reset('selectedUserId');
         session()->flash('success', 'Onboarding credentials generated successfully.');
@@ -58,7 +50,8 @@ class OnboardingTokens extends Component
         $tokens = RegistrationOnboardingToken::all();
 
         // Pull users who don't already have an active onboarding token row
-        $availableUsers = User::whereDoesntHave('onboardingToken')->get();
+
+        $availableUsers = auth()->check() ? User::where('id', auth()->id())->get() : collect();
 
         return view('livewire.onboarding-tokens', [
             'tokens' => $tokens,

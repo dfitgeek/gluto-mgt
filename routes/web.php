@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CreateSupplier as CreateSuppliers;
 use App\Http\Controllers\CreateBuyers as CreateBuyerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserAuthenticatables;
 use App\Http\Controllers\UserSaveBuyerProfile;
 use App\Http\Controllers\UserSaveSupplierProfile;
 use App\Http\Middleware;
@@ -11,12 +12,22 @@ use App\Livewire\Admin\CreateSupplier;
 use App\Livewire\Admin\Lobby;
 use App\Livewire\Admin\ManageSuppliers;
 use App\Livewire\Admin\SupplierDashboard;
+use App\Livewire\Admin\SupplierProducts;
+use App\Livewire\Admin\SupplierTracker;
 use App\Livewire\Admin\VerifiedBuyers;
 use App\Livewire\Admin\VerifiedSuppliers;
 use App\Livewire\AdminLogin;
-use App\Livewire\CreateBuyers;
+use App\Livewire\CreateBuyers as CreateBuyerPage;
 use App\Livewire\ManageBuyers;
 use App\Livewire\OnboardingTokens;
+use App\Livewire\Supplier\CreateProductCatalogue;
+use App\Livewire\Supplier\EditProductCatalogue;
+use App\Livewire\Supplier\ManageProductCatalogue;
+use App\Livewire\Supplier\ManageSupplierProfile;
+use App\Livewire\Supplier\SupplierDocumentLibrary;
+use App\Livewire\Supplier\SupplierTracker as UserTracker;
+use App\Livewire\SupplierDashboard as UserSupplierDashboard;
+use App\Livewire\SupplierLogin;
 use App\Livewire\UserCreateBuyerProfile;
 use App\Livewire\UserCreateSupplierProfile;
 use App\Livewire\UserSupplierProfileLogin;
@@ -29,6 +40,8 @@ Route::get('/', function () {
 
 Route::get('/admin/login', AdminLogin::class)->name('admin.login');
 
+Route::get('/login/supplier', SupplierLogin::class)->name('supplier.login');
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -37,13 +50,11 @@ Route::get('/user/register/supplier/{token}/create', UserCreateSupplierProfile::
 
 Route::post('/user/register/supplier/{token}/save', [UserSaveSupplierProfile::class, 'store'])->name('admin.suppliers.user.store');
 
-Route::get('/guest/supplier/login', UserSupplierProfileLogin::class)->name('supplier.login');
+// Route::get('/guest/supplier/login', UserSupplierProfileLogin::class)->name('supplier.login');
 
 Route::get('/user/register/buyer/{token}/create', UserCreateBuyerProfile::class)->name('admin.buyer.user.create');
 
 Route::post('/user/register/buyer/{token}/save', [UserSaveBuyerProfile::class, 'store'])->name('admin.buyer.user.store');
-
-Route::get('/admin/dashboard/onboarding-tokens', OnboardingTokens::class)->name('admin.onboarding.tokens');
 
 
 Route::get('/hello', function () {
@@ -56,6 +67,32 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Testuser$1234
+
+Route::middleware('role.supplier')->group(function () {
+    Route::get('/dashboard/supplier', UserSupplierDashboard::class)->name('supplier.dashboard');
+
+    Route::post('/supplier/logout', [UserAuthenticatables::class, 'supplierLogout'])->name('supplier.logout');
+
+    Route::get('/dashboard/supplier/products', ManageProductCatalogue::class)->name('supplier.products');
+
+    Route::get('/dashboard/supplier/product/create', CreateProductCatalogue::class)->name('supplier.product.create');
+
+    Route::post('/dashboard/supplier/product/store', [\App\Http\Controllers\Supplier\CreateProductCatalogue::class, 'store'])->name('supplier.products.store');
+
+    Route::get('dashboard/supplier/product/{id}/edit', EditProductCatalogue::class)->name('supplier.product.edit');
+
+    Route::post('/dashboard/supplier/product/{id}/edit/update', [\App\Http\Controllers\Supplier\UpdateProductCatalogue::class, 'update'])->name('supplier.products.update');
+
+    Route::get('/dashboard/supplier/profile', ManageSupplierProfile::class)->name('supplier.profile');
+
+    Route::get('/dashboard/supplier/profile/documents', SupplierDocumentLibrary::class)->name('supplier.profile.documents');
+
+    Route::get('/dashboard/supplier/tracker', UserTracker::class)->name('supplier.profile.tracker');
+
+
+});
+
 Route::middleware('role.admin')->group(function () {
     Route::get('/admin/dashboard', Lobby::class)->name('admin.lobby');
 
@@ -66,9 +103,16 @@ Route::middleware('role.admin')->group(function () {
 
     Route::get('/admin/dashboard/suppliers/create', CreateSupplier::class)->name('admin.suppliers.create');
 
+    Route::get('/admin/dashboard/onboarding-tokens', OnboardingTokens::class)->name('admin.onboarding.tokens');
 
 
     Route::post('/admin/dashboard/suppliers/store', [CreateSuppliers::class, 'store'])->name('admin.suppliers.store');
+
+
+    Route::get('/admin/dashboard/suppliers/{id}/product', SupplierProducts::class)->name('admin.suppliers.products');
+
+    Route::get('/admin/dashboard/suppliers/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
+
 
 
     // Supplier Facing Onboarding Form Routes
@@ -84,12 +128,9 @@ Route::middleware('role.admin')->group(function () {
 
     Route::get('/admin/dashboard/buyers/manage', ManageBuyers::class)->name('admin.buyers.manage');
 
-    Route::get('/admin/dashboard/buyers/create', CreateBuyers::class)->name('admin.buyers.create');
+    Route::get('/admin/dashboard/buyers/create', CreateBuyerPage::class)->name('admin.buyers.create');
 
     Route::post('/admin/dashboard/buyers/store', [CreateBuyerController::class, 'store'])->name('admin.buyers.store');
-
-
-
 
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

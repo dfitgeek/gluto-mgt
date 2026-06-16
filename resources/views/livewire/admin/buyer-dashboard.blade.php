@@ -1,9 +1,9 @@
   <!-- Content Area -->
-  <main class="bg-background min-h-screen flex-1">
+  <main class="flex-1 bg-background min-h-screen">
     <!-- TopAppBar -->
 
     <!-- Dashboard Content -->
-    <div class="p-container-padding mx-auto max-w-[1440px]">
+    <div class="mx-auto p-container-padding max-w-[1440px]">
         <!-- Page Header -->
         <div class="pb-stack-lg">
             <h2 class="font-headline-lg text-headline-lg text-primary">Operational Overview</h2>
@@ -11,12 +11,12 @@
                 buyer lifecycle.</p>
         </div>
         <!-- Metric Cards Grid (Bento Style) -->
-        <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8">
             <!-- Total Buyers -->
             <div
-                class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm transition-all hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
-                <div class="mb-4 flex items-center justify-between">
-                    <div class="bg-secondary-container rounded-lg p-2">
+                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="bg-secondary-container p-2 rounded-lg">
                         <span class="text-on-secondary-container material-symbols-outlined"
                             style="font-variation-settings: 'FILL' 1;">groups</span>
                     </div>
@@ -24,27 +24,27 @@
                 </div>
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total
                     Buyers</p>
-                <h3 class="font-headline-md text-headline-md text-on-surface mt-1">2,842</h3>
+                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">2,842</h3>
             </div>
             <!-- Pending Orders -->
             <div
-                class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm transition-all hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
-                <div class="mb-4 flex items-center justify-between">
-                    <div class="rounded-lg bg-amber-100 p-2">
-                        <span class="material-symbols-outlined text-amber-700"
+                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="bg-amber-100 p-2 rounded-lg">
+                        <span class="text-amber-700 material-symbols-outlined"
                             style="font-variation-settings: 'FILL' 1;">pending</span>
                     </div>
-                    <span class="font-label-md text-label-md text-amber-700">High Priority</span>
+                    <span class="font-label-md text-amber-700 text-label-md">High Priority</span>
                 </div>
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Pending
                     Orders</p>
-                <h3 class="font-headline-md text-headline-md text-on-surface mt-1">142</h3>
+                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">142</h3>
             </div>
             <!-- Processed This Month -->
             <div
-                class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm transition-all hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
-                <div class="mb-4 flex items-center justify-between">
-                    <div class="bg-primary-fixed rounded-lg p-2">
+                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="bg-primary-fixed p-2 rounded-lg">
                         <span class="text-primary material-symbols-outlined"
                             style="font-variation-settings: 'FILL' 1;">check_circle</span>
                     </div>
@@ -52,29 +52,29 @@
                 </div>
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
                     Processed Buyers</p>
-                <h3 class="font-headline-md text-headline-md text-on-surface mt-1">518</h3>
+                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">518</h3>
             </div>
             <!-- Revenue/Invoices -->
             <div
-                class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm transition-all hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)]">
-                <div class="mb-4 flex items-center justify-between">
-                    <div class="rounded-lg bg-blue-100 p-2">
-                        <span class="material-symbols-outlined text-blue-700"
+                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="bg-blue-100 p-2 rounded-lg">
+                        <span class="text-blue-700 material-symbols-outlined"
                             style="font-variation-settings: 'FILL' 1;">receipt</span>
                     </div>
-                    <span class="font-label-md text-label-md text-blue-700">Recent</span>
+                    <span class="font-label-md text-blue-700 text-label-md">Recent</span>
                 </div>
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Recent
                     Invoices</p>
-                <h3 class="font-headline-md text-headline-md text-on-surface mt-1">24</h3>
+                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">24</h3>
             </div>
         </div>
         <!-- Main Data Section -->
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div class="gap-8 grid grid-cols-1 lg:grid-cols-3">
             <!-- Table Section (Unprocessed Buyers) -->
             <div
-                class="bg-surface-container-lowest border-outline-variant overflow-hidden rounded-2xl border shadow-sm lg:col-span-2">
-                <div class="border-outline-variant flex items-center justify-between border-b p-6">
+                class="lg:col-span-2 bg-surface-container-lowest shadow-sm border rounded-2xl border-outline-variant overflow-hidden">
+                <div class="flex justify-between items-center p-6 border-b border-outline-variant">
                     <div>
                         <h3 class="font-headline-md text-headline-md text-on-surface">Recent Unprocessed Buyers
                         </h3>
@@ -84,40 +84,40 @@
                     <button class="font-label-md text-primary hover:underline">View All Queue</button>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full border-collapse text-left">
+                    <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-surface-container-low">
-                                <th class="font-label-md text-label-md text-on-surface-variant px-6 py-4">Buyer
+                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Buyer
                                     Name</th>
-                                <th class="font-label-md text-label-md text-on-surface-variant px-6 py-4">
+                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">
                                     Registration Date</th>
-                                <th class="font-label-md text-label-md text-on-surface-variant px-6 py-4">Region
+                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Region
                                 </th>
-                                <th class="font-label-md text-label-md text-on-surface-variant px-6 py-4">Status
+                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status
                                 </th>
                                 <th
-                                    class="font-label-md text-label-md text-on-surface-variant px-6 py-4 text-right">
+                                    class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">
                                     Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-outline-variant divide-y">
-                            <tr class="hover:bg-surface-container-high group transition-colors">
-                                <td class="border-l-4 border-amber-500 px-6 py-4">
+                            <tr class="group hover:bg-surface-container-high transition-colors">
+                                <td class="px-6 py-4 border-amber-500 border-l-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="bg-surface-container text-primary flex h-8 w-8 items-center justify-center rounded-full font-bold">
+                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
                                             GC</div>
                                         <span class="font-body-md text-body-md text-on-surface">Global Corp
                                             S.A.</span>
                                     </div>
                                 </td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">Oct 24,
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 24,
                                     2023</td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">EMEA
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">EMEA
                                 </td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="rounded-full bg-amber-100 px-3 py-1 text-[12px] font-bold uppercase tracking-wider text-amber-700">Pending</span>
+                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button
@@ -126,23 +126,23 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-surface-container-high group transition-colors">
-                                <td class="border-l-4 border-amber-500 px-6 py-4">
+                            <tr class="group hover:bg-surface-container-high transition-colors">
+                                <td class="px-6 py-4 border-amber-500 border-l-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="bg-surface-container text-primary flex h-8 w-8 items-center justify-center rounded-full font-bold">
+                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
                                             NL</div>
                                         <span class="font-body-md text-body-md text-on-surface">NexGen
                                             Logistics</span>
                                     </div>
                                 </td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">Oct 23,
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 23,
                                     2023</td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">APAC
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">APAC
                                 </td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="rounded-full bg-amber-100 px-3 py-1 text-[12px] font-bold uppercase tracking-wider text-amber-700">Pending</span>
+                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button
@@ -151,22 +151,22 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-surface-container-high group transition-colors">
-                                <td class="border-secondary border-l-4 px-6 py-4">
+                            <tr class="group hover:bg-surface-container-high transition-colors">
+                                <td class="px-6 py-4 border-secondary border-l-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="bg-surface-container text-primary flex h-8 w-8 items-center justify-center rounded-full font-bold">
+                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
                                             TI</div>
                                         <span class="font-body-md text-body-md text-on-surface">Tech-Innova
                                             Hub</span>
                                     </div>
                                 </td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">Oct 22,
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 22,
                                     2023</td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">NA</td>
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">NA</td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="bg-secondary-container text-on-secondary-container rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wider">Reviewing</span>
+                                        class="bg-secondary-container px-3 py-1 rounded-full font-bold text-[12px] text-on-secondary-container uppercase tracking-wider">Reviewing</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button
@@ -175,23 +175,23 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-surface-container-high group transition-colors">
-                                <td class="border-l-4 border-amber-500 px-6 py-4">
+                            <tr class="group hover:bg-surface-container-high transition-colors">
+                                <td class="px-6 py-4 border-amber-500 border-l-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="bg-surface-container text-primary flex h-8 w-8 items-center justify-center rounded-full font-bold">
+                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
                                             SV</div>
                                         <span class="font-body-md text-body-md text-on-surface">Summit Venture
                                             Co.</span>
                                     </div>
                                 </td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">Oct 21,
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 21,
                                     2023</td>
-                                <td class="font-body-sm text-body-sm text-on-surface-variant px-6 py-4">EMEA
+                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">EMEA
                                 </td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="rounded-full bg-amber-100 px-3 py-1 text-[12px] font-bold uppercase tracking-wider text-amber-700">Pending</span>
+                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button
@@ -208,71 +208,71 @@
             <div class="space-y-6">
                 <!-- Quick Add Task Card -->
                 <div
-                    class="bg-primary-container text-on-primary-container relative overflow-hidden rounded-2xl p-6 shadow-lg">
-                    <div class="relative z-10">
-                        <h4 class="font-headline-md text-headline-md mb-2">Efficiency Tip</h4>
-                        <p class="font-body-sm text-body-sm mb-4 opacity-80">You have 12 unprocessed buyers from
+                    class="relative bg-primary-container shadow-lg p-6 rounded-2xl overflow-hidden text-on-primary-container">
+                    <div class="z-10 relative">
+                        <h4 class="mb-2 font-headline-md text-headline-md">Efficiency Tip</h4>
+                        <p class="opacity-80 mb-4 font-body-sm text-body-sm">You have 12 unprocessed buyers from
                             the last 24 hours. Processing them now can increase quarterly turnover by 4%.</p>
                         <button
-                            class="bg-secondary-container font-label-md text-on-secondary-container rounded-xl px-4 py-2 transition-transform hover:scale-105 active:scale-95">
+                            class="bg-secondary-container px-4 py-2 rounded-xl font-label-md text-on-secondary-container hover:scale-105 active:scale-95 transition-transform">
                             Accelerate Processing
                         </button>
                     </div>
                     <span
-                        class="material-symbols-outlined absolute -bottom-4 -right-4 text-[120px] opacity-10">bolt</span>
+                        class="-right-4 -bottom-4 absolute opacity-10 text-[120px] material-symbols-outlined">bolt</span>
                 </div>
                 <!-- System Health Card -->
                 <div
-                    class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm">
-                    <h4 class="font-label-md text-label-md text-on-surface mb-4">Verification Health</h4>
+                    class="bg-surface-container-lowest shadow-sm p-6 border rounded-2xl border-outline-variant">
+                    <h4 class="mb-4 font-label-md text-label-md text-on-surface">Verification Health</h4>
                     <div class="space-y-4">
                         <div>
-                            <div class="mb-1 flex justify-between text-[12px]">
+                            <div class="flex justify-between mb-1 text-[12px]">
                                 <span class="font-label-sm text-on-surface-variant">KYC Compliance</span>
                                 <span class="font-label-sm text-primary">92%</span>
                             </div>
-                            <div class="bg-surface-container-high h-2 w-full overflow-hidden rounded-full">
-                                <div class="bg-primary h-full w-[92%] rounded-full"></div>
+                            <div class="bg-surface-container-high rounded-full w-full h-2 overflow-hidden">
+                                <div class="bg-primary rounded-full w-[92%] h-full"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="mb-1 flex justify-between text-[12px]">
+                            <div class="flex justify-between mb-1 text-[12px]">
                                 <span class="font-label-sm text-on-surface-variant">System Latency</span>
                                 <span class="font-label-sm text-primary">24ms</span>
                             </div>
-                            <div class="bg-surface-container-high h-2 w-full overflow-hidden rounded-full">
-                                <div class="bg-secondary h-full w-[15%] rounded-full"></div>
+                            <div class="bg-surface-container-high rounded-full w-full h-2 overflow-hidden">
+                                <div class="bg-secondary rounded-full w-[15%] h-full"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Activity Feed -->
                 <div
-                    class="bg-surface-container-lowest border-outline-variant rounded-2xl border p-6 shadow-sm">
-                    <h4 class="font-label-md text-label-md text-on-surface mb-4">Recent Activity</h4>
+                    class="bg-surface-container-lowest shadow-sm p-6 border rounded-2xl border-outline-variant">
+                    <h4 class="mb-4 font-label-md text-label-md text-on-surface">Recent Activity</h4>
                     <div class="space-y-4">
                         <div class="flex gap-3">
-                            <div class="bg-secondary mt-2 h-2 w-2 rounded-full"></div>
+                            <div class="bg-secondary mt-2 rounded-full w-2 h-2"></div>
                             <div>
                                 <p class="font-body-sm text-body-sm text-on-surface"><span
                                         class="font-bold">System</span> automatically verified Buyer #9482</p>
-                                <p class="text-on-surface-variant text-[10px]">2 mins ago</p>
+                                <p class="text-[10px] text-on-surface-variant">2 mins ago</p>
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <div class="bg-primary mt-2 h-2 w-2 rounded-full"></div>
+                            <div class="bg-primary mt-2 rounded-full w-2 h-2"></div>
                             <div>
                                 <p class="font-body-sm text-body-sm text-on-surface"><span
                                         class="font-bold">Admin</span> created profile for Delta Energy</p>
-                                <p class="text-on-surface-variant text-[10px]">1 hour ago</p>
+                                <p class="text-[10px] text-on-surface-variant">1 hour ago</p>
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <div class="mt-2 h-2 w-2 rounded-full bg-amber-500"></div>
+                            <div class="bg-amber-500 mt-2 rounded-full w-2 h-2"></div>
                             <div>
                                 <p class="font-body-sm text-body-sm text-on-surface"><span
                                         class="font-bold">Warning:</span> Invoice #902 delayed</p>
-                                <p class="text-on-surface-variant text-[10px]">3 hours ago</p>
+                                <p class="text-[10px] text-on-surface-variant">3 hours ago</p>
                             </div>
                         </div>
                     </div>
