@@ -91,6 +91,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(SupplierProfileTracker::class, 'user_id')->latest();
     }
+    public function buyerTrackers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BuyerProfileTracker::class, 'user_id')->latest();
+    }
 
     public function onboardingToken(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

@@ -8,6 +8,7 @@ use App\Http\Controllers\UserSaveBuyerProfile;
 use App\Http\Controllers\UserSaveSupplierProfile;
 use App\Http\Middleware;
 use App\Livewire\Admin\BuyerDashboard;
+use App\Livewire\Admin\BuyerTracker as AdminBuyerTracker;
 use App\Livewire\Admin\CreateSupplier;
 use App\Livewire\Admin\Lobby;
 use App\Livewire\Admin\ManageSuppliers;
@@ -17,9 +18,15 @@ use App\Livewire\Admin\SupplierTracker;
 use App\Livewire\Admin\VerifiedBuyers;
 use App\Livewire\Admin\VerifiedSuppliers;
 use App\Livewire\AdminLogin;
+use App\Livewire\Buyer\BuyerDocumentLibrary;
+use App\Livewire\Buyer\BuyerOrder;
+use App\Livewire\Buyer\BuyerProfile;
+use App\Livewire\Buyer\BuyerTracker;
+use App\Livewire\BuyerLogin;
 use App\Livewire\CreateBuyers as CreateBuyerPage;
 use App\Livewire\ManageBuyers;
 use App\Livewire\OnboardingTokens;
+use App\Livewire\OrderPage;
 use App\Livewire\Supplier\CreateProductCatalogue;
 use App\Livewire\Supplier\EditProductCatalogue;
 use App\Livewire\Supplier\ManageProductCatalogue;
@@ -41,6 +48,8 @@ Route::get('/', function () {
 Route::get('/admin/login', AdminLogin::class)->name('admin.login');
 
 Route::get('/login/supplier', SupplierLogin::class)->name('supplier.login');
+
+Route::get('/login/buyer', BuyerLogin::class)->name('buyer.login');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -93,6 +102,42 @@ Route::middleware('role.supplier')->group(function () {
 
 });
 
+Route::middleware('role.buyer')->group(function () {
+    Route::get('/dashboard/buyer', \App\Livewire\Buyer\BuyerDashboard::class)->name('buyer.dashboard');
+
+    Route::get('/buyer/manageprofile', BuyerProfile::class)->name('buyer.profile');
+
+    Route::get('/buyer/buyerorder', BuyerOrder::class)->name('buyer.order');
+
+    Route::get('/buyer/documents', BuyerDocumentLibrary::class)->name('buyer.documents');
+
+    Route::post('/buyer/logout', [UserAuthenticatables::class, 'buyerLogout'])->name('buyer.logout');
+
+    Route::get('/buyer/product', OrderPage::class)->name('buyer.product');
+
+    Route::get('/buyer/tracker', BuyerTracker::class)->name('buyer.tracker');
+
+
+
+    /* Route::get('/dashboard/supplier/products', ManageProductCatalogue::class)->name('supplier.products');
+
+    Route::get('/dashboard/supplier/product/create', CreateProductCatalogue::class)->name('supplier.product.create');
+
+    Route::post('/dashboard/supplier/product/store', [\App\Http\Controllers\Supplier\CreateProductCatalogue::class, 'store'])->name('supplier.products.store');
+
+    Route::get('dashboard/supplier/product/{id}/edit', EditProductCatalogue::class)->name('supplier.product.edit');
+
+    Route::post('/dashboard/supplier/product/{id}/edit/update', [\App\Http\Controllers\Supplier\UpdateProductCatalogue::class, 'update'])->name('supplier.products.update');
+
+    Route::get('/dashboard/supplier/profile', ManageSupplierProfile::class)->name('supplier.profile');
+
+    Route::get('/dashboard/supplier/profile/documents', SupplierDocumentLibrary::class)->name('supplier.profile.documents');
+
+    Route::get('/dashboard/supplier/tracker', UserTracker::class)->name('supplier.profile.tracker'); */
+
+
+});
+
 Route::middleware('role.admin')->group(function () {
     Route::get('/admin/dashboard', Lobby::class)->name('admin.lobby');
 
@@ -106,12 +151,14 @@ Route::middleware('role.admin')->group(function () {
     Route::get('/admin/dashboard/onboarding-tokens', OnboardingTokens::class)->name('admin.onboarding.tokens');
 
 
-    Route::post('/admin/dashboard/suppliers/store', [CreateSuppliers::class, 'store'])->name('admin.suppliers.store');
+    Route::post('/admin/dashboard/supplier/store', [CreateSuppliers::class, 'store'])->name('admin.suppliers.store');
 
 
-    Route::get('/admin/dashboard/suppliers/{id}/product', SupplierProducts::class)->name('admin.suppliers.products');
+    Route::get('/admin/dashboard/supplier/{id}/product', SupplierProducts::class)->name('admin.suppliers.products');
 
-    Route::get('/admin/dashboard/suppliers/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
+    Route::get('/admin/dashboard/supplier/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
+
+    Route::get('/admin/dashboard/buyer/{id}/track', AdminBuyerTracker::class)->name('admin.buyers.track');
 
 
 

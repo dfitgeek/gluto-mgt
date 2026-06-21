@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('buyer_ref_number')->unique(); // Unique permanent identifier [cite: 160]
 
             $table->string('status_label')->default('Unprocessed Buyer');
+            $table->string('company_icon_path')->nullable(); // [cite: 235]
+            $table->json('social_media')->nullable(); // [cite: 242]
 
             // 1. BUYER COMPANY INFORMATION [cite: 93]
             $table->string('company_name'); // [cite: 94]

@@ -71,6 +71,12 @@ class SupplierProfile extends Authenticatable
         return $this->hasMany(SupplierProduct::class);
     }
 
+    /**
+     * Define the structural relationship link back to the parent Supplier Profile.
+     */
+
+
+
     public function trackers(): HasMany
     {
         return $this->hasMany(SupplierProfileTracker::class, 'supplier_profile_id')->latest();
