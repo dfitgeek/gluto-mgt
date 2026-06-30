@@ -30,6 +30,8 @@ class BuyerOrder extends Model
         'file_others' => 'array',
         'returns_warranty_policy' => 'array',
         'product_manufacturing_certifications' => 'array',
+        'payment_meta' => 'array',
+        'date_of_initial_contact' => 'date',
     ];
 
     /**

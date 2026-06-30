@@ -27,4 +27,14 @@ class UserAuthenticatables extends Controller
 
         return redirect()->route('buyer.login')->with('success', 'You have been logged out successfully.');
     }
+
+    public function adminLogout(Request $request)
+    {
+        auth()->guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login')->with('success', 'You have been logged out successfully.');
+    }
 }

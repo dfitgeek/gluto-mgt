@@ -220,10 +220,45 @@
                     menu
                 </button>
                 <img src="{{ asset('images/logo.png') }}" alt="Gluto Logo" class="h-[35px] md:h-[50px]">
-                <span
+
+                <div class="flex flex-col items-start gap-2">
+                    <span
                     class="hidden sm:inline-block bg-primary/10 px-3 py-1 border rounded-lg font-bold text-[11px] text-primary uppercase tracking-wider">
-                    Supplier Hub
-                </span>
+                        Supplier Hub
+                    </span>
+
+                    <div class="hidden md:flex flex-col justify-center items-end px-1">
+                        @if (auth('supplier')->user()->status_label === 'Verified Supplier')
+                            <span
+                                class="inline-flex items-center gap-1 bg-emerald-50 px-2.5 py-0.5 border border-emerald-200/60 rounded-md font-bold text-[10px] text-emerald-700 uppercase tracking-wider select-none">
+                                <span class="bg-emerald-500 rounded-full w-1.5 h-1.5 animate-pulse"></span>
+                                Verified
+                            </span>
+                        @else
+                            <span
+                                class="inline-flex items-center gap-1 bg-amber-50 px-2.5 py-0.5 border border-amber-200/60 rounded-md font-bold text-[10px] text-amber-700 uppercase tracking-wider select-none">
+                                <span class="bg-amber-500 rounded-full w-1.5 h-1.5"></span>
+                                Unverified
+                            </span>
+                        @endif
+                    </div>
+                </div>
+
+                @if(session()->has('admin_supplier_masquerader_id'))
+    <div class="z-[110] relative flex justify-between items-center bg-amber-600 shadow-md px-container-padding py-2 font-mono font-bold text-white text-xs select-none">
+        <div class="flex items-center gap-2">
+            <span class="text-[18px] animate-pulse material-symbols-outlined">gavel</span>
+            <span>ADMINISTRATIVE IMPERSONATION SESSION ACTIVE: You are viewing this vendor workspace as a proxy delegate.</span>
+        </div>
+        <form action="{{ route('supplier.masquerade.exit') }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-white hover:bg-amber-50 px-3 py-1 rounded-lg font-bold text-[11px] text-amber-900 transition-colors cursor-pointer">
+                Exit Masquerade Mode
+            </button>
+        </form>
+    </div>
+@endif
+
             </div>
 
             <div class="flex items-center gap-stack-md">
@@ -241,21 +276,7 @@
                                 </p>
                             </div>
 
-                            <div class="hidden md:flex flex-col justify-center items-end px-1">
-                                @if (auth('supplier')->user()->status_label === 'Verified Supplier')
-                                    <span
-                                        class="inline-flex items-center gap-1 bg-emerald-50 px-2.5 py-0.5 border border-emerald-200/60 rounded-md font-bold text-[10px] text-emerald-700 uppercase tracking-wider select-none">
-                                        <span class="bg-emerald-500 rounded-full w-1.5 h-1.5 animate-pulse"></span>
-                                        Verified
-                                    </span>
-                                @else
-                                    <span
-                                        class="inline-flex items-center gap-1 bg-amber-50 px-2.5 py-0.5 border border-amber-200/60 rounded-md font-bold text-[10px] text-amber-700 uppercase tracking-wider select-none">
-                                        <span class="bg-amber-500 rounded-full w-1.5 h-1.5"></span>
-                                        Unverified
-                                    </span>
-                                @endif
-                            </div>
+
 
                             <img alt="Corporate Logo"
                                 class="bg-white shadow-inner border-2 border-primary-fixed rounded-xl w-10 h-10 object-cover"
@@ -358,16 +379,16 @@
                     </span>
                 </a>
 
-                <a href="#"
-                    class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('supplier.invoices*') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+                <a href="{{ route('supplier.orders') }}"
+                    class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('supplier.orders') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">request_quote</span>
-                    <span class="font-label-md text-label-md">Proforma & Billing</span>
+                    <span class="font-label-md text-label-md">Proforma & Order</span>
                 </a>
-                <a href="#"
+                {{-- <a href="#"
                     class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('supplier.compliance*') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">verified_user</span>
                     <span class="font-label-md text-label-md">Compliance Status</span>
-                </a>
+                </a> --}}
             </nav>
 
             <div class="space-y-1 mt-auto p-4 border-background border-t">

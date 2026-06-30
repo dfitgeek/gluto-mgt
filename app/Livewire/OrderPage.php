@@ -17,13 +17,9 @@ class OrderPage extends Component
     #[Url(history: true)]
     public string $categoryFilter = 'All';
 
-    // Hydration parameters for structural modal inspections
     public ?int $selectedProductId = null;
     public ?SupplierProduct $selectedProduct = null;
 
-    /**
-     * Switch context categories cleanly.
-     */
     public function setCategory(string $category)
     {
         $this->categoryFilter = $category;
@@ -33,10 +29,7 @@ class OrderPage extends Component
     public function inspectProduct(int $id)
     {
         $this->selectedProductId = $id;
-
-        // Eager load the model relationship safely
         $this->selectedProduct = SupplierProduct::with('supplier')->findOrFail($id);
-
         $this->dispatch('open-marketplace-modal');
     }
 
@@ -45,9 +38,18 @@ class OrderPage extends Component
         $this->reset(['selectedProductId', 'selectedProduct']);
     }
 
+    /**
+     * Redirect the active session directly into the specific Order Quoting Provisioning Sheet.
+     */
+    public function initiateOrderFlow()
+    {
+        return redirect()->route('orders.create', [
+            'product_id' => $this->selectedProductId
+        ]);
+    }
+
     public function render()
     {
-        // Global catalog query accessible to authenticated buyers
         $query = SupplierProduct::query();
 
         if (filled($this->search)) {
@@ -62,7 +64,6 @@ class OrderPage extends Component
             $query->where('product_category', $this->categoryFilter);
         }
 
-        // Generate metrics for structural overview aggregates
         $counts = [
             'All' => SupplierProduct::count(),
             'Organic' => SupplierProduct::where('product_category', 'Organic')->count(),

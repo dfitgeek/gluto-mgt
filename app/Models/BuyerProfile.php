@@ -16,15 +16,8 @@ class BuyerProfile extends Authenticatable
     protected $casts = [
         'social_media' => 'array',
         'password' => 'hashed',
-        'file_sales_contract' => 'array',
-        'file_commercial_invoice' => 'array',
-        'file_packing_list' => 'array',
-        'file_certificate_of_origin' => 'array',
-        'file_test_analysis_report' => 'array',
-        'file_bill_of_lading' => 'array',
-        'file_insurance_certificate' => 'array',
-        'file_product_spec_sheet' => 'array',
-        'file_others' => 'array',
+        'company_reg_doc' => 'array',
+        'id_card' => 'array',
     ];
 
     /**

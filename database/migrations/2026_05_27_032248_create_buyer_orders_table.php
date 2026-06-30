@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,41 +13,46 @@ return new class extends Migration
         Schema::create('buyer_orders', function (Blueprint $table) {
             $table->id();
 
-            // Relationship link back to the parent buyer profile
-            $table->foreignId('buyer_profile_id')->constrained()->onDelete('cascade');
+            // 1. HARD SYSTEM RELATIONSHIP SHAKING LINKS
+            $table->foreignId('buyer_profile_id')->constrained('buyer_profiles')->onDelete('cascade');
+            $table->foreignId('supplier_profile_id')->nullable()->constrained('supplier_profiles')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
 
-            // Transaction-Specific Status Label [cite: 46, 56, 91]
-            // Allowed: Unprocessed Buyer, Processed Buyer, Confirmed Order, Processing Order, Shipped Order, Completed Order [cite: 91, 92]
-            $table->string('order_progress')->default('Unprocessed order'); // [cite: 91]
+            // 2. TRANSACTION PIPELINE METADATA
+            $table->string('order_progress')->default('Unprocessed order');
+            $table->string('order_ref_number')->unique();
+            $table->string('prod_ref');
 
-            // 3. ORDER INFORMATION [cite: 109]
-            $table->text('product_names'); // [cite: 110]
-            $table->text('product_descriptions')->nullable(); // [cite: 111]
-            $table->string('product_origin')->nullable(); // [cite: 112]
-            $table->text('packaging_details')->nullable(); // [cite: 113]
-            $table->decimal('order_quantity', 15, 2)->default(0.00); // [cite: 114]
-            $table->decimal('quoted_price_per_unit', 15, 4)->default(0.0000); // [cite: 115]
-            $table->decimal('total_order_price', 15, 2)->default(0.00); // [cite: 116]
-            $table->string('quotation_currency', 3)->default('USD'); // [cite: 117]
-            $table->text('payment_term_condition')->nullable(); // [cite: 118]
-            $table->string('preferred_payment_method')->nullable(); // MT103 TT, Crypto, Bank Transfer [cite: 120, 121, 122]
-            $table->string('estimated_monthly_volume')->nullable(); // [cite: 124]
+            // 3. CORE MATERIAL PARAMETERS
+            $table->text('product_names');
+            $table->text('product_descriptions')->nullable();
+            $table->string('product_origin')->nullable();
+            $table->text('packaging_details')->nullable();
+            $table->decimal('order_quantity', 15, 2)->default(0.00);
+            $table->decimal('quoted_price_per_unit', 15, 4)->default(0.0000);
+            $table->decimal('total_order_price', 15, 2)->default(0.00);
+            $table->string('quotation_currency', 3)->default('USD');
+            $table->text('payment_term_condition')->nullable();
+            $table->string('preferred_payment_method')->nullable();
+            $table->string('estimated_monthly_volume')->nullable();
+            $table->string('shipment_status')->default('unshipped');
 
-            // 4. SHIPPING & DESTINATION DETAILS [cite: 125]
-            $table->string('loading_port')->nullable(); // [cite: 125]
-            $table->string('destination_country'); // [cite: 126]
-            $table->string('destination_port_airport')->nullable(); // [cite: 127]
-            $table->text('delivery_address_warehouse')->nullable(); // [cite: 128]
-            $table->string('lead_time')->nullable(); // [cite: 129]
-            $table->string('preferred_shipping_method')->nullable(); // Sea Freight, Air Freight, Land Transport [cite: 133, 134, 135]
-            $table->string('incoterms_preferred')->nullable(); // FOB, CIF, EXW, DDP [cite: 139, 140, 142, 143]
+            // 4. LOGISTICAL DROPOFF DETAILS
+            $table->string('loading_port')->nullable();
+            $table->string('destination_country');
+            $table->string('destination_port_airport')->nullable();
+            $table->text('delivery_address_warehouse')->nullable();
+            $table->string('lead_time')->nullable();
+            $table->string('preferred_shipping_method')->nullable();
+            $table->string('incoterms_preferred')->nullable();
 
+            // Structured array cache column for dynamic multi-part file uploads
+            $table->json('payment_meta')->nullable();
 
-            // 7. MANAGEMENT FOLLOW-UP LOG & TRANSACTION TRACKER [cite: 158]
-            $table->string('assigned_manager')->nullable(); // [cite: 161]
-            $table->string('lead_source')->nullable(); // [cite: 162]
-            $table->date('date_of_initial_contact')->nullable(); // [cite: 163]
-            // $table->text('buyer_tracker_notes')->nullable(); // Internal logs tracking this specific deal's progress [cite: 47, 57]
+            // 5. CRM BACK-OFFICE TRACKING LOGS
+            $table->string('assigned_manager')->nullable(); // Legacy legacy fallback text name field
+            $table->string('lead_source')->nullable();
+            $table->date('date_of_initial_contact')->nullable();
 
             $table->timestamps();
         });

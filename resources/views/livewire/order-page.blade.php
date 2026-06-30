@@ -181,6 +181,10 @@
                                 <p class="text-on-surface-variant leading-relaxed">{{ $selectedProduct->pricing_structure_type ?? 'Standard Base Unit Price' }}</p>
                             </div>
                             <div class="space-y-1.5 md:col-span-2 bg-white p-5 border rounded-2xl">
+                                <h4 class="font-bold text-primary uppercase tracking-wide select-none">Product Origin</h4>
+                                <p class="text-on-surface-variant leading-relaxed">{{ $selectedProduct->product_origin ?? 'No product origin provided by supplier.' }}</p>
+                            </div>
+                            <div class="space-y-1.5 md:col-span-2 bg-white p-5 border rounded-2xl">
                                 <h4 class="font-bold text-primary uppercase tracking-wide select-none">Full Truckload (FTL) Freight Logistics Requirements</h4>
                                 <p class="text-on-surface-variant leading-relaxed">{{ $selectedProduct->full_truckload_details ?? 'No heavy commercial shipping constraints reported under this item context.' }}</p>
                             </div>
@@ -192,7 +196,8 @@
                     </div>
 
                     <div x-show="activeMarketTab = 'vendor_tab'" x-cloak class="space-y-6 animate-fadeIn">
-                        @if($selectedProduct->supplierProfile)
+                        {{-- {{ dd($selectedProduct->supplier) }} --}}
+                        @if($selectedProduct->supplier)
                             <div class="space-y-4 bg-white p-6 border rounded-[2rem]">
                                 <div class="flex items-center gap-4 pb-3 border-background border-b select-none">
                                     <div class="flex justify-center items-center bg-primary/5 rounded-xl w-12 h-12 font-bold text-primary">
@@ -200,25 +205,25 @@
                                     </div>
                                     <div>
                                         <span class="block font-mono font-bold text-[10px] text-on-surface-variant/70 uppercase">
-                                            Vendor Reference ID: {{ $selectedProduct->supplierProfile->supplier_ref_number }}
+                                            Vendor Reference ID: {{ $selectedProduct->supplier->supplier_ref_number }}
                                         </span>
                                         <h4 class="mt-0.5 font-headline-md font-bold text-primary text-base">
-                                            {{ $selectedProduct->supplierProfile->company_name }}
+                                            {{ $selectedProduct->supplier->company_name }}
                                         </h4>
                                     </div>
                                 </div>
 
                                 <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 font-medium text-xs">
                                     <div><span class="block text-on-surface-variant">Company Sourcing Registration:</span> <strong
-                                            class="block mt-0.5 text-primary">{{ $selectedProduct->supplierProfile->reg_number }}</strong></div>
+                                            class="block mt-0.5 text-primary">{{ $selectedProduct->supplier->reg_number }}</strong></div>
                                     <div><span class="block text-on-surface-variant">Business Structure:</span> <strong
-                                            class="block mt-0.5 text-primary">{{ $selectedProduct->supplierProfile->type_of_business }}</strong>
+                                            class="block mt-0.5 text-primary">{{ $selectedProduct->supplier->type_of_business }}</strong>
                                     </div>
                                     <div><span class="block text-on-surface-variant">Operations Address:</span> <strong
-                                            class="block mt-0.5 text-primary whitespace-pre-line">{{ $selectedProduct->supplierProfile->address }}</strong>
+                                            class="block mt-0.5 text-primary whitespace-pre-line">{{ $selectedProduct->supplier->address }}</strong>
                                     </div>
                                     <div><span class="block text-on-surface-variant">Compliance Evaluation Level:</span> <span
-                                            class="inline-block bg-emerald-50 mt-1 px-2.5 py-0.5 border border-emerald-200 rounded font-mono font-bold text-[9px] text-emerald-800 uppercase tracking-wider select-none">{{ $selectedProduct->supplierProfile->status_label }}</span>
+                                            class="inline-block bg-emerald-50 mt-1 px-2.5 py-0.5 border border-emerald-200 rounded font-mono font-bold text-[9px] text-emerald-800 uppercase tracking-wider select-none">{{ $selectedProduct->supplier->status_label }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -241,8 +246,10 @@
                     <div class="flex justify-end gap-2.5 w-full sm:w-auto">
                         <button type="button" @click="marketModalOpen = false; document.body.classList.remove('overflow-hidden'); $wire.call('closeModal')" class="bg-surface-container-high hover:bg-surface-container px-6 py-3 rounded-xl w-full sm:w-auto font-bold text-on-surface-variant text-xs cursor-pointer">Dismiss</button>
 
-                        <button type="button" class="flex justify-center items-center gap-1.5 bg-primary hover:bg-primary/95 shadow-md px-8 py-3.5 rounded-xl w-full sm:w-auto font-bold text-white text-xs active:scale-95 transition-transform cursor-pointer">
-                            <span class="text-[16px] material-symbols-outlined">shopping_cart_checkout</span> Add Consignment to Draft Contract
+                        <button type="button" wire:click="initiateOrderFlow"
+                            class="flex justify-center items-center gap-1.5 bg-primary hover:bg-primary/95 shadow-md px-8 py-3.5 rounded-xl w-full sm:w-auto font-bold text-white text-xs active:scale-95 transition-transform cursor-pointer">
+                            <span class="text-[16px] material-symbols-outlined">shopping_cart_checkout</span>
+                            Add Product to Order
                         </button>
                     </div>
                 </div>

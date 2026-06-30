@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BuyerMasqueradeController;
 use App\Http\Controllers\Admin\CreateSupplier as CreateSuppliers;
+use App\Http\Controllers\Admin\SupplierMasqueradeController;
 use App\Http\Controllers\CreateBuyers as CreateBuyerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserAuthenticatables;
@@ -31,6 +33,7 @@ use App\Livewire\Supplier\CreateProductCatalogue;
 use App\Livewire\Supplier\EditProductCatalogue;
 use App\Livewire\Supplier\ManageProductCatalogue;
 use App\Livewire\Supplier\ManageSupplierProfile;
+use App\Livewire\Supplier\ProformaOrder;
 use App\Livewire\Supplier\SupplierDocumentLibrary;
 use App\Livewire\Supplier\SupplierTracker as UserTracker;
 use App\Livewire\SupplierDashboard as UserSupplierDashboard;
@@ -97,7 +100,12 @@ Route::middleware('role.supplier')->group(function () {
 
     Route::get('/dashboard/supplier/profile/documents', SupplierDocumentLibrary::class)->name('supplier.profile.documents');
 
+    Route::get('/dashboard/supplier/orders', ProformaOrder::class)->name('supplier.orders');
+
     Route::get('/dashboard/supplier/tracker', UserTracker::class)->name('supplier.profile.tracker');
+
+    Route::post('/supplier/masquerade-exit', [SupplierMasqueradeController::class, 'logoutAsSupplier'])
+        ->name('supplier.masquerade.exit');
 
 
 });
@@ -113,29 +121,15 @@ Route::middleware('role.buyer')->group(function () {
 
     Route::post('/buyer/logout', [UserAuthenticatables::class, 'buyerLogout'])->name('buyer.logout');
 
-    Route::get('/buyer/product', OrderPage::class)->name('buyer.product');
+    Route::get('/buyer/catalogue', OrderPage::class)->name('buyer.product');
+
+    Route::get('/buyer/catalogue/provision-order', \App\Livewire\Buyer\BuyerOrderData::class)
+        ->name('orders.create'); // Matches naming requirements to prevent configuration exceptions loops
 
     Route::get('/buyer/tracker', BuyerTracker::class)->name('buyer.tracker');
 
-
-
-    /* Route::get('/dashboard/supplier/products', ManageProductCatalogue::class)->name('supplier.products');
-
-    Route::get('/dashboard/supplier/product/create', CreateProductCatalogue::class)->name('supplier.product.create');
-
-    Route::post('/dashboard/supplier/product/store', [\App\Http\Controllers\Supplier\CreateProductCatalogue::class, 'store'])->name('supplier.products.store');
-
-    Route::get('dashboard/supplier/product/{id}/edit', EditProductCatalogue::class)->name('supplier.product.edit');
-
-    Route::post('/dashboard/supplier/product/{id}/edit/update', [\App\Http\Controllers\Supplier\UpdateProductCatalogue::class, 'update'])->name('supplier.products.update');
-
-    Route::get('/dashboard/supplier/profile', ManageSupplierProfile::class)->name('supplier.profile');
-
-    Route::get('/dashboard/supplier/profile/documents', SupplierDocumentLibrary::class)->name('supplier.profile.documents');
-
-    Route::get('/dashboard/supplier/tracker', UserTracker::class)->name('supplier.profile.tracker'); */
-
-
+    Route::post('/buyer/masquerade-exit', [BuyerMasqueradeController::class, 'logoutAsBuyer'])
+        ->name('buyer.masquerade.exit');
 });
 
 Route::middleware('role.admin')->group(function () {
@@ -160,6 +154,11 @@ Route::middleware('role.admin')->group(function () {
 
     Route::get('/admin/dashboard/buyer/{id}/track', AdminBuyerTracker::class)->name('admin.buyers.track');
 
+    Route::post('logout', [UserAuthenticatables::class, 'adminLogout'])
+        ->name('logout');
+
+    Route::get('/admin/suppliers/{id}/masquerade-login', [SupplierMasqueradeController::class, 'loginAsSupplier'])
+        ->name('admin.suppliers.masquerade');
 
 
     // Supplier Facing Onboarding Form Routes
@@ -178,6 +177,9 @@ Route::middleware('role.admin')->group(function () {
     Route::get('/admin/dashboard/buyers/create', CreateBuyerPage::class)->name('admin.buyers.create');
 
     Route::post('/admin/dashboard/buyers/store', [CreateBuyerController::class, 'store'])->name('admin.buyers.store');
+
+    Route::get('/admin/buyers/{id}/masquerade-login', [BuyerMasqueradeController::class, 'loginAsBuyer'])
+        ->name('admin.buyers.masquerade');
 
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

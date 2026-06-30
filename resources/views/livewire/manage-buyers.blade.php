@@ -10,7 +10,6 @@
         </a>
     </div>
 
-    <!-- FILTER TOOLBAR STRIP SYSTEM -->
     <div class="space-y-4 mb-8 select-none">
         <div class="flex lg:flex-row flex-col justify-between items-center gap-4 bg-white shadow-sm p-4 border rounded-2xl border-outline-variant/60">
 
@@ -35,7 +34,6 @@
         </div>
     </div>
 
-    <!-- INLINE SUCCESS FLASH BANNER -->
     @if(session()->has('success'))
         <div class="flex items-center gap-2 bg-emerald-50 mb-6 p-4 border border-emerald-200 rounded-xl font-semibold text-emerald-800 text-xs animate-fadeIn select-none">
             <span class="text-[18px] material-symbols-outlined">check_circle</span>
@@ -43,7 +41,6 @@
         </div>
     @endif
 
-    <!-- BUYER GRID ROW CONTAINER CARDS -->
     <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         @forelse($buyers as $buyer)
             <div wire:key="buyer-card-{{ $buyer->id }}"
@@ -102,12 +99,11 @@
             <div class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 bg-white p-16 border border-dashed rounded-[2.5rem] text-on-surface-variant text-center italic select-none">
                 <span class="block mb-2 text-outline text-[56px] material-symbols-outlined">face</span>
                 <p class="font-bold text-primary text-sm not-italic">No Enterprise Buyers Found</p>
-                <p class="mx-auto mt-0.5 max-w-sm text-xs">There are no matching corporate buyer entries tracked across your current index database parameters filters.</p>
+                <p class="mx-auto mt-0.5 max-w-sm text-xs">There are no matching corporate buyer entries tracked across your current index database listings parameters filters.</p>
             </div>
         @endforelse
     </div>
 
-    <!-- INSPECTOR PREVIEW DIALOG MODAL LAYOUT -->
     <div x-on:open-buyer-preview-modal.window="buyerModalOpen = true; document.body.classList.add('overflow-hidden')"
          x-on:close-buyer-preview-modal.window="buyerModalOpen = false; document.body.classList.remove('overflow-hidden')"
          x-on:keydown.escape.window="buyerModalOpen = false; document.body.classList.remove('overflow-hidden'); $wire.call('closeBuyerModal')"
@@ -122,7 +118,7 @@
                  x-data="{ buyerTab: 'corp_identity' }" x-show="buyerModalOpen"
                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="scale-95 translate-y-4" x-transition:enter-end="scale-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="scale-100 translate-y-0" x-transition:leave-end="scale-95 translate-y-4">
-
+                
                 <div class="flex justify-between items-center bg-primary p-6 text-white select-none">
                     <div class="flex items-center gap-4">
                         <div class="flex flex-shrink-0 justify-center items-center bg-white/10 shadow-inner rounded-2xl w-12 h-12 overflow-hidden">
@@ -189,59 +185,58 @@
                     </div>
 
                     <div class="flex-1 space-y-6" x-show="buyerTab === 'vault_attachments'" x-cloak class="animate-fadeIn">
-                        <div class="gap-4 grid grid-cols-1 sm:grid-cols-2">
+                        <div class="gap-6 grid grid-cols-1 sm:grid-cols-2">
                             @php
                                 $documentationVaultArrayMap = [
-                                    'file_sales_contract'        => ['lbl' => 'Sales Sourcing Contract', 'icn' => 'gavel'],
-                                    'file_commercial_invoice'    => ['lbl' => 'Commercial Invoice Scans', 'icn' => 'receipt_long'],
-                                    'file_packing_list'          => ['lbl' => 'Packing List Manifest', 'icn' => 'inventory_2'],
-                                    'file_certificate_of_origin' => ['lbl' => 'Certificate of Origin', 'icn' => 'public'],
-                                    'file_test_analysis_report'  => ['lbl' => 'Test Analysis Report', 'icn' => 'biotech'],
-                                    'file_bill_of_lading'        => ['lbl' => 'Bill of Lading Copy', 'icn' => 'local_shipping'],
-                                    'file_insurance_certificate' => ['lbl' => 'Insurance Certificate', 'icn' => 'verified_user'],
-                                    'file_product_spec_sheet'    => ['lbl' => 'Product Spec Sheet', 'icn' => 'assignment'],
-                                    'file_others'                => ['lbl' => 'Other Supporting Docs', 'icn' => 'note_add'],
+                                    'company_reg_doc' => ['lbl' => 'Company Registration Document', 'icn' => 'gavel'],
+                                    'id_card'         => ['lbl' => 'Representative ID / Passport', 'icn' => 'badge'],
                                 ];
                             @endphp
 
                             @foreach($documentationVaultArrayMap as $dbField => $meta)
                                 @php $fileStackNode = $selectedBuyer->{$dbField} ?? null; @endphp
 
-                                <div class="flex justify-between items-center gap-3 bg-white p-4 border rounded-2xl border-outline-variant/60 font-semibold text-xs">
-                                    <div class="flex items-center gap-2 max-w-[240px] truncate">
+                                <div class="flex flex-col justify-between bg-white p-5 border rounded-3xl border-outline-variant/60 min-h-[160px] font-semibold text-xs">
+                                    <div class="flex items-center gap-2 pb-2 border-background border-b select-none">
                                         <div class="flex flex-shrink-0 justify-center items-center bg-primary/5 rounded-lg w-8 h-8 text-primary">
                                             <span class="text-[18px] material-symbols-outlined">{{ $meta['icn'] }}</span>
                                         </div>
                                         <div>
-                                            <span class="block text-primary truncate leading-snug">{{ $meta['lbl'] }}</span>
-                                            @if(filled($fileStackNode) && isset($fileStackNode[0]['product_ref']))
-                                                <span class="block font-mono font-bold text-[10px] text-secondary tracking-wide">Linked SKU Ref: {{ $fileStackNode[0]['product_ref'] }}</span>
-                                            @else
-                                                <span class="block font-medium text-[9px] text-on-surface-variant/70">Global Profile Domain</span>
-                                            @endif
+                                            <span class="block font-bold text-primary leading-tight">{{ $meta['lbl'] }}</span>
+                                            <span class="block mt-0.5 font-medium text-[9px] text-on-surface-variant/70">Global Profile Vault</span>
                                         </div>
                                     </div>
 
-                                    @if(filled($fileStackNode) && isset($fileStackNode[0]['file_path']))
-                                        <a href="{{ asset('storage/' . $fileStackNode[0]['file_path']) }}" target="_blank" class="flex justify-center items-center gap-0.5 bg-primary/10 hover:bg-primary px-3 py-1.5 rounded-xl font-label-sm font-bold text-[11px] text-primary hover:text-white transition-colors">
-                                            Download <span class="text-[14px] material-symbols-outlined">download</span>
-                                        </a>
-                                    @else
-                                        <span class="pr-2 text-[10px] text-on-surface-variant/40 italic select-none">Empty Vault</span>
-                                    @endif
+                                    <div class="space-y-1.5 my-3 max-h-24 overflow-y-auto hide-scrollbar">
+                                        @if(filled($fileStackNode) && is_array($fileStackNode))
+                                            @foreach($fileStackNode as $fileIndex => $fileData)
+                                                <div class="flex justify-between items-center bg-surface-container-low p-2 border rounded-xl">
+                                                    <span class="text-outline max-w-[180px] font-mono text-[11px] truncate">File Version #{{ $fileIndex + 1 }}</span>
+                                                    <a href="{{ asset('storage/' . $fileData['file_path']) }}" target="_blank" class="flex flex-shrink-0 justify-center items-center gap-0.5 bg-primary/10 hover:bg-primary px-3 py-1 rounded-xl font-label-sm font-bold text-[10px] text-primary hover:text-white transition-colors">
+                                                        View File <span class="text-[12px] material-symbols-outlined">open_in_new</span>
+                                                    </a>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="flex items-center gap-1 bg-background p-2 border border-dashed rounded-xl text-[11px] text-on-surface-variant/40 italic select-none">
+                                                <span class="text-[15px] material-symbols-outlined">folder_off</span> Empty Document Ledger
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
 
-                <!-- CONTROL PANEL FOOTER WITH STATUS TOGGLE SWITCH SYSTEM -->
                 <div class="flex md:flex-row flex-col justify-between items-center gap-4 bg-white p-6 border-t border-outline-variant select-none">
 
                     <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-                        <button type="button" class="flex justify-center items-center gap-1.5 bg-primary hover:bg-primary/95 shadow-sm px-4 py-2.5 rounded-xl font-bold text-white text-xs active:scale-95 transition-transform cursor-pointer">
-                            <span class="text-[16px] material-symbols-outlined">login</span> Sign-In As Buyer proxy
-                        </button>
+                        <a href="{{ route('admin.buyers.masquerade', ['id' => $selectedBuyer->id]) }}" 
+                            class="flex justify-center items-center gap-1.5 bg-primary hover:bg-primary/95 shadow-sm px-4 py-2.5 rounded-xl font-bold text-white text-xs active:scale-95 transition-transform cursor-pointer">
+                             <span class="text-[16px] material-symbols-outlined">login</span> 
+                             Sign-In As Buyer proxy
+                         </a>
 
                         <a href="#" class="flex justify-center items-center gap-1.5 bg-surface-container hover:bg-primary/10 px-4 py-2.5 rounded-xl font-bold text-primary text-xs transition-colors">
                             <span class="text-[16px] material-symbols-outlined">shopping_cart</span> Buyers Order
@@ -251,7 +246,6 @@
                             <span class="text-[16px] material-symbols-outlined">quick_reference</span> Buyer Tracker Notes
                         </a>
 
-                        <!-- ======================= NEW ACTIVE STATUS SWAP DROPDOWN SELECTION ======================= -->
                         <div class="inline-block relative text-left" x-data="{ openStatusMenu: false }">
                             <button type="button" @click="openStatusMenu = !openStatusMenu" class="flex items-center gap-1 bg-surface-container-high hover:bg-surface-container-highest px-4 py-2.5 border rounded-xl font-bold text-on-surface-variant text-xs transition-colors cursor-pointer">
                                 <span class="text-[16px] text-primary material-symbols-outlined">published_with_changes</span>

@@ -1,11 +1,11 @@
 <div class="flex-1 mx-auto p-gutter w-full max-w-[1440px]">
-    
+
     <div class="flex md:flex-row flex-col justify-between md:items-center gap-4 mb-6 pb-4 border-b border-outline-variant/30">
         <div>
             <h2 class="font-headline-lg font-bold text-headline-lg text-primary text-2xl">Product Catalogue Inventory</h2>
             <p class="mt-0.5 font-body-sm text-on-surface-variant text-sm">Audit your corporate listed commodity stock sheets, logistics configurations, and custom asset certifications blueprints.</p>
         </div>
-        
+
         <a href="{{ route('supplier.product.create') }}" wire:navigate class="flex justify-center items-center gap-2 bg-primary hover:bg-primary/95 shadow-md shadow-primary/10 px-5 py-3 rounded-xl w-full md:w-auto font-label-md font-bold text-white text-xs transition-all cursor-pointer">
             <span class="text-[18px] material-symbols-outlined">add_circle</span> Add New Product Listing
         </a>
@@ -13,7 +13,7 @@
 
     <div class="space-y-4 mb-8">
         <div class="flex lg:flex-row flex-col justify-between items-center gap-4 bg-white shadow-sm p-4 border rounded-2xl border-outline-variant/60">
-            
+
             <div class="flex items-center gap-1.5 pb-2 lg:pb-0 w-full lg:w-auto overflow-x-auto hide-scrollbar">
                 @foreach(['All' => 'All Items', 'Organic' => 'Organic', 'Gluten-Free' => 'Gluten-Free', 'Non-Gluten' => 'Non-Gluten', 'FMCG' => 'FMCG Packs'] as $key => $label)
                     <button type="button" wire:click="setCategoryFilter('{{ $key }}')"
@@ -28,7 +28,7 @@
 
             <div class="relative w-full lg:w-96">
                 <span class="top-1/2 left-4 absolute text-outline text-[20px] -translate-y-1/2 material-symbols-outlined">search</span>
-                <input wire:model.live.debounce.300ms="search" type="text" 
+                <input wire:model.live.debounce.300ms="search" type="text"
                     class="bg-surface-container-low focus:bg-white shadow-inner py-2.5 pr-4 pl-11 border rounded-xl border-outline-variant outline-none focus:ring-1 focus:ring-primary w-full font-medium text-xs"
                     placeholder="Search name, barcode ean, or product ref tracking codes...">
             </div>
@@ -44,7 +44,7 @@
 
     <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         @forelse($products as $prod)
-            <div wire:key="product-card-{{ $prod->id }}" 
+            <div wire:key="product-card-{{ $prod->id }}"
                 class="group relative flex flex-col justify-between bg-white shadow-sm hover:shadow-md p-5 border rounded-[2rem] border-outline-variant/50 overflow-hidden transition-all animate-fadeIn duration-300">
 
                 <div>
@@ -101,7 +101,7 @@
                         <span class="text-[16px] material-symbols-outlined">visibility</span> View Full
                     </button>
 
-                    <a href="{{ route('supplier.product.edit', ['id' => $prod->id]) }}" 
+                    <a href="{{ route('supplier.product.edit', ['id' => $prod->id]) }}"
                         class="flex justify-center items-center bg-surface-container hover:bg-primary/10 p-2.5 rounded-xl text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
                         title="Modify Item Specs">
                         <span class="text-[18px] material-symbols-outlined">edit_square</span>                 </a>
@@ -126,7 +126,7 @@
          x-on:open-product-preview-modal.window="isModalOpen = true; document.body.classList.add('overflow-hidden')"
          x-on:close-product-preview-modal.window="isModalOpen = false; document.body.classList.remove('overflow-hidden')"
          x-on:keydown.escape.window="isModalOpen = false; document.body.classList.remove('overflow-hidden'); $wire.call('closeModal')"
-         x-show="isModalOpen" 
+         x-show="isModalOpen"
          x-cloak
          class="z-[100] fixed inset-0 flex justify-center items-center bg-black/40 backdrop-blur-sm p-4 sm:p-6 md:p-8"
          x-transition:enter="transition ease-out duration-300"
@@ -135,7 +135,7 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0">
-        
+
         @if($selectedProduct)
             <div @click.outside="isModalOpen = false; document.body.classList.remove('overflow-hidden'); $wire.call('closeModal')"
                  class="flex flex-col bg-white shadow-2xl rounded-[2.5rem] w-full max-w-4xl max-h-[calc(100vh-4rem)] overflow-hidden transform"
@@ -147,7 +147,7 @@
                  x-transition:leave="transition ease-in duration-200"
                  x-transition:leave-start="scale-100 translate-y-0"
                  x-transition:leave-end="scale-95 translate-y-4">
-                
+
                 <div class="flex justify-between items-center bg-primary p-6 text-white select-none">
                     <div class="flex items-center gap-4">
                         <div class="flex justify-center items-center bg-white/10 rounded-2xl w-12 h-12">
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="flex-1 space-y-6 bg-background p-8 overflow-y-auto text-sm hide-scrollbar">
-                    
+
                     <div x-show="modalTab === 'general'" class="space-y-6 animate-fadeIn">
                         <div class="gap-6 grid grid-cols-1 md:grid-cols-3 bg-white p-6 border rounded-2xl">
                             <div>
@@ -226,6 +226,10 @@
                                 <p class="font-medium text-on-surface-variant leading-relaxed">{{ $selectedProduct->full_truckload_details ?? 'No detailed carrier constraints maps updated yet.' }}</p>
                             </div>
                             <div class="space-y-2 md:col-span-2 bg-white p-5 border rounded-2xl">
+                                <h4 class="font-bold text-primary uppercase tracking-wide">Product Origin</h4>
+                                <p class="font-medium text-on-surface-variant leading-relaxed">{{ $selectedProduct->product_origin ?? 'No product origin provided.' }}</p>
+                            </div>
+                            <div class="space-y-2 md:col-span-2 bg-white p-5 border rounded-2xl">
                                 <h4 class="font-bold text-primary uppercase tracking-wide">Payment Settlement Terms Blueprint Code</h4>
                                 <p class="bg-surface-container-low/50 p-3 border border-dashed rounded-xl font-medium text-on-surface-variant leading-relaxed whitespace-pre-line">{{ $selectedProduct->payment_terms ?? 'Default enterprise onboarding guidelines apply.' }}</p>
                             </div>
@@ -256,7 +260,7 @@
 
                 <div class="flex sm:flex-row flex-col justify-between items-center gap-4 bg-white p-6 border-t border-outline-variant select-none">
                     <span class="flex items-center gap-1 font-semibold text-on-surface-variant/80 text-xs"><span class="text-[16px] material-symbols-outlined">calendar_today</span> Listed entry row on {{ $selectedProduct->created_at->format('M d, Y') }}</span>
-                    
+
                     <div class="flex items-center gap-2.5 w-full sm:w-auto">
                         <button type="button" @click="isModalOpen = false; document.body.classList.remove('overflow-hidden'); $wire.call('closeModal')" class="bg-surface-container-high hover:bg-surface-container px-6 py-2.5 rounded-xl font-bold text-on-surface-variant text-xs cursor-pointer">
                             Dismiss Preview

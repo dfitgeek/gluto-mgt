@@ -25,6 +25,7 @@ return new class extends Migration
             // Product Information Table Fields
             $table->string('product_name'); //
             $table->boolean('ability_to_provide_samples')->default(false); // [cite: 264]
+            $table->string('product_origin'); // [cite: 261]
 
             $table->text('product_description')->nullable(); // Info, Language, Origin
             $table->string('ean_upc_code')->nullable(); // Barcode tracking

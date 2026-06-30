@@ -210,6 +210,21 @@
                     </div>
                 </div>
 
+                @if(session()->has('admin_masquerader_id'))
+    <div class="z-[110] relative flex justify-between items-center bg-amber-600 shadow-md px-container-padding py-2 font-mono font-bold text-white text-xs select-none">
+        <div class="flex items-center gap-2">
+            <span class="text-[18px] animate-pulse material-symbols-outlined">gavel</span>
+            <span>ADMINISTRATIVE IMPERSONATION SESSION ACTIVE: You are viewing this workspace as a proxy delegate.</span>
+        </div>
+        <form action="{{ route('buyer.masquerade.exit') }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-white hover:bg-amber-50 px-3 py-1 rounded-lg font-bold text-[11px] text-amber-900 transition-colors cursor-pointer">
+                Exit Masquerade Mode
+            </button>
+        </form>
+    </div>
+@endif
+
             </div>
 
             <div class="flex items-center gap-stack-md">
@@ -255,12 +270,6 @@
                                 class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">manage_accounts</span>
                                 <span>Buyer Profile</span>
-                            </a>
-
-                            <a href="{{ route('buyer.documents') }}" wire:navigate @click="open = false"
-                                class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
-                                <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">description</span>
-                                <span>Documents Library</span>
                             </a>
 
                             <div class="mt-1 pt-1 border-t border-outline-variant/20">
