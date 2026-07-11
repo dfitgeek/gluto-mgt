@@ -3,42 +3,35 @@
 namespace App\Models;
 
 use App\Models\BuyerProfile;
+use App\Models\SupplierProfile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 class BuyerOrder extends Model
 {
-    //
     protected $guarded = ['id'];
 
     protected $casts = [
-        'order_quantity' => 'decimal:2', // [cite: 114]
-        'quoted_price_per_unit' => 'decimal:4', // [cite: 115]
-        'total_order_price' => 'decimal:2', // [cite: 116]
-        'date_of_initial_contact' => 'date', // [cite: 163]
-        // Document vaults array fields
-        'file_sales_contract' => 'array',
-        'file_commercial_invoice' => 'array',
-        'file_packing_list' => 'array',
-        'file_certificate_of_origin' => 'array',
-        'file_test_analysis_report' => 'array',
-        'supplier_invoice' => 'array',
-        'proforma_invoice' => 'array',
-        'file_bill_of_lading' => 'array',
-        'file_insurance_certificate' => 'array',
-        'file_product_spec_sheet' => 'array',
-        'file_others' => 'array',
-        'returns_warranty_policy' => 'array',
-        'product_manufacturing_certifications' => 'array',
-        'payment_meta' => 'array',
+        'grand_total_price' => 'decimal:2',
         'date_of_initial_contact' => 'date',
+
+        // Tells Eloquent to automatically cast these JSON fields to clean PHP arrays
+        'quotation_items' => 'array',
+        'payment_meta' => 'array',
     ];
 
     /**
-     * Get the parent buyer profile that owns this order configuration.
+     * Get the parent buyer profile that primarily owns this quotation request.
      */
     public function buyer(): BelongsTo
     {
-        return $this->belongsTo(BuyerProfile::class);
+        return $this->belongsTo(BuyerProfile::class, 'buyer_profile_id');
+    }
+
+    /**
+     * Relationship: Get the complete communication/negotiation tracker trail for this quote.
+     */
+    public function trackers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BuyerOrderTracker::class, 'buyer_order_id');
     }
 }

@@ -10,11 +10,14 @@ use App\Http\Controllers\UserSaveBuyerProfile;
 use App\Http\Controllers\UserSaveSupplierProfile;
 use App\Http\Middleware;
 use App\Livewire\Admin\BuyerDashboard;
+use App\Livewire\Admin\BuyerOrderTrackerHub;
 use App\Livewire\Admin\BuyerTracker as AdminBuyerTracker;
 use App\Livewire\Admin\CreateSupplier;
+use App\Livewire\Admin\GeneralBuyerOrder;
 use App\Livewire\Admin\Lobby;
 use App\Livewire\Admin\ManageSuppliers;
 use App\Livewire\Admin\SupplierDashboard;
+// use App\Livewire\Admin\SupplierOrderTracker;
 use App\Livewire\Admin\SupplierProducts;
 use App\Livewire\Admin\SupplierTracker;
 use App\Livewire\Admin\VerifiedBuyers;
@@ -128,6 +131,9 @@ Route::middleware('role.buyer')->group(function () {
 
     Route::get('/buyer/tracker', BuyerTracker::class)->name('buyer.tracker');
 
+    Route::get('/buyer/orders/{orderId}/negotiation-tracker', \App\Livewire\Buyer\BuyerOrderTrackerHub::class)
+        ->name('buyer.orders.tracker');
+
     Route::post('/buyer/masquerade-exit', [BuyerMasqueradeController::class, 'logoutAsBuyer'])
         ->name('buyer.masquerade.exit');
 });
@@ -147,18 +153,47 @@ Route::middleware('role.admin')->group(function () {
 
     Route::post('/admin/dashboard/supplier/store', [CreateSuppliers::class, 'store'])->name('admin.suppliers.store');
 
+    Route::get('/admin/suppliers/{id}/masquerade-login', [SupplierMasqueradeController::class, 'loginAsSupplier'])
+        ->name('admin.suppliers.masquerade');
+
 
     Route::get('/admin/dashboard/supplier/{id}/product', SupplierProducts::class)->name('admin.suppliers.products');
 
     Route::get('/admin/dashboard/supplier/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
 
+    Route::get('/admin/suppliers/catalog', \App\Livewire\Admin\SuppliersProductCatalogue::class)
+        ->name('admin.suppliers.catalogue');
+
+    Route::get('/admin/suppliers/{orderId}/tracker', \App\Livewire\Admin\SupplierOrderTracker::class)->name('admin.suppliers.orders.tracker');
+
+    // 2. Logistical Freight Checkout Staging Gate
+    Route::get('/admin/suppliers/checkout', \App\Livewire\Admin\SupplersProductOrderPage::class)
+        ->name('admin.suppliers.checkout');
+
+    Route::get('/admin/dashboard/recent-orders', \App\Livewire\Admin\AdminRecentOrders::class)
+        ->name('admin.suppliers.recent.orders');
+
+
+
     Route::get('/admin/dashboard/buyer/{id}/track', AdminBuyerTracker::class)->name('admin.buyers.track');
+
+    Route::get('/admin/buyer/{id}/quotes', \App\Livewire\Admin\BuyerOrder::class)
+        ->name('admin.buyers.order');
+
+    Route::get('/admin/buyers/quotes', GeneralBuyerOrder::class)
+        ->name('admin.buyers.orders');
+
+    Route::get('/admin/buyer-quotes/{orderId}/tracker', BuyerOrderTrackerHub::class)
+        ->name('admin.buyers.orders.tracker');
+
+
 
     Route::post('logout', [UserAuthenticatables::class, 'adminLogout'])
         ->name('logout');
 
-    Route::get('/admin/suppliers/{id}/masquerade-login', [SupplierMasqueradeController::class, 'loginAsSupplier'])
-        ->name('admin.suppliers.masquerade');
+
+
+
 
 
     // Supplier Facing Onboarding Form Routes

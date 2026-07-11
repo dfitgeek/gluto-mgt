@@ -4,6 +4,7 @@ namespace App\Livewire\Supplier;
 
 use App\Models\BuyerOrder;
 use App\Models\SupplierProduct;
+use App\Models\SupplierProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
@@ -16,15 +17,12 @@ class ProformaOrder extends Component
 
     #[Layout('layouts.supplier')]
 
-    // Modal state parameters
     public bool $isInvoiceModalOpen = false;
     public ?int $activeOrderId = null;
-
-    // File stream uploaded property
     public $invoice_file;
 
     protected array $rules = [
-        'invoice_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240', // Max 10MB invoice files
+        'invoice_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
     ];
 
     public function openInvoiceModal(int $orderId)
@@ -40,22 +38,23 @@ class ProformaOrder extends Component
         $this->reset(['activeOrderId', 'invoice_file']);
     }
 
-    /**
-     * Upload and bind/replace the 'supplier_invoice' asset string token inside payment_meta JSON.
-     */
     public function uploadInvoice()
     {
         $this->validate();
 
-        $supplierId = Auth::guard('supplier')->id();
+        $supplier = Auth::guard('supplier')->user(); // model instance
+        $supplierId = $supplier->id;
 
-        // Security Lock: Ensure the order maps strictly back to a product belonging to this supplier
-        $allowedProductRefs = SupplierProduct::where('supplier_profile_id', $supplierId)
+        // Safe Fallback Guard: Secure checks against either the direct ID or product reference maps
+        $myProductRefs = SupplierProduct::where('supplier_profile_id', $supplierId)
             ->pluck('product_ref')
             ->toArray();
 
         $order = BuyerOrder::where('id', $this->activeOrderId)
-            ->whereIn('prod_ref', $allowedProductRefs)
+            ->where(function ($query) use ($supplierId, $myProductRefs) {
+                $query->where('supplier_profile_id', $supplierId)
+                    ->orWhereIn('prod_ref', $myProductRefs);
+            })
             ->firstOrFail();
 
         $meta = $order->payment_meta ?? [];
@@ -63,16 +62,13 @@ class ProformaOrder extends Component
             $meta = [];
         }
 
-        // Defensive Clean up: Erase old invoice from storage disk if replacing
         if (isset($meta['supplier_invoice'])) {
             Storage::disk('public')->delete($meta['supplier_invoice']);
         }
 
-        // Store new asset stream snap
         $savedPath = $this->invoice_file->store('supplier_invoices', 'public');
         $meta['supplier_invoice'] = $savedPath;
 
-        // Auto-advance order progression status context level to guide buyer flow if desired
         $order->update([
             'payment_meta' => $meta,
             'order_progress' => $order->order_progress === 'Unprocessed order' ? 'Processed Buyer' : $order->order_progress
@@ -84,15 +80,19 @@ class ProformaOrder extends Component
 
     public function render()
     {
-        $supplierId = Auth::guard('supplier')->id();
+        $supplier = Auth::guard('supplier')->user(); // model instance
+        $supplierInfo = $supplier->id;
 
-        // 1. Gather all product reference protocol strings registered under this explicit supplier profile ID
-        $myProductRefs = SupplierProduct::where('supplier_profile_id', $supplierId)
+        // dd($supplierInfo);
+
+        // 1. Gather product refs to capture older records that don't have the new supplier_profile_id column mapped yet
+        $myProductRefs = SupplierProduct::where('supplier_profile_id', $supplierInfo)
             ->pluck('product_ref')
             ->toArray();
 
-        // 2. Fetch order rows matching those keys chronologically
-        $associatedOrders = BuyerOrder::whereIn('prod_ref', $myProductRefs)
+        // 2. Query both fields so it catches old rows AND perfectly fetches new incoming entries
+        $associatedOrders = BuyerOrder::where('supplier_profile_id', $supplierInfo)
+            ->orWhereIn('prod_ref', $myProductRefs)
             ->latest()
             ->get();
 

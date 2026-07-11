@@ -312,7 +312,7 @@
                 <a href="{{ route('buyer.product') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('buyer.product') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">add_shopping_cart</span>
-                    <span class="font-label-md text-label-md">Product Catalogue</span>
+                    <span class="font-label-md text-label-md">Make an Order</span>
                 </a>
 
                 <a href="{{ route('buyer.order') }}"
@@ -321,11 +321,11 @@
                     <span class="font-label-md text-label-md">Recent Order & Payments</span>
                 </a>
 
-                <a href="{{ route('buyer.tracker') }}"
+              {{--   <a href="{{ route('buyer.tracker') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('buyer.tracker*') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <span class="font-label-md text-label-md">Tracker Notes</span>
-                </a>
+                </a> --}}
 
 
 

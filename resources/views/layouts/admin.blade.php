@@ -253,7 +253,7 @@
             <div class="flex items-center gap-stack-md">
                 <div class="flex items-center gap-3">
 
-                    
+
 
                     {{-- <button
                         class="hover:bg-surface-container-high p-2 rounded-full text-on-surface-variant cursor-pointer material-symbols-outlined">notifications</button> --}}
@@ -296,7 +296,7 @@
                     <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">admin_panel_settings</span>
                     <span>Manage Admins</span>
                 </a>
-                            
+
 
                             <a href="{{ route('admin.onboarding.tokens') }}" wire:navigate @click="open = false"
                                 class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
@@ -348,6 +348,16 @@
                         <span class="material-symbols-outlined">dashboard</span>
                         <span class="font-label-md text-label-md">Dashboard</span>
                     </a>
+
+                    <a
+                        href="{{ route('admin.suppliers.catalogue') }}"
+                            class="group flex items-center gap-3 mx-2 my-1 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('admin.suppliers.catalogue') ? 'bg-secondary-container text-on-secondary-container font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high' }}"
+                        >
+
+                        <span class="material-symbols-outlined">receipt_long</span>
+                        <span class="font-label-md text-label-md">Suppliers Product Catalogue</span>
+                    </a>
+
                     <a href="{{ route('admin.suppliers.manage', ['sidebar' => request()->query('sidebar', 'open')]) }}"
 
                         class="group flex items-center gap-3 mx-2 my-1 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('admin.suppliers.manage') ? 'bg-secondary-container text-on-secondary-container font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
@@ -362,6 +372,14 @@
                         <span class="material-symbols-outlined">add</span>
                         <span class="font-label-md text-label-md">Create Supplier</span>
                     </a>
+                    <a href="{{ route('admin.suppliers.recent.orders', ['sidebar' => request()->query('sidebar', 'open')]) }}"
+
+                        class="group flex items-center gap-3 mx-2 my-1 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('admin.suppliers.recent.orders') ? 'bg-secondary-container text-on-secondary-container font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
+                        <span class="material-symbols-outlined">add</span>
+                        <span class="font-label-md text-label-md">Recent Orders</span>
+                    </a>
+
+
 
 
                 </nav>
@@ -421,16 +439,16 @@
                     </a>
 
                     <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
-                        href="#">
+                        href="{{ route('admin.buyers.orders') }}">
                         <span class="material-symbols-outlined">shopping_cart</span>
-                        <span class="font-label-md text-label-md">Orders</span>
+                        <span class="font-label-md text-label-md">All Buyers Quotes</span>
                     </a>
 
-                    <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
+                    {{-- <a class="group flex items-center gap-3 hover:bg-surface-container-high mx-2 my-1 px-4 py-3 rounded-lg text-on-surface-variant transition-all"
                         href="#">
                         <span class="material-symbols-outlined">receipt_long</span>
                         <span class="font-label-md text-label-md">Invoices</span>
-                    </a>
+                    </a> --}}
                 </nav>
 
                 <div class="space-y-1 mt-auto px-4">
@@ -453,7 +471,7 @@
         </main>
 
         <div x-data="{ open: false }" class="right-8 bottom-8 z-50 fixed flex flex-col items-center gap-3">
-        
+
             <a href="{{ route('admin.buyers.manage') }}" wire:navigate x-show="open"
                 x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 translate-y-4 scale-75"
@@ -463,15 +481,15 @@
                 x-transition:leave-end="opacity-0 translate-y-4 scale-75"
                 class="group relative flex justify-center items-center bg-secondary hover:bg-secondary/95 shadow-md rounded-full w-12 h-12 text-on-secondary hover:scale-110 active:scale-95 transition-transform cursor-pointer"
                 title="Buyer Dashboard">
-        
+
                 <span class="text-[22px] material-symbols-outlined">shopping_bag</span>
-        
+
                 <span
                     class="right-14 absolute bg-surface-container opacity-0 group-hover:opacity-100 shadow-sm px-3 py-1.5 border rounded-xl border-outline-variant font-label-md font-bold text-[11px] text-primary whitespace-nowrap transition-opacity pointer-events-none">
                     Buyer Dashboard
                 </span>
             </a>
-        
+
             <a href="{{ route('admin.suppliers.manage') }}" wire:navigate x-show="open"
                 x-transition:enter="transition ease-out duration-200 delay-[50ms]"
                 x-transition:enter-start="opacity-0 translate-y-4 scale-75"
@@ -481,18 +499,18 @@
                 x-transition:leave-end="opacity-0 translate-y-4 scale-75"
                 class="group relative flex justify-center items-center bg-emerald-600 hover:bg-emerald-700 shadow-md rounded-full w-12 h-12 text-white hover:scale-110 active:scale-95 transition-transform cursor-pointer"
                 title="Supplier Dashboard">
-        
+
                 <span class="text-[22px] material-symbols-outlined">local_shipping</span>
-        
+
                 <span
                     class="right-14 absolute bg-surface-container opacity-0 group-hover:opacity-100 shadow-sm px-3 py-1.5 border rounded-xl border-outline-variant font-label-md font-bold text-[11px] text-primary whitespace-nowrap transition-opacity pointer-events-none">
                     Supplier Dashboard
                 </span>
             </a>
-        
+
             <button type="button" @click="open = !open"
                 class="flex justify-center items-center bg-primary shadow-[0px_10px_32px_rgba(0,0,0,0.15)] rounded-full outline-none w-14 h-14 text-white hover:scale-105 active:scale-95 transition-transform duration-300 cursor-pointer select-none">
-        
+
                 <span class="text-[32px] transition-transform duration-300 material-symbols-outlined transform"
                     :class="open ? 'rotate-45 font-bold text-red-200' : 'rotate-0'">
                     add

@@ -22,8 +22,8 @@ class BuyerOrderData extends Component
     public string $orderRefNumber;
     public string $initialContactDate;
 
-    // Operational Order Information Input States (Explicitly defined camelCase)
-    public $orderQuantity = 1; // Handled dynamically as loose numeric element
+    // Operational Order Information Input States
+    public $orderQuantity = 1;
     public float $quotedPricePerUnit = 0.0000;
     public float $totalOrderPrice = 0.00;
     public string $preferredPaymentMethod = 'Bank Transfer';
@@ -44,6 +44,8 @@ class BuyerOrderData extends Component
     public function mount()
     {
         $this->productId = request()->query('product_id', 0);
+
+        // PATCH 1: Use the correct, updated 'supplier' relationship method name matching your model
         $this->product = SupplierProduct::with('supplier')->findOrFail($this->productId);
 
         // Map inherited baseline pricing parameters
@@ -67,7 +69,6 @@ class BuyerOrderData extends Component
      */
     public function calculateTotal()
     {
-        // Safe protection check if a buyer completely clears out the input box field
         $qty = is_numeric($this->orderQuantity) ? (float) $this->orderQuantity : 0.00;
 
         if ($qty < 0) {
@@ -84,7 +85,6 @@ class BuyerOrderData extends Component
     {
         $buyer = Auth::guard('buyer')->user();
 
-        // Run validation using strict camelCase targeting matching our public attributes
         $this->validate([
             'orderQuantity' => 'required|numeric|min:0.01',
             'preferredPaymentMethod' => 'required|string|in:MT103 TT,Crypto,Bank Transfer',
@@ -109,14 +109,25 @@ class BuyerOrderData extends Component
             ];
         }
 
+        // PATCH 2: Extract the supplier profile id directly from the loaded product context
+        $supplierProfileId = $this->product->supplier_profile_id;
+
         BuyerOrder::create([
             'buyer_profile_id' => $buyer->id,
+
+            // SOLUTION: Persisting the exact matching parent supplier ID key here
+            // unlocks straightforward data lookup scoping for the vendor panels query execution.
+            'supplier_profile_id' => $supplierProfileId,
+
             'order_progress' => 'Unprocessed order',
             'order_ref_number' => $this->orderRefNumber,
             'prod_ref' => $this->product->product_ref,
             'product_names' => $this->product->product_name,
             'product_descriptions' => $this->product->product_description,
-            'product_origin' => $this->product->supplier->country_of_registration ?? 'Global Pool',
+
+            // PATCH 3: Read country values directly from the structured parent supplier profile row relations
+            'product_origin' => $this->product->supplierProfile->country_of_registration ?? 'Global Pool',
+
             'payment_term_condition' => $this->product->payment_terms,
             'quoted_price_per_unit' => $this->quotedPricePerUnit,
             'quotation_currency' => 'NGN',
@@ -136,6 +147,7 @@ class BuyerOrderData extends Component
             'date_of_initial_contact' => $this->initialContactDate,
         ]);
 
+        // PATCH 4: Ensure the routing matches your verified active naming schema group targets
         return redirect()->route('buyer.order')
             ->with('success', "Procurement pipeline request '{$this->orderRefNumber}' has been initialized cleanly.");
     }

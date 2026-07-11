@@ -23,7 +23,7 @@ class BuyerOrder extends Component
     public $receipt_file;
 
     protected array $rules = [
-        'receipt_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB per upload instances
+        'receipt_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB per upload instance
     ];
 
     /**

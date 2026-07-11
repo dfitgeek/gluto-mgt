@@ -373,9 +373,9 @@
                                                     <span class="text-[16px] material-symbols-outlined">login</span>
                                                     Sign-In As Supplier proxy                                     </a>
 
-                                                <a href="{{ route('admin.suppliers.track', ['id' => $selectedSupplier->id]) }}" wire:navigate
+                                                {{-- <a href="{{ route('admin.suppliers.track', ['id' => $selectedSupplier->id]) }}" wire:navigate
                                                     class="flex justify-center items-center gap-2 bg-secondary hover:bg-secondary/90 shadow-sm px-6 py-3 rounded-xl w-full sm:w-auto font-label-md font-bold text-on-secondary text-xs text-center transition-all cursor-pointer">
-                                                    Supplier Tracker Notes <span class="text-[18px] material-symbols-outlined">note_stack</span>                             </a>
+                                                    Supplier Tracker Notes <span class="text-[18px] material-symbols-outlined">note_stack</span>                             </a> --}}
 
 
                                                 <a href="{{ route('admin.suppliers.products', ['id' => $selectedSupplier->id]) }}" wire:navigate

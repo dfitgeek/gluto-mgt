@@ -2,14 +2,22 @@
 
     <div class="flex sm:flex-row flex-col justify-between sm:items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30 select-none">
         <div>
-            <h2 class="font-headline-lg font-bold text-headline-lg text-primary text-2xl tracking-tight">My Historical Procurement Requests</h2>
-            <p class="mt-0.5 font-body-sm text-on-surface-variant text-sm">Track processing updates pipelines milestones, inspect verified supplier billing invoices, and attach payment verification receipts logs sheets.</p>
+            <h2 class="font-headline-lg font-bold text-headline-lg text-primary text-2xl tracking-tight">My Sourcing Quotations</h2>
+            <p class="mt-0.5 font-body-sm text-on-surface-variant text-sm">View recent quotes and track quotes</p>
         </div>
-        <div class="flex flex-wrap gap-2.5">
-            <a href="{{ route('buyer.documents') }}" wire:navigate class="flex items-center gap-1.5 bg-surface-container-high hover:bg-primary/10 px-5 py-3 rounded-xl font-label-md font-bold text-primary text-xs transition-all cursor-pointer">
-                <span class="text-[18px] material-symbols-outlined">folder_shared</span> Access Documents Library
+        <div class="flex flex-wrap sm:flex-shrink-0 items-center gap-3">
+            <a href="{{ route('buyer.documents') }}" wire:navigate
+                class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-3 rounded-xl font-label-md font-bold text-on-surface-variant text-xs transition-colors cursor-pointer">
+                <span class="text-[18px] material-symbols-outlined">folder_shared</span>
+                Document Library
             </a>
-        </div>
+
+            <a href="{{ route('buyer.product') }}" wire:navigate
+                class="flex items-center gap-2 bg-primary hover:bg-primary/95 shadow-primary/10 shadow-sm hover:shadow-md px-5 py-3 rounded-xl font-label-md font-bold text-white text-xs active:scale-95 transition-all cursor-pointer">
+                <span class="text-[18px] material-symbols-outlined">add_box</span>
+                Generate New Quotation
+            </a>
+            </div>
     </div>
 
     @if(session()->has('success'))
@@ -26,38 +34,90 @@
                 <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-background border-b text-xs select-none">
                     <div class="flex items-center gap-3">
                         <span class="bg-primary/5 shadow-inner px-3 py-1 border border-primary/10 rounded-lg font-mono font-bold text-primary text-sm">
-                            Order Ref: {{ $order->order_ref_number }}
+                            Quotation Ticket: {{ $order->order_ref_number }}
                         </span>
-                        <span class="font-mono font-semibold text-[11px] text-on-surface-variant">SKU ID Match: {{ $order->prod_ref }}</span>
+                        <span class="flex items-center gap-1 font-sans font-semibold text-[11px] text-on-surface-variant">
+                            <span class="text-[15px] material-symbols-outlined">calendar_today</span> Submitted: {{ $order->created_at->format('M d, Y') }}
+                        </span>
                     </div>
 
                     <div class="flex items-center gap-2 font-mono font-bold text-[10px] uppercase tracking-wide">
                         <span class="px-2.5 py-1 rounded-md border shadow-inner
                             {{ in_array($order->order_progress, ['Confirmed Order', 'Confirmed order', 'confirmed order']) ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-surface-container text-on-surface-variant' }}">
-                            Order: {{ $order->order_progress }}
+                            Quote Status: {{ $order->order_progress }}
                         </span>
                         <span class="px-2.5 py-1 rounded-md border shadow-inner
                             {{ $order->shipment_status === 'shipped' || $order->shipment_status === 'Shipped Order' ? 'bg-primary/10 text-primary border-primary/20' : 'bg-surface-container text-on-surface-variant/80' }}">
-                            Freight: {{ $order->shipment_status }}
+                            Logistics: {{ $order->shipment_status }}
                         </span>
                     </div>
                 </div>
 
                 <div class="gap-6 grid grid-cols-1 lg:grid-cols-3 my-4 font-semibold text-on-surface-variant text-xs">
-
-                    <div class="space-y-1 md:col-span-2">
-                        <span class="block text-outline font-bold text-[10px] uppercase tracking-wider select-none">Enrolled Sourcing Commodity</span>
-                        <h3 class="font-headline-md font-bold text-primary text-base leading-snug">{{ $order->product_names }}</h3>
-                        <p class="mt-1 font-medium text-on-surface-variant/80 line-clamp-2 leading-relaxed">{{ $order->product_descriptions ?? 'No long narrative specifications details compiled under this transactional manifest line item.' }}</p>
+                    <div class="space-y-2 bg-surface-container-low/40 p-4 border rounded-2xl border-outline-variant/30 select-none">
+                        <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Logistical Destination Matrix</span>
+                        <div class="space-y-1 font-medium text-[11px] text-primary">
+                            <div>Target Country: <strong>{{ $order->destination_country }}</strong></div>
+                            <div>Preferred Incoterm: <strong class="font-mono text-[10px]">{{ $order->incoterms_preferred ?? 'FOB' }}</strong></div>
+                            <div>Shipping Channel: <strong>{{ $order->preferred_shipping_method }}</strong></div>
+                        </div>
                     </div>
 
-                    <div class="flex flex-col justify-center bg-surface-container-low/50 p-4 border border-dashed rounded-2xl border-outline-variant/80 min-h-[90px] text-left">
-                        <span class="block text-outline font-bold text-[10px] uppercase tracking-wider select-none">Total Consolidated Gross Value</span>
-                        <div class="flex items-baseline gap-1 mt-0.5 select-all">
-                            <h4 class="font-mono font-bold text-primary text-xl">₦{{ number_format($order->total_order_price, 2) }}</h4>
-                            <span class="text-outline font-mono font-bold text-[10px]">({{ $order->quotation_currency }})</span>
+                    <div class="space-y-2 bg-surface-container-low/40 p-4 border rounded-2xl border-outline-variant/30 select-none">
+                        <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Commercial Specifications Summary</span>
+                        <div class="space-y-1 font-medium text-[11px] text-primary">
+                            <div>Payment Method: <strong>{{ $order->preferred_payment_method ?? 'Bank Transfer' }}</strong></div>
+                            <div>Est. Monthly Volume: <strong>{{ $order->estimated_monthly_volume ?? 'Not Specified' }}</strong></div>
+                            <div>Loading Port: <strong>{{ $order->loading_port ?? 'Unspecified Port' }}</strong></div>
                         </div>
-                        <span class="block mt-1 font-sans text-[10px] text-on-surface-variant/70">Volume: <strong>{{ number_format($order->order_quantity, 2) }} units</strong> @ ₦{{ number_format($order->quoted_price_per_unit, 2) }}</span>
+                    </div>
+
+                    <div class="flex flex-col justify-center bg-surface-container-low/80 p-4 border border-dashed rounded-2xl border-outline-variant/80 min-h-[90px] text-left select-none">
+                        <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Consolidated RFQ Grand Price</span>
+                        <div class="flex items-baseline gap-1 mt-0.5 select-all">
+                            <h4 class="font-mono font-bold text-primary text-xl">{{ $order->quotation_currency }} {{ number_format($order->grand_total_price, 2) }}</h4>
+                        </div>
+                        <span class="block mt-1 font-sans text-[10px] text-on-surface-variant/70">Total Item Count: <strong>{{ count($order->quotation_items ?? []) }} lines</strong></span>
+                    </div>
+                </div>
+
+                <div class="bg-white my-2 border rounded-2xl overflow-hidden select-none">
+                    <div class="flex items-center gap-1 bg-surface-container px-4 py-2 border-b font-bold text-[11px] text-primary uppercase tracking-wider">
+                        <span class="text-[16px] material-symbols-outlined">list_alt</span> Itemized Quotation Details Ledger
+                    </div>
+                    <div class="overflow-x-auto hide-scrollbar">
+                        <table class="w-full text-xs text-left border-collapse">
+                            <thead>
+                                <tr class="bg-surface-container-low border-b border-outline-variant/30 font-bold text-[10px] text-on-surface-variant uppercase tracking-wide">
+                                    <th class="p-3">Product Specifications Title</th>
+                                    <th class="p-3">Origin / Packaging</th>
+                                    <th class="p-3 text-right">Target Volume</th>
+                                    <th class="p-3 text-right">Unit Target Rate</th>
+                                    <th class="p-3 text-right">Line Gross Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-background font-medium text-primary">
+                                @if(isset($order->quotation_items) && is_array($order->quotation_items))
+                                    @foreach($order->quotation_items as $lineItem)
+                                        <tr class="hover:bg-background/40 transition-colors">
+                                            <td class="p-3 max-w-xs">
+                                                <div class="font-bold text-primary">{{ $lineItem['product_name'] }}</div>
+                                                @if(!empty($lineItem['product_description']))
+                                                    <p class="mt-0.5 text-[10px] text-on-surface-variant line-clamp-1" title="{{ $lineItem['product_description'] }}">{{ $lineItem['product_description'] }}</p>
+                                                @endif
+                                            </td>
+                                            <td class="p-3 text-[11px] text-on-surface-variant">
+                                                <div>Origin: {{ $lineItem['product_origin'] ?: 'Unlisted' }}</div>
+                                                <div class="opacity-80 text-[10px]">Pack: {{ $lineItem['packaging_details'] ?: 'Bulk standard' }}</div>
+                                            </td>
+                                            <td class="p-3 font-mono font-bold text-right">{{ number_format($lineItem['order_quantity'], 2) }}</td>
+                                            <td class="p-3 font-mono text-right">{{ $order->quotation_currency }} {{ number_format($lineItem['quoted_price_per_unit'], 4) }}</td>
+                                            <td class="p-3 font-mono font-bold text-emerald-800 text-right">{{ $order->quotation_currency }} {{ number_format($lineItem['total_item_price'], 2) }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -68,7 +128,7 @@
                         <div class="flex justify-between items-center gap-2 bg-white shadow-sm p-3 border rounded-xl">
                             <span class="flex items-center gap-1.5 max-w-[240px] text-on-surface truncate select-none">
                                 <span class="text-[18px] text-primary material-symbols-outlined">account_balance_wallet</span>
-                                <span>Official Supplier Sourcing Invoice Document</span>
+                                <span>Official Administrative Settlement Invoice</span>
                             </span>
                             @if(isset($order->payment_meta['supplier_invoice']))
                                 <a href="{{ asset('storage/' . $order->payment_meta['supplier_invoice']) }}" target="_blank" class="flex flex-shrink-0 items-center gap-0.5 bg-primary hover:bg-primary/95 shadow-sm px-3 py-1 rounded-lg font-bold text-[11px] text-white">
@@ -110,9 +170,17 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap justify-end items-center gap-2.5 mt-2 pt-4 border-background border-t select-none">
+                <div class="flex flex-wrap justify-end items-center gap-3 mt-2 pt-4 border-background border-t select-none">
+                    <a href="{{ route('buyer.orders.tracker', ['orderId' => $order->id]) }}"
+                       wire:navigate
+                       class="flex items-center gap-1.5 bg-surface-container hover:bg-primary/10 px-5 py-2.5 border rounded-xl border-outline-variant/40 font-label-md font-bold text-primary text-xs transition-colors cursor-pointer">
+                        <span class="text-[16px] material-symbols-outlined">forum</span>
+                        Open Negotiation Tracker Thread
+                    </a>
+
                     <button type="button" wire:click="openReceiptModal({{ $order->id }})" class="flex items-center gap-1.5 bg-primary hover:bg-primary/95 shadow-sm px-5 py-2.5 rounded-xl font-label-md font-bold text-white text-xs cursor-pointer">
-                        <span class="text-[16px] material-symbols-outlined">upload_file</span> Add Payment Receipt Document
+                        <span class="text-[16px] material-symbols-outlined">upload_file</span>
+                        Add Payment Receipt Document
                     </button>
                 </div>
 

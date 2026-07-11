@@ -1,283 +1,125 @@
-  <!-- Content Area -->
-  <main class="flex-1 bg-background min-h-screen">
-    <!-- TopAppBar -->
+<div class="flex-1 mx-auto my-2 p-gutter w-full max-w-[1440px]">
 
-    <!-- Dashboard Content -->
-    <div class="mx-auto p-container-padding max-w-[1440px]">
-        <!-- Page Header -->
-        <div class="pb-stack-lg">
-            <h2 class="font-headline-lg text-headline-lg text-primary">Operational Overview</h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">Real-time monitoring of procurement and
-                buyer lifecycle.</p>
-        </div>
-        <!-- Metric Cards Grid (Bento Style) -->
-        <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8">
-            <!-- Total Buyers -->
-            <div
-                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="bg-secondary-container p-2 rounded-lg">
-                        <span class="text-on-secondary-container material-symbols-outlined"
-                            style="font-variation-settings: 'FILL' 1;">groups</span>
-                    </div>
-                    <span class="font-label-md text-label-md text-secondary">+12.5%</span>
-                </div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total
-                    Buyers</p>
-                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">2,842</h3>
-            </div>
-            <!-- Pending Orders -->
-            <div
-                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="bg-amber-100 p-2 rounded-lg">
-                        <span class="text-amber-700 material-symbols-outlined"
-                            style="font-variation-settings: 'FILL' 1;">pending</span>
-                    </div>
-                    <span class="font-label-md text-amber-700 text-label-md">High Priority</span>
-                </div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Pending
-                    Orders</p>
-                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">142</h3>
-            </div>
-            <!-- Processed This Month -->
-            <div
-                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="bg-primary-fixed p-2 rounded-lg">
-                        <span class="text-primary material-symbols-outlined"
-                            style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                    </div>
-                    <span class="font-label-md text-label-md text-primary">98% Success</span>
-                </div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
-                    Processed Buyers</p>
-                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">518</h3>
-            </div>
-            <!-- Revenue/Invoices -->
-            <div
-                class="bg-surface-container-lowest shadow-sm hover:shadow-[0px_4px_20px_rgba(6,78,59,0.05)] p-6 border rounded-2xl border-outline-variant transition-all">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="bg-blue-100 p-2 rounded-lg">
-                        <span class="text-blue-700 material-symbols-outlined"
-                            style="font-variation-settings: 'FILL' 1;">receipt</span>
-                    </div>
-                    <span class="font-label-md text-blue-700 text-label-md">Recent</span>
-                </div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Recent
-                    Invoices</p>
-                <h3 class="mt-1 font-headline-md text-headline-md text-on-surface">24</h3>
-            </div>
-        </div>
-        <!-- Main Data Section -->
-        <div class="gap-8 grid grid-cols-1 lg:grid-cols-3">
-            <!-- Table Section (Unprocessed Buyers) -->
-            <div
-                class="lg:col-span-2 bg-surface-container-lowest shadow-sm border rounded-2xl border-outline-variant overflow-hidden">
-                <div class="flex justify-between items-center p-6 border-b border-outline-variant">
-                    <div>
-                        <h3 class="font-headline-md text-headline-md text-on-surface">Recent Unprocessed Buyers
-                        </h3>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">Queue for verification and
-                            profile activation.</p>
-                    </div>
-                    <button class="font-label-md text-primary hover:underline">View All Queue</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-surface-container-low">
-                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Buyer
-                                    Name</th>
-                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">
-                                    Registration Date</th>
-                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Region
-                                </th>
-                                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status
-                                </th>
-                                <th
-                                    class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">
-                                    Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-outline-variant divide-y">
-                            <tr class="group hover:bg-surface-container-high transition-colors">
-                                <td class="px-6 py-4 border-amber-500 border-l-4">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
-                                            GC</div>
-                                        <span class="font-body-md text-body-md text-on-surface">Global Corp
-                                            S.A.</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 24,
-                                    2023</td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">EMEA
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button
-                                        class="text-primary hover:text-secondary-container transition-colors">
-                                        <span class="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-surface-container-high transition-colors">
-                                <td class="px-6 py-4 border-amber-500 border-l-4">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
-                                            NL</div>
-                                        <span class="font-body-md text-body-md text-on-surface">NexGen
-                                            Logistics</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 23,
-                                    2023</td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">APAC
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button
-                                        class="text-primary hover:text-secondary-container transition-colors">
-                                        <span class="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-surface-container-high transition-colors">
-                                <td class="px-6 py-4 border-secondary border-l-4">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
-                                            TI</div>
-                                        <span class="font-body-md text-body-md text-on-surface">Tech-Innova
-                                            Hub</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 22,
-                                    2023</td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">NA</td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="bg-secondary-container px-3 py-1 rounded-full font-bold text-[12px] text-on-secondary-container uppercase tracking-wider">Reviewing</span>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button
-                                        class="text-primary hover:text-secondary-container transition-colors">
-                                        <span class="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-surface-container-high transition-colors">
-                                <td class="px-6 py-4 border-amber-500 border-l-4">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex justify-center items-center bg-surface-container rounded-full w-8 h-8 font-bold text-primary">
-                                            SV</div>
-                                        <span class="font-body-md text-body-md text-on-surface">Summit Venture
-                                            Co.</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 21,
-                                    2023</td>
-                                <td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">EMEA
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="bg-amber-100 px-3 py-1 rounded-full font-bold text-[12px] text-amber-700 uppercase tracking-wider">Pending</span>
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button
-                                        class="text-primary hover:text-secondary-container transition-colors">
-                                        <span class="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- Side Insights Section -->
-            <div class="space-y-6">
-                <!-- Quick Add Task Card -->
-                <div
-                    class="relative bg-primary-container shadow-lg p-6 rounded-2xl overflow-hidden text-on-primary-container">
-                    <div class="z-10 relative">
-                        <h4 class="mb-2 font-headline-md text-headline-md">Efficiency Tip</h4>
-                        <p class="opacity-80 mb-4 font-body-sm text-body-sm">You have 12 unprocessed buyers from
-                            the last 24 hours. Processing them now can increase quarterly turnover by 4%.</p>
-                        <button
-                            class="bg-secondary-container px-4 py-2 rounded-xl font-label-md text-on-secondary-container hover:scale-105 active:scale-95 transition-transform">
-                            Accelerate Processing
-                        </button>
-                    </div>
-                    <span
-                        class="-right-4 -bottom-4 absolute opacity-10 text-[120px] material-symbols-outlined">bolt</span>
-                </div>
-                <!-- System Health Card -->
-                <div
-                    class="bg-surface-container-lowest shadow-sm p-6 border rounded-2xl border-outline-variant">
-                    <h4 class="mb-4 font-label-md text-label-md text-on-surface">Verification Health</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-1 text-[12px]">
-                                <span class="font-label-sm text-on-surface-variant">KYC Compliance</span>
-                                <span class="font-label-sm text-primary">92%</span>
-                            </div>
-                            <div class="bg-surface-container-high rounded-full w-full h-2 overflow-hidden">
-                                <div class="bg-primary rounded-full w-[92%] h-full"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1 text-[12px]">
-                                <span class="font-label-sm text-on-surface-variant">System Latency</span>
-                                <span class="font-label-sm text-primary">24ms</span>
-                            </div>
-                            <div class="bg-surface-container-high rounded-full w-full h-2 overflow-hidden">
-                                <div class="bg-secondary rounded-full w-[15%] h-full"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Activity Feed -->
-                <div
-                    class="bg-surface-container-lowest shadow-sm p-6 border rounded-2xl border-outline-variant">
-                    <h4 class="mb-4 font-label-md text-label-md text-on-surface">Recent Activity</h4>
-                    <div class="space-y-4">
-                        <div class="flex gap-3">
-                            <div class="bg-secondary mt-2 rounded-full w-2 h-2"></div>
-                            <div>
-                                <p class="font-body-sm text-body-sm text-on-surface"><span
-                                        class="font-bold">System</span> automatically verified Buyer #9482</p>
-                                <p class="text-[10px] text-on-surface-variant">2 mins ago</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="bg-primary mt-2 rounded-full w-2 h-2"></div>
-                            <div>
-                                <p class="font-body-sm text-body-sm text-on-surface"><span
-                                        class="font-bold">Admin</span> created profile for Delta Energy</p>
-                                <p class="text-[10px] text-on-surface-variant">1 hour ago</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="bg-amber-500 mt-2 rounded-full w-2 h-2"></div>
-                            <div>
-                                <p class="font-body-sm text-body-sm text-on-surface"><span
-                                        class="font-bold">Warning:</span> Invoice #902 delayed</p>
-                                <p class="text-[10px] text-on-surface-variant">3 hours ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="flex sm:flex-row flex-col justify-between sm:items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30 select-none">
+        <div>
+            <h2 class="font-headline-lg font-bold text-headline-lg text-primary text-2xl tracking-tight">Buyer Analytics Control Console</h2>
+            <p class="mt-0.5 font-body-sm text-on-surface-variant text-sm">Monitor system-wide platform user growth metrics, review customer verification ratios, and trace historical sourcing valuations.</p>
         </div>
     </div>
-</main>
+
+    <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8 select-none">
+
+        <div class="flex items-center gap-4 bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/40 animate-fadeIn">
+            <div class="flex flex-shrink-0 justify-center items-center bg-primary/5 border border-primary/10 rounded-2xl w-12 h-12 text-primary">
+                <span class="text-[24px] material-symbols-outlined">group</span>
+            </div>
+            <div>
+                <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Total B2B Buyers</span>
+                <strong class="block mt-0.5 font-mono text-primary text-xl md:text-2xl">{{ number_format($totalBuyersCount) }}</strong>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4 bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/40 animate-fadeIn">
+            <div class="flex flex-shrink-0 justify-center items-center bg-emerald-50 border border-emerald-100 rounded-2xl w-12 h-12 text-emerald-700">
+                <span class="text-[24px] material-symbols-outlined">verified</span>
+            </div>
+            <div>
+                <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Verified Accounts</span>
+                <strong class="block mt-0.5 font-mono text-emerald-800 text-xl md:text-2xl">{{ number_format($verifiedBuyersCount) }}</strong>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4 bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/40 animate-fadeIn">
+            <div class="flex flex-shrink-0 justify-center items-center bg-amber-50 border border-amber-100 rounded-2xl w-12 h-12 text-amber-700">
+                <span class="text-[24px] material-symbols-outlined">gpp_maybe</span>
+            </div>
+            <div>
+                <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Unverified Accounts</span>
+                <strong class="block mt-0.5 font-mono text-amber-800 text-xl md:text-2xl">{{ number_format($unverifiedBuyersCount) }}</strong>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4 bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/40 animate-fadeIn">
+            <div class="flex flex-shrink-0 justify-center items-center bg-indigo-50 border border-indigo-100 rounded-2xl w-12 h-12 text-indigo-700">
+                <span class="text-[24px] material-symbols-outlined">analytics</span>
+            </div>
+            <div>
+                <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Total Pipeline Value</span>
+                <strong class="block mt-0.5 font-mono text-indigo-800 text-lg md:text-xl" title="Aggregate cumulative quote value gross sum">USD {{ number_format($totalQuotesValue, 2) }}</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bg-white shadow-sm border rounded-[2rem] border-outline-variant/50 overflow-hidden animate-fadeIn">
+        <div class="flex justify-between items-center bg-surface-container px-6 py-4 border-b border-outline-variant/30 font-bold text-primary text-xs uppercase tracking-wider select-none">
+            <span class="flex items-center gap-1.5"><span class="text-[18px] material-symbols-outlined">history</span> Real-time Recent Quotation Submissions Stream</span>
+            <a href="{{ route('admin.buyers.orders') }}" wire:navigate class="font-sans font-bold text-[11px] text-primary hover:underline normal-case">View Master Ledger →</a>
+        </div>
+
+        <div class="overflow-x-auto hide-scrollbar">
+            <table class="w-full font-medium text-on-surface-variant text-xs text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low border-b border-outline-variant/30 font-bold text-[10px] text-primary uppercase tracking-wide select-none">
+                        <th class="p-4">Voucher Ticket</th>
+                        <th class="p-4">Buyer Enterprise</th>
+                        <th class="p-4">Manifest Sample Items</th>
+                        <th class="p-4 text-right">Package Valuation</th>
+                        <th class="p-4 text-center">Milestone Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-background text-primary">
+                    @forelse($recentOrders as $order)
+                        <tr wire:key="dashboard-recent-order-{{ $order->id }}" class="hover:bg-background/20 transition-colors">
+
+                            <td class="p-4 font-mono whitespace-nowrap">
+                                <span class="block font-bold text-primary">{{ $order->order_ref_number }}</span>
+                                <span class="block mt-0.5 font-sans text-[10px] text-on-surface-variant/70">{{ $order->created_at->diffForHumans() }}</span>
+                            </td>
+
+                            <td class="p-4 max-w-xs truncate">
+                                <div class="font-bold text-primary text-xs">{{ $order->buyer->company_name ?? 'Corporate Buyer Entity' }}</div>
+                                <span class="block mt-0.5 font-mono text-[10px] text-on-surface-variant/60">Profile Ref: #{{ $order->buyer_profile_id }}</span>
+                            </td>
+
+                            <td class="p-4 max-w-xs">
+                                @if(is_array($order->quotation_items) && !empty($order->quotation_items))
+                                    <span class="font-bold text-primary">{{ $order->quotation_items[0]['product_name'] ?? 'Custom Commodity Item' }}</span>
+                                    @if(count($order->quotation_items) > 1)
+                                        <span class="block mt-0.5 font-medium text-[10px] text-on-surface-variant/70 italic">+ {{ count($order->quotation_items) - 1 }} alternative line products...</span>
+                                    @endif
+                                @else
+                                    <span class="text-outline/50 text-[11px] italic">Empty Manifest Deck</span>
+                                @endif
+                            </td>
+
+                            <td class="p-4 font-mono font-bold text-emerald-800 text-right whitespace-nowrap select-all">
+                                {{ $order->quotation_currency }} {{ number_format($order->grand_total_price, 2) }}
+                            </td>
+
+                            <td class="p-4 whitespace-nowrap select-none">
+                                <div class="flex justify-center items-center">
+                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold tracking-tight uppercase shadow-inner border
+                                        {{ $order->order_progress === 'Invoice' ? 'bg-indigo-50 text-indigo-700 border-indigo-100' : '' }}
+                                        {{ in_array($order->order_progress, ['Confirm Order', 'Completed Order']) ? 'bg-emerald-50 text-emerald-800 border-emerald-100' : '' }}
+                                        {{ !in_array($order->order_progress, ['Invoice', 'Confirm Order', 'Completed Order']) ? 'bg-surface-container text-on-surface-variant' : '' }}">
+                                        {{ $order->order_progress }}
+                                    </span>
+                                </div>
+                            </td>
+
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="p-12 text-on-surface-variant text-center italic select-none">
+                                <div class="opacity-40 mb-1 text-outline text-[40px] material-symbols-outlined">query_stats</div>
+                                <span class="block font-bold text-primary text-xs not-italic">No Quotes Logged Recently</span>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
