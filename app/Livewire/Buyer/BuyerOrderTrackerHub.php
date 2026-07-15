@@ -4,6 +4,8 @@ namespace App\Livewire\Buyer;
 
 use App\Models\BuyerOrder;
 use App\Models\BuyerOrderTracker;
+use App\Services\NotificationMailService;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -18,7 +20,7 @@ class BuyerOrderTrackerHub extends Component
 
     // Form Input Binding Properties
     public string $replyMessage = '';
-    public string $messageSubject = 'Clarification Request';
+    public string $messageSubject = 'Tracker Update';
 
     public function mount(int $orderId)
     {
@@ -26,7 +28,7 @@ class BuyerOrderTrackerHub extends Component
 
         // Security Lock: Ensure the requested order belongs explicitly to the authenticated buyer session
         $this->order = BuyerOrder::where('id', $this->orderId)
-            ->where('buyer_profile_id', Auth::guard('buyer')->id())
+            ->where('buyer_profile_id', Auth::guard('buyer')->user()->id)
             ->firstOrFail();
     }
 
@@ -54,10 +56,25 @@ class BuyerOrderTrackerHub extends Component
             'is_internal_only' => false, // Always false so both parties share access to the line thread
         ]);
 
+        $message = $this->replyMessage;
+        $subject = $this->messageSubject;
+
+        try {
+            NotificationMailService::notifyAdminOfBuyerConversation($this->order, $message, $subject);
+
+            // Success flash if both database save and email succeed
+            session()->flash('success', 'Your update response message has been securely appended to this RFQ tracker thread.');
+
+        } catch (\Throwable $e) {
+            // Log the failure behind the scenes
+            \Illuminate\Support\Facades\Log::error('Admin notification email failed: ' . $e->getMessage());
+
+            // Throw a warning/error session message to the UI
+            session()->flash('warning', 'Your message was saved securely, but we experienced an issue sending the email notification to the admin.');
+        }
+
         // Reset the message input box
         $this->reset('replyMessage');
-
-        session()->flash('success', 'Your update response message has been securely appended to this RFQ tracker thread.');
     }
 
     public function render()

@@ -114,56 +114,63 @@ class CreateSupplier extends Component {
         $storedAnalysisReport   = $this->file_test_analysis_report ? $this->file_test_analysis_report->store('supplier_docs/analysis', 'public') : null;
 
         // Persist data directly into your database schema mapping
-        SupplierProfile::create([
+        $supplier = SupplierProfile::create([
             'supplier_ref_number' => $this->supplier_ref_number,
-            'status_label'        => $this->status_label,
+            'status_label' => $this->status_label,
 
             // 1. Company General Details
             'company_icon_path' => $storedIcon,
-            'company_name'      => $this->company_name,
-            'address'           => $this->address,
-            'phone_telephone'   => $this->phone_telephone,
-            'email_address'     => $this->email_address,
-            'website'           => $this->website,
-            'whatsapp_contact'  => $this->whatsapp_contact,
-            'social_media'      => $this->social_media,
-            'reg_number'        => $this->reg_number,
-            'type_of_business'  => $this->type_of_business,
-            'nature_of_business'=> $this->nature_of_business,
-            'year_established'  => $this->year_established,
+            'company_name' => $this->company_name,
+            'address' => $this->address,
+            'phone_telephone' => $this->phone_telephone,
+            'email_address' => $this->email_address,
+            'website' => $this->website,
+            'whatsapp_contact' => $this->whatsapp_contact,
+            'social_media' => $this->social_media,
+            'reg_number' => $this->reg_number,
+            'type_of_business' => $this->type_of_business,
+            'nature_of_business' => $this->nature_of_business,
+            'year_established' => $this->year_established,
 
             // 2. Rep Details
-            'rep_legal_name'     => $this->rep_legal_name,
+            'rep_legal_name' => $this->rep_legal_name,
             'rep_position_title' => $this->rep_position_title,
-            'rep_email'          => $this->rep_email,
-            'rep_phone_number'   => $this->rep_phone_number,
+            'rep_email' => $this->rep_email,
+            'rep_phone_number' => $this->rep_phone_number,
 
             // 3. Logistics Capabilities
             'categorization_of_products' => $this->categorization_of_products,
-            'overall_moqs'               => $this->overall_moqs,
-            'production_capacity'        => $this->production_capacity,
-            'currency_accepted'          => $this->currency_accepted,
+            'overall_moqs' => $this->overall_moqs,
+            'production_capacity' => $this->production_capacity,
+            'currency_accepted' => $this->currency_accepted,
             'shipping_methods_available' => $this->shipping_methods_available,
             'ability_to_provide_samples' => $this->ability_to_provide_samples,
-            'payment_terms'              => $this->payment_terms,
+            'payment_terms' => $this->payment_terms,
 
             // 4. Generated Storage Path Links Mapping
-            'file_sales_contract'       => $storedSalesContract,
-            'file_commercial_invoice'   => $storedInvoice,
-            'file_packing_list'         => $storedPackingList,
-            'file_product_spec_sheet'   => $storedSpecSheet,
+            'file_sales_contract' => $storedSalesContract,
+            'file_commercial_invoice' => $storedInvoice,
+            'file_packing_list' => $storedPackingList,
+            'file_product_spec_sheet' => $storedSpecSheet,
             'file_test_analysis_report' => $storedAnalysisReport,
 
             // 5. Declarations Checklist Properties
-            'declares_gmo_free'         => $this->declares_gmo_free,
-            'declares_gluten_free'      => $this->declares_gluten_free,
-            'complies_haccp_gmp'        => $this->complies_haccp_gmp,
-            'declares_non_irradiated'   => $this->declares_non_irradiated,
-            'lead_source'               => $this->lead_source,
-        ]);
+            'declares_gmo_free' => $this->declares_gmo_free,
+            'declares_gluten_free' => $this->declares_gluten_free,
+            'complies_haccp_gmp' => $this->complies_haccp_gmp,
+            'declares_non_irradiated' => $this->declares_non_irradiated,
+            'lead_source' => $this->lead_source,
+        ]); //[cite: 7]
 
-        session()->flash('success', 'Supplier Account Log generated successfully!');
-        return $this->redirectRoute('admin.dashboard', navigate: true);
+        try {
+            \App\Services\NotificationMailService::notifyNewSupplierRegistration($supplier);
+            session()->flash('success', 'Supplier Account Log generated successfully and system welcome email dispatched!'); //[cite: 7]
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Supplier registration email failed: ' . $e->getMessage());
+            session()->flash('warning', 'Supplier Account Log generated successfully, but the system experienced an issue dispatching the welcome email.'); //[cite: 7]
+        }
+
+        return $this->redirectRoute('admin.suppliers.manage', navigate: true); //[cite: 7]
     }
 
     public function render()

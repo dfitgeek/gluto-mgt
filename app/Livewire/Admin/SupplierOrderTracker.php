@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\AdminOrder;
 use App\Models\AdminOrderTracker;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -12,24 +13,20 @@ class SupplierOrderTracker extends Component
 {
     #[Layout('layouts.admin')]
 
-    // Route identifier handshakes
+    // Route Parameter handshakes
     public int $orderId;
     public AdminOrder $order;
 
-    // Form Input Binding Properties
+    // Form Binding Parameters
     public string $replyMessage = '';
-    public string $messageSubject = 'Clarification Request';
+    public string $messageSubject = 'Order Tracker Update';
 
-    // Admin Auditing Checkbox Compliance Flags Array
+    // Compliance Flags Matrix Array
     public array $flaggedFields = [];
 
-    /**
-     * Fix: Parameter name $orderId here now perfectly mirrors the route parameter {orderId}
-     */
     public function mount(int $orderId)
     {
         $this->orderId = $orderId;
-
         // Eager load parent supplier metadata profile details safely
         $this->order = AdminOrder::with('supplier')->findOrFail($this->orderId);
     }
@@ -47,6 +44,8 @@ class SupplierOrderTracker extends Component
             'replyMessage.required' => 'The administrative message payload cannot be dispatched blank.',
         ]);
 
+        // dd($this->messageSubject);
+
         // Persist response parameters using our clean corrected schema relationships
         AdminOrderTracker::create([
             'admin_order_id' => $this->order->id,
@@ -58,6 +57,23 @@ class SupplierOrderTracker extends Component
             'resolution_status' => 'Pending Response', // Toggle state milestones to alert vendors
             'is_internal_only' => false, // False ensures the vendor profile has visibility access
         ]);
+
+        try {
+            // Trigger A (DYNAMIC FIX): Notifies the supplier with the precise dynamic subject and message body text
+            NotificationMailService::notifySupplierOfAdminMessage($this->order, $this->messageSubject, $this->replyMessage);
+
+        } catch (\Exception $mailException) {
+            // 1. Log the system exception for backend review
+            \Illuminate\Support\Facades\Log::error('Gluto Email Service Delivery Failure: ' . $mailException->getMessage(), [
+                'order_id' => $this->order->id,
+                'admin_id' => Auth::id()
+            ]);
+
+            // 2. Flash an operational warning to display on the frontend UI
+            session()->flash('mail_warning', 'Your updates were saved successfully, but Gluto International encountered a mail delivery delay.');
+        }
+
+        NotificationMailService::notifySupplierOfAdminMessage($this->order, $this->messageSubject, $this->replyMessage);
 
         // Reset the message input and compliance flags array state
         $this->reset(['replyMessage', 'flaggedFields']);

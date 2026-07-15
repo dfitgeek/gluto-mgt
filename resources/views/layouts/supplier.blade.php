@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.png') }}?v=2" />
     <title>Supplier Workspace Hub - Gluto Sourcing</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -366,11 +366,11 @@
                     <span class="font-label-md text-label-md">My Product Catalogue</span>
                 </a>
 
-                <a href="{{ route('supplier.profile.tracker') }}"
+                {{-- <a href="{{ route('supplier.profile.tracker') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('supplier.profile.tracker') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <span class="font-label-md text-label-md">Tracker Notes</span>
-                </a>
+                </a> --}}
 
                 <a href="{{ route('supplier.product.create') }}"
                     class="group flex items-center gap-3 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('supplier.product.create') ? 'bg-secondary-container text-on-secondary-container font-bold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">

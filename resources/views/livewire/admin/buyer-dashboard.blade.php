@@ -45,7 +45,7 @@
             </div>
             <div>
                 <span class="block text-outline font-bold text-[10px] uppercase tracking-wider">Total Pipeline Value</span>
-                <strong class="block mt-0.5 font-mono text-indigo-800 text-lg md:text-xl" title="Aggregate cumulative quote value gross sum">USD {{ number_format($totalQuotesValue, 2) }}</strong>
+                <strong class="block mt-0.5 font-mono text-indigo-800 text-lg md:text-xl" title="Aggregate cumulative quote value gross sum">NGN {{ number_format($totalQuotesValue, 2) }}</strong>
             </div>
         </div>
 

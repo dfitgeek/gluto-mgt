@@ -130,7 +130,7 @@ class SupplersProductOrderPage extends Component
 
         session()->flash('success', 'Procurement split-checkout successful: Generated ' . count($groupedBySupplier) . ' separate supplier purchase orders.');
 
-        return redirect()->route('admin.suppliers.catalogue');
+        return redirect()->route('admin.suppliers.recent.orders');
     }
 
     public function render()

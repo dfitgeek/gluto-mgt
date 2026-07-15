@@ -95,6 +95,8 @@ class SuppliersProductCatalogue extends Component
             });
         }
 
+        // dd($query);
+
         if ($this->categoryFilter !== 'All' && empty($this->search)) {
             $query->where('product_category', $this->categoryFilter);
         }

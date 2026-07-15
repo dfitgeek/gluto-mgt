@@ -69,7 +69,7 @@ class BuyerOrder extends Component
     /**
      * Upload an administrative invoice document and bind it to payment_meta.
      */
-    public function uploadAdminInvoice()
+   /*  public function uploadAdminInvoice()
     {
         $this->validate();
 
@@ -97,6 +97,55 @@ class BuyerOrder extends Component
 
         $this->closeInvoiceModal();
         session()->flash('success', "Administrative invoice document successfully pushed to Quote reference #{$order->order_ref_number}.");
+    } */
+
+    /**
+     * Upload an administrative invoice document and bind it to payment_meta.
+     */
+    public function uploadAdminInvoice()
+    {
+        $this->validate();
+
+        // Ensure the order belongs to this specific buyer profile resource context
+        // Eager load 'buyer' so the notification service can access the email cleanly
+        $order = OrderModel::with('buyer')->where('id', $this->activeQuoteId)
+            ->where('buyer_profile_id', $this->buyerId)
+            ->firstOrFail();
+
+        $meta = $order->payment_meta ?? [];
+        if (!is_array($meta)) {
+            $meta = [];
+        }
+
+        if (isset($meta['supplier_invoice'])) {
+            Storage::disk('public')->delete($meta['supplier_invoice']);
+        }
+
+        $savedPath = $this->invoice_file->store('supplier_invoices', 'public');
+        $fileName = $this->invoice_file->getClientOriginalName();
+        $meta['supplier_invoice'] = $savedPath;
+
+        $order->update([
+            'payment_meta' => $meta,
+            'order_progress' => 'Invoice'
+        ]);
+
+        try {
+            // Safely resolve the buyer's email
+            $buyerEmail = $order->buyer->rep_email;
+
+            // Dispatch the alert to the buyer
+            \App\Services\NotificationMailService::notifyBuyerOfAdminInvoice($order, $fileName, $buyerEmail);
+
+            $this->closeInvoiceModal();
+            session()->flash('success', "Administrative invoice document successfully pushed to Quote reference #{$order->order_ref_number}.");
+
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Buyer invoice notification failed: ' . $e->getMessage());
+
+            $this->closeInvoiceModal();
+            session()->flash('warning', "Administrative invoice document successfully pushed to Quote reference #{$order->order_ref_number}, but we experienced an issue alerting the buyer.");
+        }
     }
 
     /**
@@ -109,7 +158,8 @@ class BuyerOrder extends Component
             return;
         }
 
-        $order = OrderModel::where('id', $orderId)
+        // Eager load the buyer relation
+        $order = OrderModel::with('buyer')->where('id', $orderId)
             ->where('buyer_profile_id', $this->buyerId)
             ->firstOrFail();
 
@@ -117,12 +167,23 @@ class BuyerOrder extends Component
             'order_progress' => $newStatus
         ]);
 
-        session()->flash('success', "Order reference #{$order->order_ref_number} status updated to '{$newStatus}'.");
+        try {
+            $buyerEmail = $order->buyer->rep_email ?? $order->buyer->email ?? 'No email provided';
+
+            \App\Services\NotificationMailService::notifyBuyerOfStatusUpdate($order, 'Order Progress', $newStatus, $buyerEmail);
+
+            session()->flash('success', "Order reference #{$order->order_ref_number} status updated to '{$newStatus}'.");
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Order status notification failed: ' . $e->getMessage());
+
+            session()->flash('warning', "Order reference #{$order->order_ref_number} status updated to '{$newStatus}', but we experienced an issue alerting the buyer.");
+        }
     }
 
     public function updateShipmentStatus(int $orderId, string $newStatus)
     {
-        $order = OrderModel::where('id', $orderId)
+        // Eager load the buyer relation
+        $order = OrderModel::with('buyer')->where('id', $orderId)
             ->where('buyer_profile_id', $this->buyerId)
             ->firstOrFail();
 
@@ -130,7 +191,17 @@ class BuyerOrder extends Component
             'shipment_status' => $newStatus
         ]);
 
-        session()->flash('success', "Order reference #{$order->order_ref_number} shipment track status switched to '{$newStatus}'.");
+        try {
+            $buyerEmail = $order->buyer->rep_email ?? $order->buyer->email ?? 'No email provided';
+
+            \App\Services\NotificationMailService::notifyBuyerOfStatusUpdate($order, 'Shipment Status', $newStatus, $buyerEmail);
+
+            session()->flash('success', "Order reference #{$order->order_ref_number} shipment track status switched to '{$newStatus}'.");
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Shipment status notification failed: ' . $e->getMessage());
+
+            session()->flash('warning', "Order reference #{$order->order_ref_number} shipment track status switched to '{$newStatus}', but we experienced an issue alerting the buyer.");
+        }
     }
 
     public function render()

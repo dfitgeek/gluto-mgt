@@ -3,6 +3,7 @@
 namespace App\Livewire\Buyer;
 
 use App\Models\BuyerOrder as OrderModel;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
@@ -49,12 +50,15 @@ class BuyerOrder extends Component
     {
         $this->validate();
 
+        $buyer = Auth::guard('buyer')->user();
+
         $order = OrderModel::where('id', $this->activeOrderId)
-            ->where('buyer_profile_id', Auth::guard('buyer')->id())
+            ->where('buyer_profile_id', $buyer->id)
             ->firstOrFail();
 
         // Stream binary upload payload straight to public disk channels
         $savedPath = $this->receipt_file->store('buyer_receipts', 'public');
+        $fileName = $this->receipt_file->getClientOriginalName();
 
         // Parse existing payment_meta payloads data safely
         $meta = $order->payment_meta ?? [];
@@ -71,15 +75,29 @@ class BuyerOrder extends Component
         $meta['receipts'][] = [
             'file_path' => $savedPath,
             'uploaded_at' => now()->toDateTimeString(),
-            'file_name' => $this->receipt_file->getClientOriginalName()
+            'file_name' => $fileName
         ];
 
         $order->update([
             'payment_meta' => $meta
         ]);
 
-        $this->closeReceiptModal();
-        session()->flash('success', 'Your payment verification receipt has been appended to the order ledger context successfully.');
+        try {
+            // Resolve the email to prevent null type errors
+            $buyerEmail = $buyer->rep_email ?? $buyer->email ?? 'System Upload';
+
+            // Dispatch the alert to the admin network
+            NotificationMailService::notifyAdminOfBuyerReceiptUpload($order, $fileName, $buyerEmail);
+
+            $this->closeReceiptModal();
+            session()->flash('success', 'Your payment verification receipt has been appended to the order ledger context successfully.');
+
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Admin receipt notification failed: ' . $e->getMessage());
+
+            $this->closeReceiptModal();
+            session()->flash('warning', 'Your payment verification receipt has been saved successfully, but we experienced an issue alerting the admin team.');
+        }
     }
 
     /**

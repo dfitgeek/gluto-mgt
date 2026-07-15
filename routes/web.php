@@ -1,5 +1,6 @@
 <?php
 
+// use App\App\Livewire\Supplier\SupplierOrderTracker as SupplierTracker;
 use App\Http\Controllers\Admin\BuyerMasqueradeController;
 use App\Http\Controllers\Admin\CreateSupplier as CreateSuppliers;
 use App\Http\Controllers\Admin\SupplierMasqueradeController;
@@ -9,15 +10,17 @@ use App\Http\Controllers\UserAuthenticatables;
 use App\Http\Controllers\UserSaveBuyerProfile;
 use App\Http\Controllers\UserSaveSupplierProfile;
 use App\Http\Middleware;
+use App\Livewire\Admin\AdminSettings;
 use App\Livewire\Admin\BuyerDashboard;
 use App\Livewire\Admin\BuyerOrderTrackerHub;
 use App\Livewire\Admin\BuyerTracker as AdminBuyerTracker;
+use App\Livewire\Admin\CreateNewAdmin;
 use App\Livewire\Admin\CreateSupplier;
 use App\Livewire\Admin\GeneralBuyerOrder;
 use App\Livewire\Admin\Lobby;
+use App\Livewire\Admin\ManageAdmin;
 use App\Livewire\Admin\ManageSuppliers;
 use App\Livewire\Admin\SupplierDashboard;
-// use App\Livewire\Admin\SupplierOrderTracker;
 use App\Livewire\Admin\SupplierProducts;
 use App\Livewire\Admin\SupplierTracker;
 use App\Livewire\Admin\VerifiedBuyers;
@@ -37,7 +40,9 @@ use App\Livewire\Supplier\EditProductCatalogue;
 use App\Livewire\Supplier\ManageProductCatalogue;
 use App\Livewire\Supplier\ManageSupplierProfile;
 use App\Livewire\Supplier\ProformaOrder;
+use App\Livewire\Supplier\SupplierAdminOrderTracker;
 use App\Livewire\Supplier\SupplierDocumentLibrary;
+use App\Livewire\Supplier\SuppliersOrder;
 use App\Livewire\Supplier\SupplierTracker as UserTracker;
 use App\Livewire\SupplierDashboard as UserSupplierDashboard;
 use App\Livewire\SupplierLogin;
@@ -47,9 +52,7 @@ use App\Livewire\UserSupplierProfileLogin;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', \App\Livewire\LandingPage::class)->name('home');
 
 Route::get('/admin/login', AdminLogin::class)->name('admin.login');
 
@@ -103,7 +106,11 @@ Route::middleware('role.supplier')->group(function () {
 
     Route::get('/dashboard/supplier/profile/documents', SupplierDocumentLibrary::class)->name('supplier.profile.documents');
 
-    Route::get('/dashboard/supplier/orders', ProformaOrder::class)->name('supplier.orders');
+    Route::get('/dashboard/supplier/orders', SuppliersOrder::class)->name('supplier.orders');
+
+    Route::get('/orders/{orderId}/tracker', SupplierAdminOrderTracker::class)
+        ->name('supplier.orders.tracker');
+
 
     Route::get('/dashboard/supplier/tracker', UserTracker::class)->name('supplier.profile.tracker');
 
@@ -159,7 +166,7 @@ Route::middleware('role.admin')->group(function () {
 
     Route::get('/admin/dashboard/supplier/{id}/product', SupplierProducts::class)->name('admin.suppliers.products');
 
-    Route::get('/admin/dashboard/supplier/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
+    // Route::get('/admin/dashboard/supplier/{id}/track', SupplierTracker::class)->name('admin.suppliers.track');
 
     Route::get('/admin/suppliers/catalog', \App\Livewire\Admin\SuppliersProductCatalogue::class)
         ->name('admin.suppliers.catalogue');
@@ -185,7 +192,6 @@ Route::middleware('role.admin')->group(function () {
 
     Route::get('/admin/buyer-quotes/{orderId}/tracker', BuyerOrderTrackerHub::class)
         ->name('admin.buyers.orders.tracker');
-
 
 
     Route::post('logout', [UserAuthenticatables::class, 'adminLogout'])
@@ -218,6 +224,10 @@ Route::middleware('role.admin')->group(function () {
 
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/admin/settings', AdminSettings::class)->name('settings');
+    Route::get('/admin/manage-accounts', ManageAdmin::class)->name('manage');
+    Route::get('/admin/create-account', CreateNewAdmin::class)->name('create');
 });
 
 require __DIR__.'/auth.php';

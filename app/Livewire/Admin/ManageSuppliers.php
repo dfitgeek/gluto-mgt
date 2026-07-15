@@ -37,16 +37,35 @@ class ManageSuppliers extends Component
         $supplier = SupplierProfile::find($id);
 
         if ($supplier) {
+            $newStatus = '';
+            $successMessage = '';
+
             if ($supplier->status_label === 'Verified Supplier') {
-                $supplier->update(['status_label' => 'Unverified Supplier']);
-                session()->flash('success', "{$supplier->company_name} is now unverified.");
+                $newStatus = 'Unverified Supplier';
+                $supplier->update(['status_label' => $newStatus]);
+                $successMessage = "{$supplier->company_name} is now unverified.";
             } else {
-                $supplier->update(['status_label' => 'Verified Supplier']);
-                session()->flash('success', "{$supplier->company_name} has been verified successfully!");
+                $newStatus = 'Verified Supplier';
+                $supplier->update(['status_label' => $newStatus]);
+                $successMessage = "{$supplier->company_name} has been verified successfully!";
             }
 
             if ($this->selectedSupplier && $this->selectedSupplier->id === $id) {
                 $this->selectedSupplier = $supplier;
+            }
+
+            try {
+                // Dispatch the compliance status update alert to the supplier
+                \App\Services\NotificationMailService::notifySupplierOfVerificationStatus($supplier, $newStatus);
+
+                session()->flash('success', $successMessage);
+
+            } catch (\Throwable $e) {
+                // Log the error silently for backend debugging
+                \Illuminate\Support\Facades\Log::error('Supplier verification status notification failed: ' . $e->getMessage());
+
+                // Alert the admin that the database update worked, but the email failed
+                session()->flash('warning', $successMessage . " However, we experienced an issue dispatching the compliance email alert to the vendor.");
             }
         }
     }

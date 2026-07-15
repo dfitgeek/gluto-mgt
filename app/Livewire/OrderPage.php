@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\BuyerOrder;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
@@ -194,8 +195,35 @@ class OrderPage extends Component
             'date_of_initial_contact' => $this->initialContactDate,
         ]);
 
-        session()->flash('success', "Quotation proposal package '{$this->orderRefNumber}' successfully submitted to administrative operations.");
-        return redirect()->route('buyer.order');
+        // Prepare the payload for the email service
+        // Join all product names from the array so both parties see the full scope of the request
+        $productNames = implode(', ', array_column($finalItems, 'product_name'));
+
+        $quoteData = [
+            'product_names' => $productNames
+        ];
+
+        try {
+            // Securely resolve the buyer's email to prevent null type errors
+            $buyerEmail = $buyer->rep_email;
+
+            // 1. Dispatch the admin notification
+            NotificationMailService::notifyAdminOfBuyerQuote($quoteData, $buyerEmail);
+
+            // 2. Dispatch the buyer receipt acknowledgment notification
+            NotificationMailService::notifyBuyerOfQuoteReceipt($buyerEmail, $quoteData);
+
+            session()->flash('success', "Quotation proposal package '{$this->orderRefNumber}' successfully submitted to administrative operations.");
+            return redirect()->route('buyer.order');
+
+        } catch (\Throwable $e) {
+            // Log the error silently for debugging (catches failures from either email dispatch)
+            \Illuminate\Support\Facades\Log::error('Notification email(s) failed for Quotation: ' . $e->getMessage());
+
+            // Redirect with a warning so the buyer knows the system saved their quotation despite the email glitch
+            session()->flash('warning', "Quotation proposal package '{$this->orderRefNumber}' was saved securely, but we experienced an issue dispatching the email notifications.");
+            return redirect()->route('buyer.order');
+        }
     }
 
     public function render()

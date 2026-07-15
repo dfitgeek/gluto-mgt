@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\AdminOrder;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
@@ -50,7 +51,9 @@ class AdminRecentOrders extends Component
     {
         $this->validate();
 
+        // Eager load the supplier profile relation to easily grab the email
         $order = AdminOrder::findOrFail($this->activeOrderId);
+
         $meta = $order->order_meta ?? [];
         if (!is_array($meta)) {
             $meta = [];
@@ -63,16 +66,35 @@ class AdminRecentOrders extends Component
 
         // Store file onto disk channels securely
         $savedPath = $this->receipt_file->store('admin_payment_receipts', 'public');
+        $fileName = $this->receipt_file->getClientOriginalName();
         $meta['admin_payment_receipt'] = $savedPath;
+
+        // dd($order->supplier);
 
         // Automatically update the order status tracking flag block context cleanly
         $order->update([
             'order_meta' => $meta,
-            'order_status' => 'Accepted' // Mark as Accepted/Paid configuration milestone
+            // 'order_status' => 'Accepted' // Mark as Accepted/Paid configuration milestone
         ]);
 
-        $this->closeReceiptModal();
-        session()->flash('success', "Payment receipt remittance asset successfully pinned to PO ticket #{$order->purchase_order_number}.");
+        try {
+            // Safely resolve the supplier's email based on your schema (adjust property name if needed)
+
+
+            $supplierEmail = $order->supplier->rep_email ?? $order->supplier->rep_email;
+
+            // Dispatch the alert to the supplier
+            NotificationMailService::notifySupplierOfAdminPaymentReceipt($order, $fileName, $supplierEmail);
+
+            $this->closeReceiptModal();
+            session()->flash('success', "Payment receipt remittance asset successfully pinned to PO ticket #{$order->purchase_order_number}.");
+
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Supplier remittance notification failed: ' . $e->getMessage());
+
+            $this->closeReceiptModal();
+            session()->flash('warning', "Payment receipt remittance asset successfully pinned to PO ticket #{$order->purchase_order_number}, but we experienced an issue alerting the supplier.");
+        }
     }
 
     public function render()

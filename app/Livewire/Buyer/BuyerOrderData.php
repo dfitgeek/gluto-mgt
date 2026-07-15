@@ -4,6 +4,7 @@ namespace App\Livewire\Buyer;
 
 use App\Models\BuyerOrder;
 use App\Models\SupplierProduct;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
@@ -114,20 +115,13 @@ class BuyerOrderData extends Component
 
         BuyerOrder::create([
             'buyer_profile_id' => $buyer->id,
-
-            // SOLUTION: Persisting the exact matching parent supplier ID key here
-            // unlocks straightforward data lookup scoping for the vendor panels query execution.
             'supplier_profile_id' => $supplierProfileId,
-
             'order_progress' => 'Unprocessed order',
             'order_ref_number' => $this->orderRefNumber,
             'prod_ref' => $this->product->product_ref,
             'product_names' => $this->product->product_name,
             'product_descriptions' => $this->product->product_description,
-
-            // PATCH 3: Read country values directly from the structured parent supplier profile row relations
             'product_origin' => $this->product->supplierProfile->country_of_registration ?? 'Global Pool',
-
             'payment_term_condition' => $this->product->payment_terms,
             'quoted_price_per_unit' => $this->quotedPricePerUnit,
             'quotation_currency' => 'NGN',
@@ -147,9 +141,27 @@ class BuyerOrderData extends Component
             'date_of_initial_contact' => $this->initialContactDate,
         ]);
 
-        // PATCH 4: Ensure the routing matches your verified active naming schema group targets
-        return redirect()->route('buyer.order')
-            ->with('success', "Procurement pipeline request '{$this->orderRefNumber}' has been initialized cleanly.");
+        // Prepare the payload for the email service
+        $quoteData = [
+            'product_names' => $this->product->product_name
+        ];
+
+        // try {
+            // Dispatch the admin notification
+            // NotificationMailService::notifyAdminOfBuyerQuote($quoteData, $buyer->email);
+
+            // PATCH 4: Ensure the routing matches your verified active naming schema group targets
+            return redirect()->route('buyer.order')
+                ->with('success', "Procurement pipeline request '{$this->orderRefNumber}' has been initialized cleanly.");
+
+        // } catch (\Throwable $e) {
+            // Log the error silently for debugging
+            // \Illuminate\Support\Facades\Log::error('Admin notification email failed for Order Manifest: ' . $e->getMessage());
+
+            // Redirect with a warning so the buyer knows the system saved their order despite the email glitch
+        //     return redirect()->route('buyer.order')
+        //         ->with('warning', "Procurement pipeline request '{$this->orderRefNumber}' has been saved, but we experienced an issue alerting the admin team.");
+        // }
     }
 
     public function render()

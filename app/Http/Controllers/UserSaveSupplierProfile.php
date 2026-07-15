@@ -151,8 +151,9 @@ class UserSaveSupplierProfile extends Controller
             'linkedin' => $request->input('social_linkedin'),
         ]);
 
-        // 4. Persist the SupplierProfile database entry card
-        SupplierProfile::create([
+        // dd($validated['customization_options']);
+
+        $supplier = SupplierProfile::create([
             'user_id' => $user->id,
             'supplier_ref_number' => $validated['supplier_ref_number'],
             'status_label' => 'Unverified Supplier',
@@ -181,7 +182,7 @@ class UserSaveSupplierProfile extends Controller
 
             'categorization_of_products' => $validated['categorization_of_products'],
             'overall_moqs' => $validated['overall_moqs'],
-            'customization_options' => $validated['customization_options'],
+            // 'customization_options' => $validated['customization_options'],
             'ability_to_provide_samples' => $request->has('ability_to_provide_samples'),
             'manufacturing_locations' => $validated['manufacturing_locations'],
             'production_capacity' => $validated['production_capacity'],
@@ -217,14 +218,20 @@ class UserSaveSupplierProfile extends Controller
             'declaration_authorized_person' => $validated['declaration_authorized_person'],
             'declaration_title' => $validated['declaration_title'],
             'declaration_signature_path' => $signaturePath,
-        ]);
+        ]); //[cite: 5]
 
         // 5. Invalidate the tracking onboarding token
         $onboardingToken->update([
             'is_used' => true,
             'used_at' => now(),
-        ]);
+        ]); //[cite: 5]
 
-        return redirect()->route('supplier.login')->with('success', 'Corporate verification documentation submitted successfully. Our internal compliance panel will review your credentials within 48 hours.');
+        try {
+            \App\Services\NotificationMailService::notifyNewSupplierRegistration($supplier);
+            return redirect()->route('supplier.login')->with('success', 'Corporate verification documentation submitted successfully. Our internal compliance panel will review your credentials within 48 hours.'); //[cite: 5]
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Supplier registration email failed: ' . $e->getMessage());
+            return redirect()->route('supplier.login')->with('warning', 'Corporate verification documentation submitted successfully, but we experienced an issue dispatching the welcome email to your inbox.'); //[cite: 5]
+        }
     }
 }

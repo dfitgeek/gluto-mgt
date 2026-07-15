@@ -86,7 +86,7 @@ class CreateBuyers extends Controller
             : Hash::make('glutobuyer');
 
         // 3. Save and persist cleanly to database structure
-        BuyerProfile::create([
+        $buyer = BuyerProfile::create([
             'user_id' => $validated['user_id'] ?? null,
             'buyer_ref_number' => $validated['buyer_ref_number'],
             'company_icon_path' => $iconPath,
@@ -112,9 +112,16 @@ class CreateBuyers extends Controller
             // Refactored document entries fields
             'company_reg_doc' => $processedFiles['company_reg_doc'],
             'id_card' => $processedFiles['id_card'],
-        ]);
+        ]); //[cite: 6]
 
-        return redirect()->route('admin.buyers.manage')
-            ->with('success', "Buyer profile card for '{$validated['company_name']}' has been registered cleanly into the system network.");
+        try {
+            \App\Services\NotificationMailService::notifyNewBuyerRegistration($buyer);
+            return redirect()->route('admin.buyers.manage')
+                ->with('success', "Buyer profile card for '{$validated['company_name']}' has been registered cleanly into the system network and the welcome email has been dispatched."); //[cite: 6]
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Buyer registration email failed: ' . $e->getMessage());
+            return redirect()->route('admin.buyers.manage')
+                ->with('warning', "Buyer profile card for '{$validated['company_name']}' has been registered cleanly, but we experienced an issue dispatching the welcome email alert."); //[cite: 6]
+        }
     }
 }

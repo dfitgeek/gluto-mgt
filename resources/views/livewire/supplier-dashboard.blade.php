@@ -1,256 +1,157 @@
-<main class="min-h-screen">
-        <!-- Main Dashboard Content -->
-    <div class="mx-auto p-container-padding max-w-[1440px]">
-        <div class="mb-stack-lg">
-            <h2 class="font-headline-lg text-headline-lg text-primary">Dashboard Overview</h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">Real-time logistics and supply chain
-                performance metrics.</p>
+<div class="flex-1 mx-auto my-2 p-gutter w-full max-w-[1440px]">
+
+    <div class="flex sm:flex-row flex-col justify-between sm:items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30 select-none">
+        <div>
+            <h2 class="font-headline-lg font-bold text-headline-lg text-primary text-2xl tracking-tight">Supplier Operations Dashboard</h2>
+            <p class="mt-0.5 font-body-sm text-on-surface-variant text-sm">Monitor inbound commercial demand channels, optimize logistical delivery pipelines, and track escrow settlements summary data flags.</p>
         </div>
-        <!-- Summary Cards Bento Grid -->
-        <section class="gap-gutter grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-stack-lg">
-            <div
-                class="flex flex-col justify-between bg-surface-container-lowest soft-forest-shadow p-stack-md border rounded-2xl border-outline-variant">
-                <div>
-                    <p class="mb-1 font-label-md text-label-md text-on-surface-variant">Total Revenue</p>
-                    <h3 class="font-headline-md text-headline-md text-primary">$128,450.00</h3>
-                </div>
-                <div class="flex items-center mt-4 font-bold text-secondary text-sm">
-                    <span class="mr-1 text-sm material-symbols-outlined">trending_up</span>
-                    +12.5% vs last month
-                </div>
+        <div class="flex items-center gap-2 bg-surface-container shadow-inner px-4 py-2 border rounded-xl h-fit font-mono font-bold text-primary text-xs select-none">
+            <span class="bg-emerald-500 rounded-full w-2 h-2 animate-pulse"></span>
+            Fulfillment Link Online
+        </div>
+    </div>
+
+    <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8 select-none">
+
+        <div class="flex flex-col justify-between bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/50 min-h-[130px]">
+            <div class="flex justify-between items-center">
+                <span class="text-outline font-bold text-[10px] uppercase tracking-wider">Settled Valuation Volume</span>
+                <span class="text-[20px] text-emerald-600 material-symbols-outlined">payments</span>
             </div>
-            <div
-                class="flex flex-col justify-between bg-surface-container-lowest soft-forest-shadow p-stack-md border rounded-2xl border-outline-variant">
-                <div>
-                    <p class="mb-1 font-label-md text-label-md text-on-surface-variant">Active Orders</p>
-                    <h3 class="font-headline-md text-headline-md text-primary">42</h3>
-                </div>
-                <div class="flex items-center mt-4 font-bold text-on-primary-container text-sm">
-                    <span class="mr-1 text-sm material-symbols-outlined">schedule</span>
-                    8 processing now
-                </div>
-            </div>
-            <div
-                class="flex flex-col justify-between bg-surface-container-lowest soft-forest-shadow p-stack-md border rounded-2xl border-outline-variant">
-                <div>
-                    <p class="mb-1 font-label-md text-label-md text-on-surface-variant">Pending Shipments</p>
-                    <h3 class="font-headline-md text-headline-md text-primary">15</h3>
-                </div>
-                <div class="flex items-center mt-4 font-bold text-on-surface-variant text-sm">
-                    <span class="mr-1 text-sm material-symbols-outlined">inventory</span>
-                    Awaiting carrier pickup
-                </div>
-            </div>
-            <div
-                class="flex flex-col justify-between bg-surface-container-lowest soft-forest-shadow p-stack-md border border-l-4 border-l-error rounded-2xl border-outline-variant">
-                <div>
-                    <p class="mb-1 font-label-md text-label-md text-on-surface-variant">Low Stock Alerts</p>
-                    <h3 class="font-headline-md text-error text-headline-md">3 Items</h3>
-                </div>
-                <div class="flex items-center mt-4 font-bold text-error text-sm">
-                    <span class="mr-1 text-sm material-symbols-outlined">warning</span>
-                    Reorder recommended
-                </div>
-            </div>
-        </section>
-        <!-- Main Layout: Performance & Quick Actions -->
-        <div class="gap-gutter grid grid-cols-1 lg:grid-cols-3 mb-stack-lg">
-            <!-- Performance Overview -->
-            <div
-                class="lg:col-span-2 bg-surface-container-lowest soft-forest-shadow p-stack-md border rounded-2xl border-outline-variant">
-                <div class="flex justify-between items-center mb-stack-md">
-                    <h4 class="font-headline-md text-headline-md text-primary">Performance Overview</h4>
-                    <select
-                        class="bg-surface-container-low px-3 py-1 rounded-lg border-outline-variant font-label-md text-sm">
-                        <option>Last 7 Days</option>
-                        <option>Last 30 Days</option>
-                        <option>Year to Date</option>
-                    </select>
-                </div>
-                <div
-                    class="relative flex justify-between items-end bg-surface-container-low p-4 rounded-xl w-full h-[300px] overflow-hidden">
-                    <!-- Simulated Chart Grid -->
-                    <div class="absolute inset-0 gap-4 grid grid-cols-7 opacity-10">
-                        <div class="border-outline border-r h-full"></div>
-                        <div class="border-outline border-r h-full"></div>
-                        <div class="border-outline border-r h-full"></div>
-                        <div class="border-outline border-r h-full"></div>
-                        <div class="border-outline border-r h-full"></div>
-                        <div class="border-outline border-r h-full"></div>
-                    </div>
-                    <!-- Simulated Chart Area (Using simple bars for visualization) -->
-                    <div class="bg-primary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 40%">
-                    </div>
-                    <div class="bg-primary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 60%">
-                    </div>
-                    <div class="bg-secondary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 45%">
-                    </div>
-                    <div class="bg-primary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 75%">
-                    </div>
-                    <div class="bg-primary-container hover:opacity-80 rounded-t-lg w-8 transition-all"
-                        style="height: 55%"></div>
-                    <div class="bg-primary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 85%">
-                    </div>
-                    <div class="bg-secondary hover:opacity-80 rounded-t-lg w-8 transition-all" style="height: 65%">
-                    </div>
-                </div>
-                <div class="flex justify-between mt-4 px-2 font-label-sm text-on-surface-variant">
-                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                </div>
-            </div>
-            <!-- Quick Actions Grid -->
-            <div
-                class="bg-surface-container-lowest soft-forest-shadow p-stack-md border rounded-2xl border-outline-variant">
-                <h4 class="mb-stack-md font-headline-md text-headline-md text-primary">Quick Actions</h4>
-                <div class="gap-3 grid grid-cols-1">
-                    <button
-                        class="flex items-center gap-4 bg-primary hover:opacity-90 p-4 rounded-xl font-label-md text-white transition-all">
-                        <span class="material-symbols-outlined">add_circle</span>
-                        Add New Product
-                    </button>
-                    <button
-                        class="bg-tertiary-fixed hover:bg-primary-fixed flex items-center gap-4 p-4 rounded-xl font-label-md text-primary transition-all">
-                        <span class="material-symbols-outlined">sync_alt</span>
-                        Update Inventory
-                    </button>
-                    <button
-                        class="bg-tertiary-fixed hover:bg-primary-fixed flex items-center gap-4 p-4 rounded-xl font-label-md text-primary transition-all">
-                        <span class="material-symbols-outlined">description</span>
-                        Generate Report
-                    </button>
-                    <button
-                        class="flex items-center gap-4 bg-surface-container-high hover:bg-surface-container-highest p-4 rounded-xl font-label-md text-on-surface transition-all">
-                        <span class="material-symbols-outlined">support_agent</span>
-                        Contact Support
-                    </button>
-                </div>
-                <div class="mt-stack-md pt-stack-md border-t border-outline-variant">
-                    <p class="mb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">System Health</p>
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-on-surface-variant">API Connection</span>
-                        <span class="flex items-center gap-1 font-bold text-secondary">Stable <span
-                                class="bg-secondary rounded-full w-2 h-2"></span></span>
-                    </div>
-                </div>
+            <div class="mt-2">
+                <h3 class="font-mono font-bold text-neutral-900 text-2xl truncate">₦{{ number_format($metrics['total_revenue'], 2) }}</h3>
+                <p class="mt-0.5 font-medium text-[11px] text-on-surface-variant">Aggregated Gross Completed Revenue</p>
             </div>
         </div>
-        <!-- Recent Orders Table -->
-        <section
-            class="bg-surface-container-lowest soft-forest-shadow border rounded-2xl border-outline-variant overflow-hidden">
-            <div
-                class="flex justify-between items-center bg-surface-container-low/50 p-stack-md border-b border-outline-variant">
-                <h4 class="font-headline-md text-headline-md text-primary">Recent Orders</h4>
-                <button class="font-label-md text-label-md text-secondary hover:underline">View All Orders</button>
+
+        <div class="flex flex-col justify-between bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/50 min-h-[130px]">
+            <div class="flex justify-between items-center">
+                <span class="text-outline font-bold text-[10px] uppercase tracking-wider">Total Contract Vouchers</span>
+                <span class="text-[20px] text-primary material-symbols-outlined">inventory_2</span>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
+            <div class="mt-2">
+                <h3 class="font-mono font-bold text-neutral-900 text-2xl">{{ number_format($metrics['total_orders']) }}</h3>
+                <p class="mt-0.5 font-medium text-[11px] text-on-surface-variant">Lifetime Registered Purchase Orders</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-between bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/50 min-h-[130px]">
+            <div class="flex justify-between items-center">
+                <span class="text-outline font-bold text-[10px] uppercase tracking-wider">Awaiting Billing Action</span>
+                <span class="text-[20px] text-amber-600 material-symbols-outlined">request_quote</span>
+            </div>
+            <div class="mt-2">
+                <h3 class="flex items-center gap-1.5 font-mono font-bold text-neutral-900 text-2xl">
+                    {{ number_format($metrics['pending_action']) }}
+                    @if($metrics['pending_action'] > 0)
+                        <span class="inline-block bg-amber-500 rounded-full w-2 h-2 animate-ping"></span>
+                    @endif
+                </h3>
+                <p class="mt-0.5 font-medium text-[11px] text-on-surface-variant">Staged or Awaiting Invoices</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-between bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/50 min-h-[130px]">
+            <div class="flex justify-between items-center">
+                <span class="text-outline font-bold text-[10px] uppercase tracking-wider">Logistical Carriers Dispatched</span>
+                <span class="text-[20px] text-purple-600 material-symbols-outlined">local_shipping</span>
+            </div>
+            <div class="mt-2">
+                <h3 class="font-mono font-bold text-neutral-900 text-2xl">{{ number_format($metrics['active_processing']) }}</h3>
+                <p class="mt-0.5 font-medium text-[11px] text-on-surface-variant">Active Midstream Freight Operations</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="items-start gap-8 grid grid-cols-1 lg:grid-cols-3">
+
+        <div class="lg:col-span-2 bg-white shadow-sm border rounded-[2rem] border-outline-variant/40 overflow-hidden">
+            <div class="flex justify-between items-center bg-surface-container px-6 py-4 border-b border-outline-variant/30 font-bold text-primary text-xs uppercase tracking-wider select-none">
+                <span class="flex items-center gap-1"><span class="text-[18px] material-symbols-outlined">history</span> Latest Inbound Procurements Stream</span>
+                <a href="{{ route('supplier.orders') }}" wire:navigate class="bg-white hover:bg-primary px-3 py-1 border rounded-lg font-sans font-bold text-[10px] hover:text-white normal-case transition-colors">View Full Index</a>
+            </div>
+
+            <div class="overflow-x-auto hide-scrollbar">
+                <table class="w-full font-medium text-neutral-800 text-xs text-left border-collapse">
                     <thead>
-                        <tr class="bg-surface-container-low border-b border-outline-variant">
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Order ID</th>
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Customer Name</th>
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Date</th>
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Amount</th>
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Status</th>
-                            <th class="px-stack-md py-4 font-label-md text-[12px] text-on-surface-variant uppercase">
-                                Action</th>
+                        <tr class="bg-neutral-50/70 border-b border-outline-variant/20 font-bold text-[10px] text-on-surface-variant uppercase tracking-wide select-none">
+                            <th class="p-4">PO Reference</th>
+                            <th class="p-4">Date Issued</th>
+                            <th class="p-4 text-right">Contract Price Value</th>
+                            <th class="p-4">Milestone Progress</th>
+                            <th class="p-4 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-outline-variant divide-y">
-                        <tr class="hover:bg-surface-container-low/30 transition-colors">
-                            <td class="px-stack-md py-4 font-label-md">#LOG-8921</td>
-                            <td class="px-stack-md py-4 font-body-sm">Northwood Lumber Ltd.</td>
-                            <td class="px-stack-md py-4 font-body-sm">Oct 12, 2023</td>
-                            <td class="px-stack-md py-4 font-label-md">$12,450.00</td>
-                            <td class="px-stack-md py-4">
-                                <span
-                                    class="bg-secondary-container/30 px-3 py-1 rounded-full font-bold text-[10px] text-secondary uppercase">Shipped</span>
-                            </td>
-                            <td class="px-stack-md py-4">
-                                <button class="p-1 hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-surface-container-low/30 transition-colors">
-                            <td class="px-stack-md py-4 font-label-md">#LOG-8922</td>
-                            <td class="px-stack-md py-4 font-body-sm">Skyline Builders</td>
-                            <td class="px-stack-md py-4 font-body-sm">Oct 14, 2023</td>
-                            <td class="px-stack-md py-4 font-label-md">$8,200.00</td>
-                            <td class="px-stack-md py-4">
-                                <span
-                                    class="bg-primary-container/20 px-3 py-1 rounded-full font-bold text-[10px] text-on-primary-container uppercase">Processing</span>
-                            </td>
-                            <td class="px-stack-md py-4">
-                                <button class="p-1 hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-surface-container-low/30 transition-colors">
-                            <td class="px-stack-md py-4 font-label-md">#LOG-8923</td>
-                            <td class="px-stack-md py-4 font-body-sm">Evergreen Partners</td>
-                            <td class="px-stack-md py-4 font-body-sm">Oct 15, 2023</td>
-                            <td class="px-stack-md py-4 font-label-md">$2,100.00</td>
-                            <td class="px-stack-md py-4">
-                                <span
-                                    class="bg-error-container/30 px-3 py-1 rounded-full font-bold text-[10px] text-error uppercase">Delayed</span>
-                            </td>
-                            <td class="px-stack-md py-4">
-                                <button class="p-1 hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-surface-container-low/30 transition-colors">
-                            <td class="px-stack-md py-4 font-label-md">#LOG-8924</td>
-                            <td class="px-stack-md py-4 font-body-sm">Coastal Developments</td>
-                            <td class="px-stack-md py-4 font-body-sm">Oct 15, 2023</td>
-                            <td class="px-stack-md py-4 font-label-md">$15,700.00</td>
-                            <td class="px-stack-md py-4">
-                                <span
-                                    class="bg-secondary-container/30 px-3 py-1 rounded-full font-bold text-[10px] text-secondary uppercase">Shipped</span>
-                            </td>
-                            <td class="px-stack-md py-4">
-                                <button class="p-1 hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </button>
-                            </td>
-                        </tr>
+                    <tbody class="divide-y divide-neutral-100 font-sans text-neutral-900">
+                        @forelse($recentOrders as $order)
+                            <tr class="hover:bg-neutral-50/40 transition-colors">
+                                <td class="p-4 font-mono font-bold text-primary select-all">#{{ $order->purchase_order_number }}</td>
+                                <td class="p-4 font-medium text-neutral-500 select-none">{{ $order->created_at->format('M d, Y') }}</td>
+                                <td class="p-4 font-mono font-bold text-emerald-800 text-right">{{ $order->currency }} {{ number_format($order->grand_total_amount, 2) }}</td>
+                                <td class="p-4 select-none">
+                                    <span class="px-2 py-0.5 rounded-md font-mono text-[9px] uppercase font-bold border tracking-tight
+                                        {{ $order->order_status === 'Pending' ? 'bg-amber-50 text-amber-700 border-amber-200' : '' }}
+                                        {{ $order->order_status === 'Invoice' ? 'bg-blue-50 text-blue-700 border-blue-200' : '' }}
+                                        {{ $order->order_status === 'Completed Order' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : '' }}
+                                        {{ !in_array($order->order_status, ['Pending', 'Invoice', 'Completed Order']) ? 'bg-neutral-100 text-neutral-700 border-neutral-300' : '' }}
+                                    ">
+                                        {{ $order->order_status }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-right select-none">
+                                    <a href="{{ route('supplier.orders.tracker', ['orderId' => $order->id]) }}" wire:navigate class="inline-block bg-neutral-100 hover:bg-primary shadow-inner px-3 py-1 border rounded-lg font-sans font-bold text-[10px] text-neutral-700 hover:text-white transition-colors">
+                                        Track Audit
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="select-none">
+                                <td colspan="5" class="p-12 font-medium text-on-surface-variant/50 text-center italic">
+                                    No administrative purchase or procurement orders listed under your supplier entity profile yet.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
+
+        <div class="space-y-6 lg:col-span-1 select-none">
+
+            <div class="space-y-4 bg-white shadow-sm p-6 border rounded-[2rem] border-outline-variant/50">
+                <h4 class="flex items-center gap-1 pb-2 border-b font-bold text-[11px] text-primary uppercase tracking-wider">
+                    <span class="text-[16px] material-symbols-outlined">bolt</span> Quick Workspace Links
+                </h4>
+
+                <div class="flex flex-col gap-2 font-bold text-xs">
+                    <a href="{{ route('supplier.orders') }}" wire:navigate class="group flex justify-between items-center bg-neutral-50 hover:bg-primary/5 p-3 border rounded-xl w-full text-neutral-700 hover:text-primary transition-all">
+                        <span class="flex items-center gap-2">
+                            <span class="text-[18px] text-neutral-400 group-hover:text-primary material-symbols-outlined">assignment_turned_in</span>
+                            <span>Fulfill Admin Orders</span>
+                        </span>
+                        <span class="text-[14px] text-neutral-300 transition-transform group-hover:translate-x-0.5 material-symbols-outlined">arrow_forward_ios</span>
+                    </a>
+
+                    <a href="#" onclick="alert('Wholesale Product Catalogue asset manager profile interface upcoming configuration node!')" class="group flex justify-between items-center bg-neutral-50 hover:bg-primary/5 p-3 border rounded-xl w-full text-neutral-700 hover:text-primary transition-all">
+                        <span class="flex items-center gap-2">
+                            <span class="text-[18px] text-neutral-400 group-hover:text-primary material-symbols-outlined">storefront</span>
+                            <span>My Catalog Items</span>
+                        </span>
+                        <span class="text-[14px] text-neutral-300 transition-transform group-hover:translate-x-0.5 material-symbols-outlined">arrow_forward_ios</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-primary/5 to-primary/10 p-6 border border-primary/20 rounded-[2rem] font-medium text-primary text-xs leading-relaxed">
+                <span class="block flex items-center gap-0.5 mb-1 font-bold text-[10px] text-primary/70 uppercase tracking-wider">
+                    <span class="text-[14px] material-symbols-outlined">gavel</span> System Guard Guideline
+                </span>
+                Please remember to upload official proforma billing invoices immediately upon checking new orders. This allows the back-office compliance and operations financial desk to wire payment settlement slips without delay.
+            </div>
+
+        </div>
+
     </div>
-    <!-- Management Quick-Add FAB -->
-    <button
-        class="right-8 bottom-8 z-50 fixed flex justify-center items-center bg-primary level-3-shadow rounded-full w-14 h-14 text-white hover:scale-110 active:scale-95 transition-all">
-        <span class="scale-125 material-symbols-outlined">add</span>
-    </button>
 
-    <script>
-        // Micro-interaction for summary cards hover
-        document.querySelectorAll('.soft-forest-shadow').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-4px)';
-                card.style.transition = 'all 0.3s ease';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Simple table filtering simulation or row highlight
-        const rows = document.querySelectorAll('tbody tr');
-        rows.forEach(row => {
-            row.addEventListener('click', () => {
-                // Potential interaction: open order details
-                console.log('Order clicked');
-            });
-        });
-    </script>
-</main>
+</div>

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\BuyerOrder;
 use App\Models\BuyerOrderTracker;
+use App\Services\NotificationMailService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -18,7 +19,7 @@ class BuyerOrderTrackerHub extends Component
 
     // Form Input Binding Properties
     public string $replyMessage = '';
-    public string $messageSubject = 'Clarification Request';
+    public string $messageSubject = 'Information Request';
 
     // Admin Auditing Checkbox Flags Array
     public array $flaggedFields = [];
@@ -47,6 +48,8 @@ class BuyerOrderTrackerHub extends Component
             'replyMessage.required' => 'The message body payload cannot be dispatched blank.',
         ]);
 
+        $buyer = $this->order->buyer;
+
         // Persist response parameters into buyer_order_trackers registry schema
         BuyerOrderTracker::create([
             'buyer_order_id' => $this->order->id,
@@ -59,10 +62,22 @@ class BuyerOrderTrackerHub extends Component
             'is_internal_only' => false, // Set to false to share visibility with the buyer's console
         ]);
 
+        try {
+            NotificationMailService::notifyBuyerOfQuoteTrackerUpdate($buyer->rep_email, $this->order, $this->messageSubject, $this->replyMessage);
+
+            // Success flash if both database save and email succeed
+            session()->flash('success', 'Your administrative update message has been securely committed to the conversation thread.');
+
+        } catch (\Throwable $e) {
+            // Log the failure behind the scenes
+            \Illuminate\Support\Facades\Log::error('Buyer notification email failed: ' . $e->getMessage());
+
+            // Throw a warning/error session message to the UI
+            session()->flash('warning', 'Your message was securely committed, but we experienced an issue sending the email notification to the buyer.');
+        }
+
         // Reset the message input and compliance flags array state
         $this->reset(['replyMessage', 'flaggedFields']);
-
-        session()->flash('success', 'Your administrative update message has been securely committed to the conversation thread.');
     }
 
     public function render()

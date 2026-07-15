@@ -23,6 +23,6 @@ class SupplierProduct extends Model
      */
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(SupplierProfile::class);
+        return $this->belongsTo(SupplierProfile::class, 'supplier_profile_id');
     }
 }

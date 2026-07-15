@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Buyer Workspace Hub - Gluto Procurement</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.png') }}?v=2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}?v=2" />
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400;500;600&display=swap" rel="stylesheet" />
@@ -270,6 +272,11 @@
                                 class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">manage_accounts</span>
                                 <span>Buyer Profile</span>
+                            </a>
+                            <a href="{{ route('buyer.documents') }}" wire:navigate @click="open = false"
+                                class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
+                                <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">manage_accounts</span>
+                                <span>Documentation Library</span>
                             </a>
 
                             <div class="mt-1 pt-1 border-t border-outline-variant/20">

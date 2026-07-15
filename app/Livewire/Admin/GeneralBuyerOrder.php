@@ -54,7 +54,7 @@ class GeneralBuyerOrder extends Component
     /**
      * Upload an administrative commercial invoice asset and store it under payment_meta JSON.
      */
-    public function uploadAdminInvoice()
+   /*  public function uploadAdminInvoice()
     {
         $this->validate();
 
@@ -78,6 +78,52 @@ class GeneralBuyerOrder extends Component
 
         $this->closeInvoiceModal();
         session()->flash('success', "Administrative commercial invoice successfully bound to RFQ ticket #{$order->order_ref_number}.");
+    } */
+
+
+    /**
+     * Upload an administrative commercial invoice asset and store it under payment_meta JSON.
+     */
+    public function uploadAdminInvoice()
+    {
+        $this->validate();
+
+        // Eager load 'buyer' so the notification service can access the email cleanly
+        $order = OrderModel::with('buyer')->findOrFail($this->activeQuoteId);
+        $meta = $order->payment_meta ?? [];
+        if (!is_array($meta)) {
+            $meta = [];
+        }
+
+        if (isset($meta['supplier_invoice'])) {
+            Storage::disk('public')->delete($meta['supplier_invoice']);
+        }
+
+        $savedPath = $this->invoice_file->store('supplier_invoices', 'public');
+        $fileName = $this->invoice_file->getClientOriginalName();
+        $meta['supplier_invoice'] = $savedPath;
+
+        $order->update([
+            'payment_meta' => $meta,
+            'order_progress' => 'Invoice'
+        ]);
+
+        try {
+            // Safely resolve the buyer's email
+            $buyerEmail = $order->buyer->rep_email ?? $order->buyer->email ?? 'No email provided';
+
+            // Dispatch the alert to the buyer
+            \App\Services\NotificationMailService::notifyBuyerOfAdminInvoice($order, $fileName, $buyerEmail);
+
+            $this->closeInvoiceModal();
+            session()->flash('success', "Administrative commercial invoice successfully bound to RFQ ticket #{$order->order_ref_number}.");
+
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Buyer invoice notification failed: ' . $e->getMessage());
+
+            $this->closeInvoiceModal();
+            session()->flash('warning', "Administrative commercial invoice successfully bound to RFQ ticket #{$order->order_ref_number}, but we experienced an issue alerting the buyer.");
+        }
     }
 
     /**
@@ -90,10 +136,21 @@ class GeneralBuyerOrder extends Component
             return;
         }
 
-        $order = OrderModel::findOrFail($orderId);
+        // Eager load the buyer to access the email property cleanly
+        $order = OrderModel::with('buyer')->findOrFail($orderId);
         $order->update(['order_progress' => $newStatus]);
 
-        session()->flash('success', "Quotation Reference #{$order->order_ref_number} switched to status milestone context '{$newStatus}'.");
+        try {
+            $buyerEmail = $order->buyer->rep_email ?? $order->buyer->email ?? 'No email provided';
+
+            \App\Services\NotificationMailService::notifyBuyerOfStatusUpdate($order, 'Order Progress', $newStatus, $buyerEmail);
+
+            session()->flash('success', "Quotation Reference #{$order->order_ref_number} switched to status milestone context '{$newStatus}'.");
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Order status notification failed: ' . $e->getMessage());
+
+            session()->flash('warning', "Quotation Reference #{$order->order_ref_number} switched to '{$newStatus}', but we experienced an issue alerting the buyer.");
+        }
     }
 
     /**
@@ -101,10 +158,21 @@ class GeneralBuyerOrder extends Component
      */
     public function updateShipmentStatus(int $orderId, string $newStatus)
     {
-        $order = OrderModel::findOrFail($orderId);
+        // Eager load the buyer to access the email property cleanly
+        $order = OrderModel::with('buyer')->findOrFail($orderId);
         $order->update(['shipment_status' => $newStatus]);
 
-        session()->flash('success', "Logistical freight status for RFQ Ticket #{$order->order_ref_number} adjusted to '{$newStatus}'.");
+        try {
+            $buyerEmail = $order->buyer->rep_email ?? $order->buyer->email ?? 'No email provided';
+
+            \App\Services\NotificationMailService::notifyBuyerOfStatusUpdate($order, 'Shipment Status', $newStatus, $buyerEmail);
+
+            session()->flash('success', "Logistical freight status for RFQ Ticket #{$order->order_ref_number} adjusted to '{$newStatus}'.");
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Shipment status notification failed: ' . $e->getMessage());
+
+            session()->flash('warning', "Freight status for RFQ Ticket #{$order->order_ref_number} adjusted to '{$newStatus}', but we experienced an issue alerting the buyer.");
+        }
     }
 
     public function render()

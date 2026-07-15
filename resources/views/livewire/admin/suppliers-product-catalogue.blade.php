@@ -70,7 +70,8 @@
                         <h3 class="min-h-[44px] font-headline-md font-bold text-primary text-base line-clamp-2 leading-snug" title="{{ $item->product_name }}">
                             {{ $item->product_name }}
                         </h3>
-                        <span class="block font-medium text-[11px] text-on-surface-variant/80 truncate">Supplier: <strong class="text-primary">{{ $item->supplier->company_name ?? 'Platform Vendor' }}</strong></span>
+                        <span class="block font-medium text-[11px] text-on-surface-variant/80 truncate">Supplier: <strong class="text-primary">{{ $item->supplier->company_name ?? 'Platform Vendor' }}
+                        </strong></span>
 
                         <div class="flex items-baseline gap-1 pt-2 select-none">
                             <span class="font-bold text-[11px] text-on-surface-variant/80">Base Rate:</span>

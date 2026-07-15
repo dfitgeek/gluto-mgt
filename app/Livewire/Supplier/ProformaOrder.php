@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Supplier;
 
-use App\Models\BuyerOrder;
-use App\Models\SupplierProduct;
-use App\Models\SupplierProfile;
+use App\Models\AdminOrder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
@@ -21,83 +19,107 @@ class ProformaOrder extends Component
     public ?int $activeOrderId = null;
     public $invoice_file;
 
-    protected array $rules = [
-        'invoice_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240',
-    ];
+        protected array $rules = [
+            'invoice_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240', // Max 10MB invoice files
+        ];
 
-    public function openInvoiceModal(int $orderId)
-    {
-        $this->activeOrderId = $orderId;
-        $this->reset('invoice_file');
-        $this->isInvoiceModalOpen = true;
-    }
-
-    public function closeInvoiceModal()
-    {
-        $this->isInvoiceModalOpen = false;
-        $this->reset(['activeOrderId', 'invoice_file']);
-    }
-
-    public function uploadInvoice()
-    {
-        $this->validate();
-
-        $supplier = Auth::guard('supplier')->user(); // model instance
-        $supplierId = $supplier->id;
-
-        // Safe Fallback Guard: Secure checks against either the direct ID or product reference maps
-        $myProductRefs = SupplierProduct::where('supplier_profile_id', $supplierId)
-            ->pluck('product_ref')
-            ->toArray();
-
-        $order = BuyerOrder::where('id', $this->activeOrderId)
-            ->where(function ($query) use ($supplierId, $myProductRefs) {
-                $query->where('supplier_profile_id', $supplierId)
-                    ->orWhereIn('prod_ref', $myProductRefs);
-            })
-            ->firstOrFail();
-
-        $meta = $order->payment_meta ?? [];
-        if (!is_array($meta)) {
-            $meta = [];
+        public function openInvoiceModal(int $orderId)
+        {
+            $this->activeOrderId = $orderId;
+            $this->reset('invoice_file');
+            $this->isInvoiceModalOpen = true;
         }
 
-        if (isset($meta['supplier_invoice'])) {
-            Storage::disk('public')->delete($meta['supplier_invoice']);
+        public function closeInvoiceModal()
+        {
+            $this->isInvoiceModalOpen = false;
+            $this->reset(['activeOrderId', 'invoice_file']);
         }
 
-        $savedPath = $this->invoice_file->store('supplier_invoices', 'public');
-        $meta['supplier_invoice'] = $savedPath;
+        /**
+         * Upload the vendor proforma invoice document and store it inside the order_meta JSON layout.
+         */
+        public function uploadInvoice()
+        {
+            $this->validate();
 
-        $order->update([
-            'payment_meta' => $meta,
-            'order_progress' => $order->order_progress === 'Unprocessed order' ? 'Processed Buyer' : $order->order_progress
-        ]);
+            $supplierId = Auth::guard('supplier')->id();
 
-        $this->closeInvoiceModal();
-        session()->flash('success', "Commercial invoice successfully dispatched to Order reference #{$order->order_ref_number}.");
+            // Fetch order matching this specific authenticated wholesale profile
+            $order = AdminOrder::where('id', $this->activeOrderId)
+                ->where('supplier_profile_id', $supplierId)
+                ->firstOrFail();
+
+            $meta = $order->order_meta ?? [];
+            if (!is_array($meta)) {
+                $meta = [];
+            }
+
+            // Drop the old file asset disk link if re-uploading
+            if (isset($meta['supplier_invoice'])) {
+                Storage::disk('public')->delete($meta['supplier_invoice']);
+            }
+
+            $savedPath = $this->invoice_file->store('supplier_invoices', 'public');
+            $meta['supplier_invoice'] = $savedPath;
+
+            // Save metadata changes down to disk and auto-advance status to Invoice
+            $order->update([
+                'order_meta'   => $meta,
+                'order_status' => 'Invoice'
+            ]);
+
+            $this->closeInvoiceModal();
+            session()->flash('success', "Commercial proforma invoice document successfully dispatched for Order #{$order->purchase_order_number}.");
+        }
+
+        /**
+         * Dynamically update the core order processing pipeline track milestone flag.
+         */
+        public function updateOrderStatus(int $orderId, string $newStatus)
+        {
+            $supplierId = Auth::guard('supplier')->id();
+
+            $order = AdminOrder::where('id', $orderId)
+                ->where('supplier_profile_id', $supplierId)
+                ->firstOrFail();
+
+            $order->update([
+                'order_status' => $newStatus
+            ]);
+
+            session()->flash('success', "Order reference #{$order->purchase_order_number} shifted to milestone status '{$newStatus}'.");
+        }
+
+        /**
+         * Dynamically update the logistical freight tracking shipment parameter state flag.
+         */
+        public function updateShipmentStatus(int $orderId, string $newStatus)
+        {
+            $supplierId = Auth::guard('supplier')->id();
+
+            $order = AdminOrder::where('id', $orderId)
+                ->where('supplier_profile_id', $supplierId)
+                ->firstOrFail();
+
+            $order->update([
+                'shipment_status' => $newStatus
+            ]);
+
+            session()->flash('success', "Order reference #{$order->purchase_order_number} shipment track updated to '{$newStatus}'.");
+        }
+
+        public function render()
+        {
+            $supplierId = Auth::guard('supplier')->id();
+
+            // Retrieve incoming procurement bundles belonging explicitly to this vendor
+            $associatedOrders = AdminOrder::where('supplier_profile_id', $supplierId)
+                ->latest()
+                ->get();
+
+            return view('livewire.supplier.proforma-order', [
+                'orders' => $associatedOrders
+            ]);
+        }
     }
-
-    public function render()
-    {
-        $supplier = Auth::guard('supplier')->user(); // model instance
-        $supplierInfo = $supplier->id;
-
-        // dd($supplierInfo);
-
-        // 1. Gather product refs to capture older records that don't have the new supplier_profile_id column mapped yet
-        $myProductRefs = SupplierProduct::where('supplier_profile_id', $supplierInfo)
-            ->pluck('product_ref')
-            ->toArray();
-
-        // 2. Query both fields so it catches old rows AND perfectly fetches new incoming entries
-        $associatedOrders = BuyerOrder::where('supplier_profile_id', $supplierInfo)
-            ->orWhereIn('prod_ref', $myProductRefs)
-            ->latest()
-            ->get();
-
-        return view('livewire.supplier.proforma-order', [
-            'orders' => $associatedOrders
-        ]);
-    }
-}

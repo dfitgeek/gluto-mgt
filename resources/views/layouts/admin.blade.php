@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.png') }}?v=2" />
 
     <title>Gluto Management Admin Panel</title>
 
@@ -291,7 +292,7 @@
                                     Utilities</p>
                             </div>
 
-                            <a href="{{ route('admin.suppliers.manage') }}" wire:navigate @click="open = false"
+                            <a href="{{ route('manage') }}" wire:navigate @click="open = false"
                     class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                     <span class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">admin_panel_settings</span>
                     <span>Manage Admins</span>
@@ -305,13 +306,13 @@
                                 <span>Manage Tokens</span>
                             </a>
 
-                            <a href="" wire:navigate @click="open = false"
+                            <a href="{{ route('create') }}" wire:navigate @click="open = false"
                                 class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span
                                     class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">person_add</span>
                                 <span>Create a New Admin</span>
                             </a>
-                            <a href="" wire:navigate @click="open = false"
+                            <a href="{{ route('settings') }}" wire:navigate @click="open = false"
                                 class="group flex items-center gap-3 hover:bg-surface-container-low px-4 py-2.5 font-semibold text-on-surface-variant hover:text-primary text-xs transition-colors">
                                 <span
                                     class="text-outline text-[18px] group-hover:text-primary transition-colors material-symbols-outlined">settings</span>
@@ -375,7 +376,9 @@
                     <a href="{{ route('admin.suppliers.recent.orders', ['sidebar' => request()->query('sidebar', 'open')]) }}"
 
                         class="group flex items-center gap-3 mx-2 my-1 px-4 py-3 rounded-lg transition-all {{ request()->routeIs('admin.suppliers.recent.orders') ? 'bg-secondary-container text-on-secondary-container font-semibold' : 'text-on-surface-variant hover:bg-surface-container-high' }}">
-                        <span class="material-symbols-outlined">add</span>
+                        {{-- <span class="material-symbols-outlined">add</span> --}}
+                        <span class="material-symbols-outlined">
+                            history_2                     </span>
                         <span class="font-label-md text-label-md">Recent Orders</span>
                     </a>
 

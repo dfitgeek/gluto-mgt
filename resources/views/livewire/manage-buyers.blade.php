@@ -241,9 +241,9 @@
                                     <span class="text-[16px] material-symbols-outlined">shopping_cart</span> Buyers Order
                                 </a>
 
-                                <a href="{{ route('admin.buyers.track', ['id' => $selectedBuyer->id]) }}" wire:navigate @click="buyerModalOpen = false; document.body.classList.remove('overflow-hidden')" class="flex justify-center items-center gap-1.5 bg-surface-container hover:bg-primary/10 px-4 py-2.5 rounded-xl font-bold text-primary text-xs transition-colors">
+                                {{-- <a href="{{ route('admin.buyers.track', ['id' => $selectedBuyer->id]) }}" wire:navigate @click="buyerModalOpen = false; document.body.classList.remove('overflow-hidden')" class="flex justify-center items-center gap-1.5 bg-surface-container hover:bg-primary/10 px-4 py-2.5 rounded-xl font-bold text-primary text-xs transition-colors">
                                     <span class="text-[16px] material-symbols-outlined">quick_reference</span> Buyer Tracker Notes
-                                </a>
+                                </a> --}}
 
                                 <div class="inline-block relative text-left" x-data="{ openStatusMenu: false }">
                                     <button type="button" @click="openStatusMenu = !openStatusMenu" class="flex items-center gap-1 bg-surface-container-high hover:bg-surface-container-highest px-4 py-2.5 border rounded-xl font-bold text-on-surface-variant text-xs transition-colors cursor-pointer">
